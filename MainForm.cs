@@ -29,7 +29,7 @@ namespace DeclineAplay
             axPlayer1.Location = new Point(5, 5);
             this.Panel_main.Controls.Add(axPlayer1);
             axPlayer1.Visible = true;
-            Bitmap bmp = new Bitmap(Image.FromFile(@"E:\CNetProject\DeclineAplay\WindowsFormsApplication1\Resources\2.png"));
+            Bitmap bmp = new Bitmap(Image.FromFile(@"E:\CNetProject\DeclineAplay\Resources\2.png"));
             axPlayer1.SetCustomLogo(bmp.GetHbitmap().ToInt32());
             axPlayer1.SetConfig(207, "1");//智能去除当前视频黑边
             axPlayer1.SetConfig(36, "16761024;50;20");//Logo 风格设置，格式："backcolor;xpercent;ypercent"，例如设置白色背景(16777215为0xffffff的十进制串)、水平偏左(30%)、垂直居中(50%)的 Logo 位置："16777215;30;50"

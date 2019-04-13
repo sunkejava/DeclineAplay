@@ -64,6 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AplayControl\AplayerBase.cs">
+      <SubType>Component</SubType>
+      <CustomToolNamespace>AplayBase</CustomToolNamespace>
+    </Compile>
+    <Compile Include="AplayControl\AplayerBase.Designer.cs">
+      <DependentUpon>AplayerBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
