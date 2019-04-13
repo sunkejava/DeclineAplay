@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Panel_main = new LayeredSkin.Controls.LayeredPanel();
+            this.aplayerBase1 = new DeclineAplay.AplayControl.AplayerBase();
+            this.Panel_main.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panel_main
@@ -44,11 +46,19 @@
             this.Panel_main.Borders.TopColor = System.Drawing.Color.Empty;
             this.Panel_main.Borders.TopWidth = 1;
             this.Panel_main.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("Panel_main.Canvas")));
+            this.Panel_main.Controls.Add(this.aplayerBase1);
             this.Panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Panel_main.Location = new System.Drawing.Point(0, 0);
             this.Panel_main.Name = "Panel_main";
             this.Panel_main.Size = new System.Drawing.Size(728, 487);
             this.Panel_main.TabIndex = 0;
+            // 
+            // aplayerBase1
+            // 
+            this.aplayerBase1.Location = new System.Drawing.Point(315, 89);
+            this.aplayerBase1.Name = "aplayerBase1";
+            this.aplayerBase1.Size = new System.Drawing.Size(306, 282);
+            this.aplayerBase1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -66,6 +76,7 @@
             this.Text = "";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Panel_main.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -73,6 +84,7 @@
         #endregion
 
         private LayeredSkin.Controls.LayeredPanel Panel_main;
+        private AplayControl.AplayerBase aplayerBase1;
     }
 }
 
