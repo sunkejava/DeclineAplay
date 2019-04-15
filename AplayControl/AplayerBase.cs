@@ -26,7 +26,8 @@ namespace DeclineAplay.AplayControl
         }
         #region Aplayer自带属性
         [Description("设置APlayer引擎视频区域在未播放视频时显示的图片"), Category("Aplayer自带属性")]
-        public Image DefaultImage {
+        public Image DefaultImage
+        {
             get
             {
                 return defaultImage;
@@ -46,7 +47,7 @@ namespace DeclineAplay.AplayControl
             set
             {
                 aplaybackColor = value;
-            } 
+            }
         }
 
         [Description("获取或设置是否开启硬件加速，1-开启，0-不开启"), Category("Aplayer自带属性")]
@@ -157,7 +158,7 @@ namespace DeclineAplay.AplayControl
         {
             this.Controls.Add(_axPlayer);
             _axPlayer.Dock = DockStyle.Fill;
-            if (defaultImage is null)
+            if (defaultImage == null)
             {
                 _axPlayer.SetCustomLogo(-1);
             }
@@ -168,7 +169,7 @@ namespace DeclineAplay.AplayControl
                 _axPlayer.SetCustomLogo(bmp.GetHbitmap().ToInt32());
             }
             //设置背景颜色及自定义logo位置aplaybackColor.ToArgb().ToString() +
-            _axPlayer.SetConfig(36,  "16777215;" + (logoLocation.X).ToString() + ";" + (logoLocation.Y).ToString());
+            _axPlayer.SetConfig(36, "16777215;" + (logoLocation.X).ToString() + ";" + (logoLocation.Y).ToString());
             //是否硬件加速
             _axPlayer.SetConfig(209, speedup ? "1" : "0");
 
