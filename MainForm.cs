@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AxAPlayer3Lib;
+using APlayer3Lib;
 
 namespace DeclineAplay
 {
@@ -17,15 +18,22 @@ namespace DeclineAplay
         {
             InitializeComponent();
         }
-        AxAPlayer3Lib.AxPlayer _apl = null;
+        AxPlayer _apl = null;
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _apl = new AxAPlayer3Lib.AxPlayer();
+            LayeredSkin.Controls.LayeredBaseControl lb = new LayeredSkin.Controls.LayeredBaseControl();
+            lb.Size = new Size(this.Width - 10, this.Height - 40);
+            lb.Location = new Point(5, 35);
+            //lb.BackColor = Color.Blue;
+            this.Controls.Add(lb);
+            _apl = new AxPlayer();
+            ((System.ComponentModel.ISupportInitialize)(this._apl)).BeginInit();
             _apl.Name = "defaultAplayer";
             _apl.Size = new Size(500, 350);
             _apl.Location = new Point(10, 15);
             _apl.Visible = true;
-            this.Controls.Add(_apl);
+            lb.Controls.Add(_apl);
+            ((System.ComponentModel.ISupportInitialize)(this._apl)).EndInit();
             _apl.SetVolume(50);
             _apl.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
             _apl.Play();

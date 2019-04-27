@@ -83,6 +83,7 @@
             this.AnimationType = LayeredSkin.Forms.AnimationTypes.FadeinFadeoutEffect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(123)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.ClientSize = new System.Drawing.Size(728, 519);
             this.Name = "MainForm";
             this.Text = "MainForm";
