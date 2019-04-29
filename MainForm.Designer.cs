@@ -33,6 +33,7 @@
             this.Panel_Left = new LayeredSkin.Controls.LayeredPanel();
             this.Panel_Right = new LayeredSkin.Controls.LayeredPanel();
             this.Panel_Bottom = new LayeredSkin.Controls.LayeredPanel();
+            this.BaseControl = new LayeredSkin.Controls.LayeredBaseControl();
             this.panel_min.SuspendLayout();
             this.panel_close.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +48,7 @@
             this.panel_min.Borders.RightWidth = 1;
             this.panel_min.Borders.TopColor = System.Drawing.Color.Empty;
             this.panel_min.Borders.TopWidth = 1;
-            this.panel_min.Location = new System.Drawing.Point(665, 0);
+            this.panel_min.Location = new System.Drawing.Point(670, 0);
             // 
             // panel_close
             // 
@@ -59,7 +60,7 @@
             this.panel_close.Borders.RightWidth = 1;
             this.panel_close.Borders.TopColor = System.Drawing.Color.Empty;
             this.panel_close.Borders.TopWidth = 1;
-            this.panel_close.Location = new System.Drawing.Point(695, 0);
+            this.panel_close.Location = new System.Drawing.Point(700, 0);
             // 
             // btn_min
             // 
@@ -151,6 +152,26 @@
             this.Panel_Bottom.Size = new System.Drawing.Size(730, 50);
             this.Panel_Bottom.TabIndex = 5;
             // 
+            // BaseControl
+            // 
+            this.BaseControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BaseControl.Borders.BottomColor = System.Drawing.Color.Empty;
+            this.BaseControl.Borders.BottomWidth = 1;
+            this.BaseControl.Borders.LeftColor = System.Drawing.Color.Empty;
+            this.BaseControl.Borders.LeftWidth = 1;
+            this.BaseControl.Borders.RightColor = System.Drawing.Color.Empty;
+            this.BaseControl.Borders.RightWidth = 1;
+            this.BaseControl.Borders.TopColor = System.Drawing.Color.Empty;
+            this.BaseControl.Borders.TopWidth = 1;
+            this.BaseControl.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("BaseControl.Canvas")));
+            this.BaseControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BaseControl.Location = new System.Drawing.Point(0, 0);
+            this.BaseControl.Name = "BaseControl";
+            this.BaseControl.Size = new System.Drawing.Size(730, 520);
+            this.BaseControl.TabIndex = 6;
+            this.BaseControl.MouseLeave += new System.EventHandler(this.BaseControl_MouseLeave);
+            this.BaseControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseMove);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -161,10 +182,14 @@
             this.Controls.Add(this.Panel_Right);
             this.Controls.Add(this.Panel_Left);
             this.Controls.Add(this.Panel_Top);
+            this.Controls.Add(this.BaseControl);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "MainForm";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);
+            this.Controls.SetChildIndex(this.BaseControl, 0);
             this.Controls.SetChildIndex(this.Panel_Top, 0);
             this.Controls.SetChildIndex(this.panel_close, 0);
             this.Controls.SetChildIndex(this.panel_min, 0);
@@ -183,5 +208,6 @@
         private LayeredSkin.Controls.LayeredPanel Panel_Left;
         private LayeredSkin.Controls.LayeredPanel Panel_Right;
         private LayeredSkin.Controls.LayeredPanel Panel_Bottom;
+        private LayeredSkin.Controls.LayeredBaseControl BaseControl;
     }
 }

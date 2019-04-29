@@ -12,7 +12,6 @@ namespace DeclineAplay
 {
     public partial class LayeredWindow : LayeredForm
     {
-        MainForm mf;
         public LayeredWindow()
         {
             InitializeComponent();
@@ -26,7 +25,7 @@ namespace DeclineAplay
 
         private void LayeredWindow_AutoSizeChanged(object sender, EventArgs e)
         {
-            axPlayer1.Size = this.Size;
+            axPlayer.Size = this.Size;
         }
     }
 }

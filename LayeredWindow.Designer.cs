@@ -29,26 +29,26 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayeredWindow));
-            this.axPlayer1 = new AxAPlayer3Lib.AxPlayer();
-            ((System.ComponentModel.ISupportInitialize)(this.axPlayer1)).BeginInit();
+            this.axPlayer = new AxAPlayer3Lib.AxPlayer();
+            ((System.ComponentModel.ISupportInitialize)(this.axPlayer)).BeginInit();
             this.SuspendLayout();
             // 
-            // axPlayer1
+            // axPlayer
             // 
-            this.axPlayer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axPlayer1.Enabled = true;
-            this.axPlayer1.Location = new System.Drawing.Point(0, 0);
-            this.axPlayer1.Name = "axPlayer1";
-            this.axPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axPlayer1.OcxState")));
-            this.axPlayer1.Size = new System.Drawing.Size(622, 408);
-            this.axPlayer1.TabIndex = 0;
+            this.axPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axPlayer.Enabled = true;
+            this.axPlayer.Location = new System.Drawing.Point(0, 0);
+            this.axPlayer.Name = "axPlayer";
+            this.axPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axPlayer.OcxState")));
+            this.axPlayer.Size = new System.Drawing.Size(622, 408);
+            this.axPlayer.TabIndex = 0;
             // 
             // LayeredWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 408);
-            this.Controls.Add(this.axPlayer1);
+            this.Controls.Add(this.axPlayer);
             this.DrawIcon = false;
             this.EnableAnimation = false;
             this.HaloColor = System.Drawing.Color.Transparent;
@@ -58,16 +58,17 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LayeredWindow";
+            this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.AutoSizeChanged += new System.EventHandler(this.LayeredWindow_AutoSizeChanged);
             this.Load += new System.EventHandler(this.LayeredWindow_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.axPlayer1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axPlayer)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public AxAPlayer3Lib.AxPlayer axPlayer1;
+        public AxAPlayer3Lib.AxPlayer axPlayer;
     }
 }
