@@ -100,6 +100,7 @@
             this.Panel_Top.Name = "Panel_Top";
             this.Panel_Top.Size = new System.Drawing.Size(730, 30);
             this.Panel_Top.TabIndex = 2;
+            this.Panel_Top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_Top_MouseDown);
             // 
             // Panel_Left
             // 
@@ -117,6 +118,7 @@
             this.Panel_Left.Name = "Panel_Left";
             this.Panel_Left.Size = new System.Drawing.Size(30, 440);
             this.Panel_Left.TabIndex = 3;
+            this.Panel_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_Top_MouseDown);
             // 
             // Panel_Right
             // 
@@ -134,6 +136,7 @@
             this.Panel_Right.Name = "Panel_Right";
             this.Panel_Right.Size = new System.Drawing.Size(30, 440);
             this.Panel_Right.TabIndex = 4;
+            this.Panel_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_Top_MouseDown);
             // 
             // Panel_Bottom
             // 
@@ -151,6 +154,7 @@
             this.Panel_Bottom.Name = "Panel_Bottom";
             this.Panel_Bottom.Size = new System.Drawing.Size(730, 50);
             this.Panel_Bottom.TabIndex = 5;
+            this.Panel_Bottom.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_Top_MouseDown);
             // 
             // BaseControl
             // 

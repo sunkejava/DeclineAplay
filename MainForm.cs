@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using LayeredSkin.Controls;
 using LayeredSkin.DirectUI;
 
 namespace DeclineAplay
@@ -13,6 +15,18 @@ namespace DeclineAplay
         public Color defaultSkinColor = Color.FromArgb(80, 255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
+
+
+        #region 模拟窗体移动变量
+        [DllImport("user32.dll", EntryPoint = "SendMessageA")]
+        private static extern int SendMessage(int hwnd, int wMsg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        private static extern int ReleaseCapture();
+        private const int WM_NCLBUTTONDOWN = 0XA1;   //.定义鼠標左鍵按下
+        private const int HTCAPTION = 2;
+        #endregion
+
         public MainForm(LayeredWindow ilw)
         {
             InitializeComponent();
@@ -24,39 +38,10 @@ namespace DeclineAplay
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            BaseControl.BringToFront();
-            panel_min.BringToFront();
-            panel_close.BringToFront();
+            
             lw.axPlayer.SetVolume(50);
-            lw.axPlayer.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
-            lw.axPlayer.Play();
-        }
-
-        private void BaseControl_Leave(object sender, EventArgs e)
-        {
-            if (dl_PlayerExplain != null)
-            {
-                dl_PlayerExplain.Visible = false;
-                dl_PlayerExplain.Size = new Size(0, 0);
-                dl_PlayerExplain.Location = new Point(0, 0);
-                dl_PlayerExplain.Text = "";
-            }
-        }
-
-        private void BaseControl_Enter(object sender, EventArgs e)
-        {
-            if (dl_PlayerExplain == null)
-            {
-                dl_PlayerExplain = new DuiLabel();
-                BaseControl.DUIControls.Add(dl_PlayerExplain);
-            }
-            dl_PlayerExplain.Text = "已获取到焦点";
-            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
-            dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 10, 30);
-            dl_PlayerExplain.ForeColor = defaultSkinColor;
-            dl_PlayerExplain.Location = playerPoint;
-            dl_PlayerExplain.Visible = true;
+            //lw.axPlayer.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+            //lw.axPlayer.Play();
         }
 
         public override void btn_close_Click(object sender, EventArgs e)
@@ -167,6 +152,15 @@ namespace DeclineAplay
                 lw.Close();
             }
             base.btn_close_Click(sender, e);
+        }
+
+        private void Panel_Top_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            //为当前的应用程序释放鼠标捕获
+            ReleaseCapture();
+            //发送消息﹐让系統误以为在标题栏上按下鼠标
+            SendMessage((int)this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            
         }
     }
 }
