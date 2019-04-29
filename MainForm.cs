@@ -13,44 +13,49 @@ namespace DeclineAplay
 {
     public partial class MainForm : BaseForm
     {
-
-        public MainForm()
+        LayeredWindow lw = null;
+        public Color defaultSkinColor = Color.FromArgb(255, 92, 138);
+        public MainForm(LayeredWindow ilw)
         {
             InitializeComponent();
+            lw = ilw;
+            SetDefaultSkin();
         }
-        AxPlayer _apl = null;
+
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LayeredSkin.Controls.LayeredBaseControl lb = new LayeredSkin.Controls.LayeredBaseControl();
-            lb.Size = new Size(this.Width - 10, this.Height - 40);
-            lb.Location = new Point(5, 35);
-            //lb.BackColor = Color.Blue;
-            this.Controls.Add(lb);
-            _apl = new AxPlayer();
-            ((System.ComponentModel.ISupportInitialize)(this._apl)).BeginInit();
-            _apl.Name = "defaultAplayer";
-            _apl.Size = new Size(500, 350);
-            _apl.Location = new Point(10, 15);
-            _apl.Visible = true;
-            lb.Controls.Add(_apl);
-            ((System.ComponentModel.ISupportInitialize)(this._apl)).EndInit();
-            _apl.SetVolume(50);
-            _apl.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
-            _apl.Play();
-            foreach (Control item in this.Controls)
-            {
-                Logger.Singleton.Error(item.Name + " SIZE:" + item.Size.ToString() + " V:" + item.Visible.ToString());
-            }
-
+            lw.axPlayer1.SetVolume(50);
+            lw.axPlayer1.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+            lw.axPlayer1.Play();
         }
 
         public override void btn_close_Click(object sender, EventArgs e)
         {
-            if (_apl != null)
+            if (lw != null)
             {
-                _apl.Dispose();
+                lw.Dispose();
             }
             base.btn_close_Click(sender, e);
         }
+
+        private void MainForm_LocationChanged(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
+                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
+            }
+        }
+        #region 窗体样式配置
+
+        private void SetDefaultSkin()
+        {
+            this.Panel_Top.BackColor = defaultSkinColor;
+            this.Panel_Left.BackColor = defaultSkinColor;
+            this.Panel_Right.BackColor = defaultSkinColor;
+            this.Panel_Bottom.BackColor = defaultSkinColor;
+        }
+
+        #endregion
     }
 }

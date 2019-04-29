@@ -155,15 +155,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(123)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.BackColor = System.Drawing.Color.Transparent;
             this.ClientSize = new System.Drawing.Size(530, 340);
             this.Controls.Add(this.panel_close);
             this.Controls.Add(this.panel_min);
             this.DoubleBuffered = false;
+            this.DrawIcon = false;
             this.Name = "BaseForm";
             this.Radius = 25;
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BaseForm";
+            this.Text = "";
             this.panel_min.ResumeLayout(false);
             this.panel_close.ResumeLayout(false);
             this.ResumeLayout(false);

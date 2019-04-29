@@ -20,6 +20,16 @@ namespace DeclineAplay
         private void btn_min_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+            if (sender is LayeredButton)
+            {
+                LayeredButton thisButton = sender as LayeredButton;
+                thisButton.BackColor = Color.Transparent;
+            }
+            else if (sender is LayeredPanel)
+            {
+                LayeredPanel thisButton = sender as LayeredPanel;
+                thisButton.BackColor = Color.Transparent;
+            }
         }
 
         private void btn_min_MouseEnter(object sender, EventArgs e)

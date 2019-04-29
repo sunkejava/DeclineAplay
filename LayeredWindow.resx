@@ -117,47 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Panel_Top.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="axPlayer1.OcxState" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAtoAAAAeCAYAAAASCLm4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACwSURBVHhe7dYxAQAgDMAwhKII08PE+uWIh5y5bwAAgF2i
-        DQAAAdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoA
-        ABAQbQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAA
-        AdEGAICAaAMAQEC0AQAgINoAALDuzQe611cqDK1xyQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="Panel_Left.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAG4CAYAAABSAlflAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEgSURBVHhe7c0xAQAgDMAwhKJopoeL8PTInbN39odippgp
-        ZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmipli
-        ppgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClm
-        iplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKm
-        mClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaK
-        mWKmmClmiplippj5FM8+UboU/CShScYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="Panel_Right.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAG4CAYAAABSAlflAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEgSURBVHhe7c0xAQAgDMAwhKJopoeL8PTInbN39odippgp
-        ZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmipli
-        ppgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClm
-        iplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKm
-        mClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaKmWKmmClmiplippgpZoqZYqaYKWaK
-        mWKmmClmiplippj5FM8+UboU/CShScYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="Panel_Bottom.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAtoAAAAyCAYAAABiZnz1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAERSURBVHhe7dYxAQAgDMAwhKII08PE+uWIh5y5bwAAgF2i
-        DQAAAdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoA
-        ABAQbQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAA
-        AdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoAABAQ
-        bQAACIg2AAAERBsAAAKiDQAAAdEGAICAaAMAQEC0AQAgINoAABAQbQAACIg2AAAERBsAAAKiDQAA6958
-        MdM79X3WKfQAAAAASUVORK5CYII=
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAIQAAAAIB
+        AAAAAQAAAAAAAAAAAAAAAAwAAAAQBwAASUAAACsqAAAL
 </value>
   </data>
 </root>
