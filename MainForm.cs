@@ -17,7 +17,6 @@ namespace DeclineAplay
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
 
-
         #region 模拟窗体移动变量
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
         private static extern int SendMessage(int hwnd, int wMsg, int wParam, int lParam);
@@ -27,6 +26,8 @@ namespace DeclineAplay
         private const int WM_NCLBUTTONDOWN = 0XA1;   //.定义鼠標左鍵按下
         private const int HTCAPTION = 2;
         #endregion
+
+        #region 主窗体事件
 
         public MainForm(LayeredWindow ilw)
         {
@@ -51,7 +52,8 @@ namespace DeclineAplay
             lw.axPlayer.OnSeekCompleted += AxPlayer_OnSeekCompleted;//在用户进行一个 SetPosition 的异步调用完成后
             lw.axPlayer.OnVideoSizeChanged += AxPlayer_OnVideoSizeChanged;//在所播放的视频的分辨率改变时触发
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
-            BaseControl.BackColor = Panel_Bottom.BackColor;
+            lw.axPlayer.Move += BaseControl_MouseMove;
+            lw.axPlayer.Leave += BaseControl_MouseLeave;
             Logger.Singleton.Error("播放器宽高及位置：" + lw.Size.ToString() + lw.Location.ToString());
             Logger.Singleton.Error("BaseControl宽高及位置：" + BaseControl.Size.ToString() + BaseControl.Location.ToString());
             Logger.Singleton.Error("控件窗体MainForm宽高及位置" + this.Size.ToString() + this.Location.ToString());
@@ -61,6 +63,62 @@ namespace DeclineAplay
             Logger.Singleton.Error("Panel_Bottom宽高及位置：" + Panel_Bottom.Size.ToString() + Panel_Bottom.Location.ToString());
             //Logger.Singleton.Error("dl_PlayerExplain宽高及位置：" + dl_PlayerExplain.Size.ToString() + dl_PlayerExplain.Location.ToString());
         }
+
+        private void BaseControl_MouseMove(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BaseControl_MouseLeave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.axPlayer.Dispose();
+                lw.Close();
+            }
+            base.btn_close_Click(sender, e);
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
+                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
+                playerPoint = lw.Location;
+                lw.axPlayer.Refresh();
+                lw.Refresh();
+            }
+            this.Refresh();
+        }
+
+        public override void btn_close_Click(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.axPlayer.Dispose();
+                lw.Close();
+            }
+            base.btn_close_Click(sender, e);
+        }
+
+        private void MainForm_LocationChanged(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
+                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
+                playerPoint = lw.Location;
+            }
+            this.Refresh();
+        }
+        #endregion
+
         #region 播放器相关事件
         /// <summary>
         /// 播放器状态发生变化
@@ -69,19 +127,6 @@ namespace DeclineAplay
         /// <param name="e"></param>
         private void AxPlayer_OnStateChanged(object sender, AxAPlayer3Lib._IPlayerEvents_OnStateChangedEvent e)
         {
-            if (e.nNewState == 0)
-            {
-                //初始化操作
-                BaseControl.BackColor = Panel_Top.BackColor;
-                lw.TopLevel = false;
-                lw.Visible = false;
-            }
-            else
-            {
-                BaseControl.BackColor = Color.Transparent;
-                lw.TopLevel = true;
-                lw.Visible = true;
-            }
             switch (e.nNewState)
             {
                 case 0: //准备就绪
@@ -135,7 +180,64 @@ namespace DeclineAplay
         /// <param name="e"></param>
         private void AxPlayer_OnMessage(object sender, AxAPlayer3Lib._IPlayerEvents_OnMessageEvent e)
         {
-            throw new NotImplementedException();
+            if (dl_PlayerExplain == null)
+            {
+                dl_PlayerExplain = new DuiLabel();
+                BaseControl.DUIControls.Add(dl_PlayerExplain);
+            }
+            dl_PlayerExplain.Text = e.nMessage.ToString();
+            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
+            dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
+            dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 10, 20);
+            dl_PlayerExplain.ForeColor = Color.White;
+            dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
+            dl_PlayerExplain.Visible = true;
+            //switch (e.nMessage)
+            //{
+            //    case Utils.ConstClass.WM_LBUTTONDBLCLK://左键双击
+            //        dl_PlayerExplain.Text = "左键双击";
+            //        Logger.Singleton.Info("左键双击消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+            //        break;
+            //    case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
+            //        dl_PlayerExplain.Text = "左键按下";
+            //        Logger.Singleton.Info("左键按下消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+            //        break;
+            //    case Utils.ConstClass.WM_LBUTTONUP://左键弹起
+            //        dl_PlayerExplain.Text = "左键弹起";
+            //        Logger.Singleton.Info("左键弹起消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+            //        break;
+            //    case Utils.ConstClass.WM_RBUTTONDOWN://右键按下
+            //        dl_PlayerExplain.Text = "右键按下";
+            //        Logger.Singleton.Info("右键按下消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+            //        break;
+            //    case 32://鼠标进入
+            //        //if (!BaseControl.Focus())
+            //        //{
+            //        //    return;
+            //        //}
+            //        //if (dl_PlayerExplain == null)
+            //        //{
+            //        //    dl_PlayerExplain = new DuiLabel();
+            //        //    BaseControl.DUIControls.Add(dl_PlayerExplain);
+            //        //}
+            //        //dl_PlayerExplain.Text = "已获取到焦点";
+            //        //dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
+            //        //dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
+            //        //dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 10, 20);
+            //        //dl_PlayerExplain.ForeColor = Color.White;
+            //        //dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
+            //        //dl_PlayerExplain.Visible = true;
+            //        break;
+            //    case 512://鼠标离开
+            //        //if (dl_PlayerExplain != null)
+            //        //{
+            //        //    dl_PlayerExplain.Text = "";
+            //        //}
+            //        break;
+            //    default:
+            //        Logger.Singleton.Info("其他消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+            //        break;
+            //}
         }
         /// <summary>
         /// 在 APlayer 引擎成功打开一个媒体文件时
@@ -174,27 +276,6 @@ namespace DeclineAplay
             throw new NotImplementedException();
         }
         #endregion
-
-        public override void btn_close_Click(object sender, EventArgs e)
-        {
-            if (lw != null)
-            {
-                lw.axPlayer.Dispose();
-                lw.Close();
-            }
-            base.btn_close_Click(sender, e);
-        }
-
-        private void MainForm_LocationChanged(object sender, EventArgs e)
-        {
-            if (lw != null)
-            {
-                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
-                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
-                playerPoint = lw.Location;
-            }
-            this.Refresh();
-        }
 
         #region 窗体控件添加
         private void AddControl()
@@ -271,48 +352,6 @@ namespace DeclineAplay
 
         #endregion
 
-        private void BaseControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            if (!BaseControl.Focus())
-            {
-                return;
-            }
-            if (dl_PlayerExplain == null)
-            {
-                dl_PlayerExplain = new DuiLabel();
-                BaseControl.DUIControls.Add(dl_PlayerExplain);
-            }
-            Logger.Singleton.Error("播放器坐标：" + playerPoint.ToString());
-            dl_PlayerExplain.Text = "已获取到焦点";
-            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
-            dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 5, 20);
-            dl_PlayerExplain.ForeColor = Color.White;
-            dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
-            dl_PlayerExplain.Visible = true;
-        }
-
-        private void BaseControl_MouseLeave(object sender, EventArgs e)
-        {
-            if (dl_PlayerExplain != null)
-            {
-                dl_PlayerExplain.Visible = false;
-                dl_PlayerExplain.Size = new Size(0, 0);
-                dl_PlayerExplain.Location = new Point(0, 0);
-                dl_PlayerExplain.Text = "";
-            }
-        }
-
-        private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
-        {
-            if (lw != null)
-            {
-                lw.axPlayer.Dispose();
-                lw.Close();
-            }
-            base.btn_close_Click(sender, e);
-        }
-
         #region 窗体大小修改及位置移动
 
         bool isMouseDown = false; //表示鼠标当前是否处于按下状态，初始值为否 
@@ -339,13 +378,11 @@ namespace DeclineAplay
             if (sender is LayeredPanel)
             {
                 LayeredPanel lpn = sender as LayeredPanel;
-                Logger.Singleton.Error("控件为：" + (sender as LayeredPanel).Name + "--鼠标位置为：" + e.Location.ToString());
                 thisZ = lpn.Size;
             }
             else if (sender is DuiButton)
             {
                 DuiButton btn_Resize = sender as DuiButton;
-                Logger.Singleton.Error("控件为：" + (sender as DuiButton).Name + "--鼠标位置为：" + e.Location.ToString());
                 thisZ = btn_Resize.Size;
             }
             //鼠标移动过程中，坐标时刻在改变 
@@ -377,7 +414,6 @@ namespace DeclineAplay
 
         private void ResizeWindow()
         {
-            Logger.Singleton.Error("位置：" + MousePosition.ToString());
             //这个判断很重要，只有在鼠标按下时才能拖拽改变窗体大小，如果不作判断，那么鼠标弹起和按下时，窗体都可以改变 
             if (!isMouseDown)
                 return;
@@ -422,17 +458,5 @@ namespace DeclineAplay
 
         #endregion
 
-        private void MainForm_SizeChanged(object sender, EventArgs e)
-        {
-            if (lw != null)
-            {
-                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
-                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
-                playerPoint = lw.Location;
-                lw.axPlayer.Refresh();
-                lw.Refresh();
-            }
-            this.Refresh();
-        }
     }
 }

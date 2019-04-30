@@ -68,12 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AplayControl\AplayerBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="AplayControl\AplayerBase.Designer.cs">
-      <DependentUpon>AplayerBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="AppLogs.cs" />
     <Compile Include="BaseForm.cs">
       <SubType>Form</SubType>
@@ -96,6 +90,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ConstClass.cs" />
+    <Compile Include="Utils\PlayClass.cs" />
+    <Compile Include="Utils\Win32.cs" />
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
