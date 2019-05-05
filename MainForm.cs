@@ -16,6 +16,8 @@ namespace DeclineAplay
         public Color defaultSkinColor = Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
+        bool IsFull = false;//是否全屏
+        Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
 
         #region 模拟窗体移动变量
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
@@ -73,7 +75,12 @@ namespace DeclineAplay
 
         private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
-            Close();
+            if (lw != null)
+            {
+                lw.axPlayer.Dispose();
+                lw.Close();
+            }
+            base.btn_close_Click(sender, e);
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
@@ -91,7 +98,12 @@ namespace DeclineAplay
 
         public override void btn_close_Click(object sender, EventArgs e)
         {
-            Close();
+            if (lw != null)
+            {
+                lw.axPlayer.Dispose();
+                lw.Close();
+            }
+            base.btn_close_Click(sender, e);
         }
 
         private void MainForm_LocationChanged(object sender, EventArgs e)
@@ -183,6 +195,7 @@ namespace DeclineAplay
             {
                 case Utils.ConstClass.WM_LBUTTONDBLCLK://左键双击
                     dl_PlayerExplain.Text = "左键双击";
+                    fullScreen();
                     break;
                 case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
                     dl_PlayerExplain.Text = "左键按下";
@@ -225,7 +238,7 @@ namespace DeclineAplay
                     break;
                 case Utils.ConstClass.VK_ESCAPE:
                     Logger.Singleton.Info("键盘ESC键事件");
-                    Close();
+                    fullScreen();
                     break;
                 case Utils.ConstClass.VK_SPACE:
                     Logger.Singleton.Info("空格键事件");
@@ -475,15 +488,19 @@ namespace DeclineAplay
         #endregion
 
         #region 自定义事件
-        public new void Close()
+        public void fullScreen()
         {
-            if (lw != null)
+            if (IsFull)
             {
-                lw.axPlayer.Dispose();
-                lw.Close();
+                this.WindowState = FormWindowState.Normal;
+                IsFull = false;
             }
-            this.Close();
-            base.Close();
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+                IsFull = true;
+            }
+            lw.axPlayer.Focus();
         }
         #endregion
 
