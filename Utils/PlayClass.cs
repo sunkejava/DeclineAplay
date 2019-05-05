@@ -61,7 +61,7 @@ namespace DeclineAplay.Utils
         public enum PLAY_STATE
         {
             /// <summary>
-            /// 正在加载
+            /// 准备就绪
             /// </summary>
             PS_READY = 0,
             /// <summary>

@@ -42,8 +42,6 @@ namespace DeclineAplay
         {
 
             lw.axPlayer.SetVolume(50);
-            //lw.axPlayer.Open("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
-            //lw.axPlayer.Play();
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
             lw.axPlayer.OnBuffer += AxPlayer_OnBuffer;//网络缓冲
@@ -61,7 +59,6 @@ namespace DeclineAplay
             Logger.Singleton.Error("Panel_Right宽高及位置：" + Panel_Right.Size.ToString() + Panel_Right.Location.ToString());
             Logger.Singleton.Error("Panel_Top宽高及位置：" + Panel_Top.Size.ToString() + Panel_Top.Location.ToString());
             Logger.Singleton.Error("Panel_Bottom宽高及位置：" + Panel_Bottom.Size.ToString() + Panel_Bottom.Location.ToString());
-            //Logger.Singleton.Error("dl_PlayerExplain宽高及位置：" + dl_PlayerExplain.Size.ToString() + dl_PlayerExplain.Location.ToString());
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -76,12 +73,7 @@ namespace DeclineAplay
 
         private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
-            if (lw != null)
-            {
-                lw.axPlayer.Dispose();
-                lw.Close();
-            }
-            base.btn_close_Click(sender, e);
+            Close();
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
@@ -99,12 +91,7 @@ namespace DeclineAplay
 
         public override void btn_close_Click(object sender, EventArgs e)
         {
-            if (lw != null)
-            {
-                lw.axPlayer.Dispose();
-                lw.Close();
-            }
-            base.btn_close_Click(sender, e);
+            Close();
         }
 
         private void MainForm_LocationChanged(object sender, EventArgs e)
@@ -192,52 +179,61 @@ namespace DeclineAplay
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
             dl_PlayerExplain.Visible = true;
-            //switch (e.nMessage)
-            //{
-            //    case Utils.ConstClass.WM_LBUTTONDBLCLK://左键双击
-            //        dl_PlayerExplain.Text = "左键双击";
-            //        Logger.Singleton.Info("左键双击消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
-            //        break;
-            //    case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
-            //        dl_PlayerExplain.Text = "左键按下";
-            //        Logger.Singleton.Info("左键按下消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
-            //        break;
-            //    case Utils.ConstClass.WM_LBUTTONUP://左键弹起
-            //        dl_PlayerExplain.Text = "左键弹起";
-            //        Logger.Singleton.Info("左键弹起消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
-            //        break;
-            //    case Utils.ConstClass.WM_RBUTTONDOWN://右键按下
-            //        dl_PlayerExplain.Text = "右键按下";
-            //        Logger.Singleton.Info("右键按下消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
-            //        break;
-            //    case 32://鼠标进入
-            //        //if (!BaseControl.Focus())
-            //        //{
-            //        //    return;
-            //        //}
-            //        //if (dl_PlayerExplain == null)
-            //        //{
-            //        //    dl_PlayerExplain = new DuiLabel();
-            //        //    BaseControl.DUIControls.Add(dl_PlayerExplain);
-            //        //}
-            //        //dl_PlayerExplain.Text = "已获取到焦点";
-            //        //dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
-            //        //dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            //        //dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 10, 20);
-            //        //dl_PlayerExplain.ForeColor = Color.White;
-            //        //dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
-            //        //dl_PlayerExplain.Visible = true;
-            //        break;
-            //    case 512://鼠标离开
-            //        //if (dl_PlayerExplain != null)
-            //        //{
-            //        //    dl_PlayerExplain.Text = "";
-            //        //}
-            //        break;
-            //    default:
-            //        Logger.Singleton.Info("其他消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
-            //        break;
-            //}
+            switch (e.nMessage)
+            {
+                case Utils.ConstClass.WM_LBUTTONDBLCLK://左键双击
+                    dl_PlayerExplain.Text = "左键双击";
+                    break;
+                case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
+                    dl_PlayerExplain.Text = "左键按下";
+                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    break;
+                case Utils.ConstClass.WM_LBUTTONUP://左键弹起
+                    dl_PlayerExplain.Text = "左键弹起";
+                    break;
+                case Utils.ConstClass.WM_RBUTTONDOWN://右键按下
+                    dl_PlayerExplain.Text = "右键按下";
+                    break;
+                case Utils.ConstClass.WM_MOUSEMOVE://鼠标移动
+                    Logger.Singleton.Info("鼠标移动事件");
+                    break;
+                case Utils.ConstClass.WM_MOUSELEAVE://鼠标离开
+                    Logger.Singleton.Info("鼠标离开事件");
+                    break;
+                case Utils.ConstClass.WM_MOUSEHOVER://鼠标悬停
+                    Logger.Singleton.Info("鼠标悬停事件");
+                    break;
+                default:
+                    //dl_PlayerExplain.Text = "其他消息事件";
+                    //Logger.Singleton.Info("其他消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
+                    break;
+            }
+            //键盘按键判断
+            switch (e.wParam)
+            {
+                case Utils.ConstClass.VK_LEFT:
+                    Logger.Singleton.Info("键盘左方向键事件");
+                    break;
+                case Utils.ConstClass.VK_UP:
+                    Logger.Singleton.Info("键盘上方向键事件");
+                    break;
+                case Utils.ConstClass.VK_RIGHT:
+                    Logger.Singleton.Info("键盘右方向键事件");
+                    break;
+                case Utils.ConstClass.VK_DOWN:
+                    Logger.Singleton.Info("键盘下方向键事件");
+                    break;
+                case Utils.ConstClass.VK_ESCAPE:
+                    Logger.Singleton.Info("键盘ESC键事件");
+                    Close();
+                    break;
+                case Utils.ConstClass.VK_SPACE:
+                    Logger.Singleton.Info("空格键事件");
+                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// 在 APlayer 引擎成功打开一个媒体文件时
@@ -274,6 +270,26 @@ namespace DeclineAplay
         private void AxPlayer_OnEvent(object sender, AxAPlayer3Lib._IPlayerEvents_OnEventEvent e)
         {
             throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 播放器暂停或播放
+        /// </summary>
+        /// <param name="url"></param>
+        private void AxPlayer_PlayOrPause(string url)
+        {
+            if (lw.axPlayer.GetState() == 5)
+            {
+                lw.axPlayer.Pause();
+            }
+            else if (lw.axPlayer.GetState() == 0)
+            {
+                lw.axPlayer.Open(url);
+                lw.axPlayer.Play();
+            }
+            else if (lw.axPlayer.GetState() == 3)
+            {
+                lw.axPlayer.Play();
+            }
         }
         #endregion
 
@@ -456,6 +472,19 @@ namespace DeclineAplay
             None//不做标志，即不拖动窗体改变大小 
         }
 
+        #endregion
+
+        #region 自定义事件
+        public new void Close()
+        {
+            if (lw != null)
+            {
+                lw.axPlayer.Dispose();
+                lw.Close();
+            }
+            this.Close();
+            base.Close();
+        }
         #endregion
 
     }
