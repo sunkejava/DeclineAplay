@@ -54,13 +54,7 @@ namespace DeclineAplay
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
-            Logger.Singleton.Error("播放器宽高及位置：" + lw.Size.ToString() + lw.Location.ToString());
-            Logger.Singleton.Error("BaseControl宽高及位置：" + BaseControl.Size.ToString() + BaseControl.Location.ToString());
-            Logger.Singleton.Error("控件窗体MainForm宽高及位置" + this.Size.ToString() + this.Location.ToString());
-            Logger.Singleton.Error("Panel_Left宽高及位置：" + Panel_Left.Size.ToString() + Panel_Left.Location.ToString());
-            Logger.Singleton.Error("Panel_Right宽高及位置：" + Panel_Right.Size.ToString() + Panel_Right.Location.ToString());
-            Logger.Singleton.Error("Panel_Top宽高及位置：" + Panel_Top.Size.ToString() + Panel_Top.Location.ToString());
-            Logger.Singleton.Error("Panel_Bottom宽高及位置：" + Panel_Bottom.Size.ToString() + Panel_Bottom.Location.ToString());
+            this.TopLevel = true;
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -85,15 +79,20 @@ namespace DeclineAplay
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
-            if (lw != null)
+            if (lw != null && this.WindowState != FormWindowState.Minimized)
             {
                 lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
+                if (dl_PlayerExplain != null)
+                {
+                    dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
+                }
+                BaseControl.Refresh();
+                this.Refresh();
             }
-            this.Refresh();
         }
 
         public override void btn_close_Click(object sender, EventArgs e)
@@ -106,6 +105,14 @@ namespace DeclineAplay
             base.btn_close_Click(sender, e);
         }
 
+        public override void btn_min_Click(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.WindowState = FormWindowState.Minimized;
+            }
+            base.btn_min_Click(sender, e);
+        }
         private void MainForm_LocationChanged(object sender, EventArgs e)
         {
             if (lw != null)
@@ -113,6 +120,11 @@ namespace DeclineAplay
                 lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
+                if (dl_PlayerExplain != null)
+                {
+                    dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
+                }
+                BaseControl.Refresh();
             }
             this.Refresh();
         }
@@ -129,25 +141,25 @@ namespace DeclineAplay
             switch (e.nNewState)
             {
                 case 0: //准备就绪
-
+                    dl_PlayerExplain.Text = "准备就绪";
                     break;
                 case 1: //正在打开
-
+                    dl_PlayerExplain.Text = "正在打开";
                     break;
                 case 2://正在暂停
-
+                    dl_PlayerExplain.Text = "正在暂停";
                     break;
                 case 3://暂停中
-
+                    dl_PlayerExplain.Text = "暂停中";
                     break;
                 case 4://正在开始播放
-
+                    dl_PlayerExplain.Text = "正在开始播放";
                     break;
                 case 5://播放中
-
+                    dl_PlayerExplain.Text = "播放中";
                     break;
                 case 6://正在开始关闭
-
+                    dl_PlayerExplain.Text = "正在开始关闭";
                     break;
                 default:
                     break;
@@ -179,46 +191,25 @@ namespace DeclineAplay
         /// <param name="e"></param>
         private void AxPlayer_OnMessage(object sender, AxAPlayer3Lib._IPlayerEvents_OnMessageEvent e)
         {
-            if (dl_PlayerExplain == null)
-            {
-                dl_PlayerExplain = new DuiLabel();
-                BaseControl.DUIControls.Add(dl_PlayerExplain);
-            }
-            dl_PlayerExplain.Text = e.nMessage.ToString();
-            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
-            dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(dl_PlayerExplain.Text.Length * 10, 20);
-            dl_PlayerExplain.ForeColor = Color.White;
-            dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
-            dl_PlayerExplain.Visible = true;
             switch (e.nMessage)
             {
                 case Utils.ConstClass.WM_LBUTTONDBLCLK://左键双击
-                    dl_PlayerExplain.Text = "左键双击";
                     fullScreen();
                     break;
                 case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
-                    dl_PlayerExplain.Text = "左键按下";
                     AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 case Utils.ConstClass.WM_LBUTTONUP://左键弹起
-                    dl_PlayerExplain.Text = "左键弹起";
                     break;
                 case Utils.ConstClass.WM_RBUTTONDOWN://右键按下
-                    dl_PlayerExplain.Text = "右键按下";
                     break;
                 case Utils.ConstClass.WM_MOUSEMOVE://鼠标移动
-                    Logger.Singleton.Info("鼠标移动事件");
                     break;
                 case Utils.ConstClass.WM_MOUSELEAVE://鼠标离开
-                    Logger.Singleton.Info("鼠标离开事件");
                     break;
                 case Utils.ConstClass.WM_MOUSEHOVER://鼠标悬停
-                    Logger.Singleton.Info("鼠标悬停事件");
                     break;
                 default:
-                    //dl_PlayerExplain.Text = "其他消息事件";
-                    //Logger.Singleton.Info("其他消息事件ID:" + e.nMessage.ToString() + "lParam:" + e.lParam.ToString() + "wParam:" + e.wParam.ToString());
                     break;
             }
             //键盘按键判断
@@ -309,33 +300,19 @@ namespace DeclineAplay
         #region 窗体控件添加
         private void AddControl()
         {
-            DuiButton btn_reSize = new DuiButton();
-            btn_reSize.Size = new Size(40, 40);
-            btn_reSize.Location = new Point(Panel_Bottom.Width - 40, Panel_Bottom.Height - 40);
-            btn_reSize.BackColor = Color.Transparent;
-            btn_reSize.BaseColor = btn_reSize.BackColor;
-            btn_reSize.AdaptImage = true;
-            btn_reSize.NormalImage = Properties.Resources.resize_bottom_right;
-            btn_reSize.PressedImage = Properties.Resources.resize_bottom_right;
-            btn_reSize.HoverImage = Properties.Resources.resize_bottom_right;
-            btn_reSize.MouseDown += Control_MouseDown;
-            btn_reSize.MouseUp += Control_MouseUp;
-            btn_reSize.MouseMove += Control_MouseMove;
-            btn_reSize.Name = "btn_reSize";
-            //Panel_Bottom.DUIControls.Add(btn_reSize);
-            Panel_Bottom.SizeChanged += Panel_Bottom_SizeChanged;
-        }
-
-        private void Panel_Bottom_SizeChanged(object sender, EventArgs e)
-        {
-            foreach (DuiBaseControl item in BaseControl.DUIControls)
+            //添加左上角显示内容标签（状态，声音等）
+            if (dl_PlayerExplain == null)
             {
-                if (item.Name == "btn_reSize")
-                {
-                    item.Location = new Point(Panel_Bottom.Width - 40, Panel_Bottom.Height - 40);
-                }
+                dl_PlayerExplain = new DuiLabel();
+                BaseControl.DUIControls.Add(dl_PlayerExplain);
             }
-            this.Refresh();
+            dl_PlayerExplain.Text = "";
+            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
+            dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
+            dl_PlayerExplain.Size = new Size(50, 20);
+            dl_PlayerExplain.ForeColor = Color.White;
+            dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
+            dl_PlayerExplain.Visible = true;
         }
 
         #endregion

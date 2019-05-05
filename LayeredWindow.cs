@@ -25,7 +25,9 @@ namespace DeclineAplay
 
         private void LayeredWindow_AutoSizeChanged(object sender, EventArgs e)
         {
-            axPlayer.Size = this.Size;
+            if (this.WindowState == FormWindowState.Normal)
+                axPlayer.Size = this.Size;
+
         }
     }
 }

@@ -185,7 +185,6 @@
             this.Controls.Add(this.BaseControl);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "MainForm";
-            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);

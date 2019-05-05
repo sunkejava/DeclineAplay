@@ -17,7 +17,7 @@ namespace DeclineAplay
             InitializeComponent();
         }
 
-        private void btn_min_Click(object sender, EventArgs e)
+        public virtual void btn_min_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
             panel_min.BackColor = Color.Transparent;

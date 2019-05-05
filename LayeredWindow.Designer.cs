@@ -58,7 +58,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LayeredWindow";
-            this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.AutoSizeChanged += new System.EventHandler(this.LayeredWindow_AutoSizeChanged);
             this.Load += new System.EventHandler(this.LayeredWindow_Load);
