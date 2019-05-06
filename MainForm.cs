@@ -79,13 +79,16 @@ namespace DeclineAplay
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
-            if (lw != null && this.WindowState != FormWindowState.Minimized)
+            if (lw != null)
             {
                 lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
+                lw.WindowState = this.WindowState;
+                lw.TopLevel = this.TopLevel;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
+
                 if (dl_PlayerExplain != null)
                 {
                     dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
@@ -105,14 +108,6 @@ namespace DeclineAplay
             base.btn_close_Click(sender, e);
         }
 
-        public override void btn_min_Click(object sender, EventArgs e)
-        {
-            if (lw != null)
-            {
-                lw.WindowState = FormWindowState.Minimized;
-            }
-            base.btn_min_Click(sender, e);
-        }
         private void MainForm_LocationChanged(object sender, EventArgs e)
         {
             if (lw != null)
