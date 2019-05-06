@@ -35,14 +35,13 @@ namespace DeclineAplay
         {
             InitializeComponent();
             lw = ilw;
-            SetDefaultSkin();
-            SetDefaultAnchr();
-            AddControl();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            SetDefaultSkin();
+            SetDefaultAnchr();
+            AddControl();
             lw.axPlayer.SetVolume(50);
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
@@ -55,18 +54,84 @@ namespace DeclineAplay
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
             this.TopLevel = true;
+            BaseControl.BringToFront();
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
-
+            dl_PlayerExplain.Text = "鼠标经过";
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
         {
+            dl_PlayerExplain.Text = "鼠标离开";
+        }
+
+        private void BaseControl_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                dl_PlayerExplain.Text = "鼠标左键单击";
+                AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+            }
+            else
+            {
+                dl_PlayerExplain.Text = "鼠标右键单击";
+            }
 
         }
 
+        private void BaseControl_MouseHover(object sender, EventArgs e)
+        {
+            dl_PlayerExplain.Text = "鼠标悬停";
+        }
+
+        private void BaseControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            dl_PlayerExplain.Text = "鼠标双击";
+            fullScreen();
+        }
+
+        private void BaseControl_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            dl_PlayerExplain.Text = e.KeyChar.ToString();
+            switch ((int)e.KeyChar)
+            {
+                case Utils.ConstClass.VK_SPACE:
+                    dl_PlayerExplain.Text = ("空格键事件");
+                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private void BaseControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            dl_PlayerExplain.Text = e.KeyValue.ToString();
+            switch (e.KeyValue)
+            {
+                case Utils.ConstClass.VK_LEFT:
+                    dl_PlayerExplain.Text = ("键盘左方向键事件");
+                    break;
+                case Utils.ConstClass.VK_UP:
+                    dl_PlayerExplain.Text = ("键盘上方向键事件");
+                    break;
+                case Utils.ConstClass.VK_RIGHT:
+                    dl_PlayerExplain.Text = ("键盘右方向键事件");
+                    break;
+                case Utils.ConstClass.VK_DOWN:
+                    dl_PlayerExplain.Text = ("键盘下方向键事件");
+                    break;
+                case Utils.ConstClass.VK_ESCAPE:
+                    dl_PlayerExplain.Text = ("键盘ESC键事件");
+                    fullScreen();
+                    break;
+                default:
+                    break;
+            }
+        }
         private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
             if (lw != null)
@@ -85,7 +150,7 @@ namespace DeclineAplay
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
                 lw.WindowState = this.WindowState;
-                lw.TopLevel = this.TopLevel;
+                //lw.TopLevel = this.TopLevel;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
 
@@ -304,7 +369,7 @@ namespace DeclineAplay
             dl_PlayerExplain.Text = "";
             dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
             dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(50, 20);
+            dl_PlayerExplain.Size = new Size(80, 20);
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
             dl_PlayerExplain.Visible = true;
@@ -318,6 +383,7 @@ namespace DeclineAplay
         /// </summary>
         private void SetDefaultSkin()
         {
+            BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
             this.Panel_Left.BackColor = defaultSkinColor;
             this.Panel_Top.BackColor = defaultSkinColor;
             this.Panel_Right.BackColor = defaultSkinColor;
@@ -472,7 +538,8 @@ namespace DeclineAplay
                 this.WindowState = FormWindowState.Maximized;
                 IsFull = true;
             }
-            lw.axPlayer.Focus();
+            BaseControl.Focus();
+            //lw.axPlayer.Focus();
         }
         #endregion
 

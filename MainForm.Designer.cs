@@ -169,7 +169,12 @@
             this.BaseControl.Name = "BaseControl";
             this.BaseControl.Size = new System.Drawing.Size(730, 520);
             this.BaseControl.TabIndex = 6;
+            this.BaseControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BaseControl_KeyPress);
+            this.BaseControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BaseControl_KeyUp);
+            this.BaseControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseClick);
+            this.BaseControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseDoubleClick);
             this.BaseControl.MouseLeave += new System.EventHandler(this.BaseControl_MouseLeave);
+            this.BaseControl.MouseHover += new System.EventHandler(this.BaseControl_MouseHover);
             this.BaseControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseMove);
             // 
             // MainForm
@@ -208,6 +213,6 @@
         private LayeredSkin.Controls.LayeredPanel Panel_Left;
         private LayeredSkin.Controls.LayeredPanel Panel_Right;
         private LayeredSkin.Controls.LayeredPanel Panel_Bottom;
-        private LayeredSkin.Controls.LayeredBaseControl BaseControl;
+        public LayeredSkin.Controls.LayeredBaseControl BaseControl;
     }
 }
