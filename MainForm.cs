@@ -55,6 +55,13 @@ namespace DeclineAplay
             lw.axPlayer.Leave += BaseControl_MouseLeave;
             this.TopLevel = true;
             BaseControl.BringToFront();
+            Panel_Bottom.BringToFront();
+            Panel_Top.BringToFront();
+            Panel_Left.BringToFront();
+            Panel_Right.BringToFront();
+            panel_close.BringToFront();
+            panel_min.BringToFront();
+
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
