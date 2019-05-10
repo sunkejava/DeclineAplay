@@ -13,13 +13,14 @@ namespace DeclineAplay
     public partial class MainForm : BaseForm
     {
         LayeredWindow lw = null;
-        public Color defaultSkinColor = Color.FromArgb(255, 92, 138);
+        public Color defaultSkinColor = Color.FromArgb(120, 255, 255, 255);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
         bool IsFull = false;//是否全屏
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
         int volumeNum = 50;//视频音量
         int tvPosition = 0;//视频播放进度
+        int borderSizeH = 10;//播放器边框宽度
         DuiBaseControl playerControl = new DuiBaseControl();
 
         #region 模拟窗体移动变量
@@ -45,7 +46,6 @@ namespace DeclineAplay
             SetDefaultSkin();
             SetDefaultAnchr();
             AddControl();
-            lw.Visible = false;
             lw.axPlayer.SetVolume(50);
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
@@ -65,7 +65,7 @@ namespace DeclineAplay
             Panel_Right.BringToFront();
             panel_close.BringToFront();
             panel_min.BringToFront();
-
+            Panel_Top.Focus();
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -84,7 +84,6 @@ namespace DeclineAplay
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                lw.Visible = true;
                 dl_PlayerExplain.Text = "鼠标左键单击";
                 AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
             }
@@ -491,7 +490,7 @@ namespace DeclineAplay
             Panel_Bottom.MouseUp += Control_MouseUp;
             Panel_Bottom.MouseMove += Control_MouseMove;
             Panel_Top.MouseDown += Panel_Top_MouseDown;
-            //Panel_Left.MouseDown += Panel_Top_MouseDown;
+            Panel_Left.MouseDown += Panel_Top_MouseDown;
         }
 
         private void Panel_Top_MouseDown(object sender, MouseEventArgs e)
