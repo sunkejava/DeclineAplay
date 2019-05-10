@@ -296,6 +296,72 @@
   <ItemGroup>
     <None Include="Resources\resize-bottom-right.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\list1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\list2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minSize1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minSize2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noVolume1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noVolume2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volume1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volume2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xys1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xys2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\allSize1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\allSize2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jietu1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jietu2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

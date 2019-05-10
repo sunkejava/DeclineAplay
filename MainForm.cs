@@ -18,6 +18,9 @@ namespace DeclineAplay
         Point playerPoint = new Point();
         bool IsFull = false;//是否全屏
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
+        int volumeNum = 50;//视频音量
+        int tvPosition = 0;//视频播放进度
+        DuiBaseControl playerControl = new DuiBaseControl();
 
         #region 模拟窗体移动变量
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
@@ -42,6 +45,7 @@ namespace DeclineAplay
             SetDefaultSkin();
             SetDefaultAnchr();
             AddControl();
+            lw.Visible = false;
             lw.axPlayer.SetVolume(50);
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
@@ -67,17 +71,20 @@ namespace DeclineAplay
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标经过";
+            playerControl.Visible = true;
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标离开";
+            playerControl.Visible = false;
         }
 
         private void BaseControl_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
+                lw.Visible = true;
                 dl_PlayerExplain.Text = "鼠标左键单击";
                 AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
             }
@@ -91,6 +98,7 @@ namespace DeclineAplay
         private void BaseControl_MouseHover(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标悬停";
+            //playerControl.Visible = false;
         }
 
         private void BaseControl_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -123,13 +131,23 @@ namespace DeclineAplay
                     dl_PlayerExplain.Text = ("键盘左方向键事件");
                     break;
                 case Utils.ConstClass.VK_UP:
-                    dl_PlayerExplain.Text = ("键盘上方向键事件");
+                    if (volumeNum < 1000)
+                    {
+                        volumeNum++;
+                    }
+                    lw.axPlayer.SetVolume(volumeNum);
+                    dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_RIGHT:
                     dl_PlayerExplain.Text = ("键盘右方向键事件");
                     break;
                 case Utils.ConstClass.VK_DOWN:
-                    dl_PlayerExplain.Text = ("键盘下方向键事件");
+                    if (volumeNum > 0)
+                    {
+                        volumeNum--;
+                    }
+                    lw.axPlayer.SetVolume(volumeNum);
+                    dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_ESCAPE:
                     dl_PlayerExplain.Text = ("键盘ESC键事件");
@@ -156,7 +174,7 @@ namespace DeclineAplay
                 lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
-                lw.WindowState = this.WindowState;
+                //lw.WindowState = this.WindowState;
                 //lw.TopLevel = this.TopLevel;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
@@ -376,10 +394,81 @@ namespace DeclineAplay
             dl_PlayerExplain.Text = "";
             dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
             dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(80, 20);
+            dl_PlayerExplain.Size = new Size(200, 20);
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
             dl_PlayerExplain.Visible = true;
+            //添加播放器控制控件
+            playerControl.Size = new Size(BaseControl.Width - Panel_Left.Width - Panel_Right.Width, 120);
+            playerControl.Location = new Point(Panel_Left.Width, BaseControl.Height - Panel_Bottom.Height - 120);
+            playerControl.Dock = DockStyle.Bottom;
+            //停止按钮
+            DuiButton btnStop = new DuiButton();
+            btnStop.Size = new Size(30, 30);
+            btnStop.Location = new Point(20, 45);
+            btnStop.ShowBorder = false;
+            btnStop.BaseColor = Color.Transparent;
+            btnStop.BackgroundImage = Properties.Resources.stop1;
+            btnStop.BackgroundImageLayout = ImageLayout.Stretch;
+            btnStop.IsPureColor = true;
+            btnStop.Tag = "停止";
+            playerControl.Controls.Add(btnStop);
+            //上一个按钮
+            DuiButton btnPrev = new DuiButton();
+            btnPrev.Size = new Size(30, 30);
+            btnPrev.Location = new Point(70, 45);
+            btnPrev.ShowBorder = false;
+            btnPrev.BaseColor = Color.Transparent;
+            btnPrev.BackgroundImage = Properties.Resources.sys1;
+            btnPrev.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPrev.IsPureColor = true;
+            btnPrev.Tag = "上一个";
+            playerControl.Controls.Add(btnPrev);
+            //播放按钮
+            DuiButton btnPlay = new DuiButton();
+            btnPlay.Size = new Size(30, 30);
+            btnPlay.Location = new Point(120, 45);
+            btnPlay.ShowBorder = false;
+            btnPlay.BaseColor = Color.Transparent;
+            btnPlay.BackgroundImage = Properties.Resources.play1;
+            btnPlay.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPlay.IsPureColor = true;
+            btnPlay.Tag = "播放";
+            playerControl.Controls.Add(btnPlay);
+            //下一个按钮
+            DuiButton btnNext = new DuiButton();
+            btnNext.Size = new Size(30, 30);
+            btnNext.Location = new Point(170, 45);
+            btnNext.ShowBorder = false;
+            btnNext.BaseColor = Color.Transparent;
+            btnNext.BackgroundImage = Properties.Resources.xys1;
+            btnNext.BackgroundImageLayout = ImageLayout.Stretch;
+            btnNext.IsPureColor = true;
+            btnNext.Tag = "下一个";
+            playerControl.Controls.Add(btnNext);
+            //声音按钮
+            DuiButton btnVolume = new DuiButton();
+            btnVolume.Size = new Size(30, 30);
+            btnVolume.Location = new Point(220, 45);
+            btnVolume.ShowBorder = false;
+            btnVolume.BaseColor = Color.Transparent;
+            btnVolume.BackgroundImage = Properties.Resources.volume1;
+            btnVolume.BackgroundImageLayout = ImageLayout.Stretch;
+            btnVolume.IsPureColor = true;
+            btnVolume.Tag = "静音";
+            playerControl.Controls.Add(btnVolume);
+            //声音进度条
+
+            //播放进度条
+
+            //播放进度标签
+
+            //截图按钮
+            //全屏按钮
+            //列表按钮
+
+            BaseControl.DUIControls.Add(playerControl);
+            playerControl.Visible = false;
         }
 
         #endregion
