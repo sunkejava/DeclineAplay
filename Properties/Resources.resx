@@ -271,12 +271,6 @@
   <data name="resize_bottom_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resize-bottom-right.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="allSize1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\allSize1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="allSize2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\allSize2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="jietu1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\jietu1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -288,12 +282,6 @@
   </data>
   <data name="list2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\list2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="minSize1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minSize1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="minSize2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minSize2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="noVolume1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\noVolume1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -336,5 +324,32 @@
   </data>
   <data name="xys2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xys2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="allSize1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\allSize1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="allSize2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\allSize2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minSize1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minSize1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minSize2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minSize2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dkwj1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dkwj1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dkwj2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dkwj2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_PointImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb.PointImage.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_PointImageHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb.PointImageHover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_PointImagePressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb.PointImagePressed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

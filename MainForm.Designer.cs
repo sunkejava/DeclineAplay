@@ -34,6 +34,7 @@
             this.Panel_Right = new LayeredSkin.Controls.LayeredPanel();
             this.Panel_Bottom = new LayeredSkin.Controls.LayeredPanel();
             this.BaseControl = new LayeredSkin.Controls.LayeredBaseControl();
+            this.playPanel = new LayeredSkin.Controls.LayeredPanel();
             this.panel_min.SuspendLayout();
             this.panel_close.SuspendLayout();
             this.SuspendLayout();
@@ -177,12 +178,32 @@
             this.BaseControl.MouseHover += new System.EventHandler(this.BaseControl_MouseHover);
             this.BaseControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseMove);
             // 
+            // playPanel
+            // 
+            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.playPanel.Borders.BottomColor = System.Drawing.Color.Empty;
+            this.playPanel.Borders.BottomWidth = 1;
+            this.playPanel.Borders.LeftColor = System.Drawing.Color.Empty;
+            this.playPanel.Borders.LeftWidth = 1;
+            this.playPanel.Borders.RightColor = System.Drawing.Color.Empty;
+            this.playPanel.Borders.RightWidth = 1;
+            this.playPanel.Borders.TopColor = System.Drawing.Color.Empty;
+            this.playPanel.Borders.TopWidth = 1;
+            this.playPanel.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("playPanel.Canvas")));
+            this.playPanel.Location = new System.Drawing.Point(30, 430);
+            this.playPanel.Name = "playPanel";
+            this.playPanel.Size = new System.Drawing.Size(670, 40);
+            this.playPanel.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.ClientSize = new System.Drawing.Size(730, 520);
+            this.Controls.Add(this.playPanel);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Right);
             this.Controls.Add(this.Panel_Left);
@@ -201,6 +222,7 @@
             this.Controls.SetChildIndex(this.Panel_Left, 0);
             this.Controls.SetChildIndex(this.Panel_Right, 0);
             this.Controls.SetChildIndex(this.Panel_Bottom, 0);
+            this.Controls.SetChildIndex(this.playPanel, 0);
             this.panel_min.ResumeLayout(false);
             this.panel_close.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -214,5 +236,6 @@
         private LayeredSkin.Controls.LayeredPanel Panel_Right;
         private LayeredSkin.Controls.LayeredPanel Panel_Bottom;
         public LayeredSkin.Controls.LayeredBaseControl BaseControl;
+        private LayeredSkin.Controls.LayeredPanel playPanel;
     }
 }

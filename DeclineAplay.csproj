@@ -303,12 +303,6 @@
     <None Include="Resources\list2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\minSize1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\minSize2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\noVolume1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -351,16 +345,37 @@
     <None Include="Resources\xys2.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\jietu1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jietu2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minSize1.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\allSize1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\allSize2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\jietu1.png" />
+    <None Include="Resources\minSize2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\jietu2.png" />
+    <None Include="Resources\dkwj1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dkwj2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tb.PointImagePressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tb.PointImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tb.PointImageHover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

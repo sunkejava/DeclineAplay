@@ -13,15 +13,25 @@ namespace DeclineAplay
     public partial class MainForm : BaseForm
     {
         LayeredWindow lw = null;
-        public Color defaultSkinColor = Color.FromArgb(120, 255, 255, 255);//Color.FromArgb(255, 92, 138);
+        public Color defaultSkinColor = Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
         bool IsFull = false;//是否全屏
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
         int volumeNum = 50;//视频音量
         int tvPosition = 0;//视频播放进度
-        int borderSizeH = 10;//播放器边框宽度
-        DuiBaseControl playerControl = new DuiBaseControl();
+
+        #region 播放器控件
+        DuiButton btnStop = new DuiButton();//停止按钮
+        DuiButton btnPrev = new DuiButton();//上一个按钮
+        DuiButton btnPlay = new DuiButton();//播放按钮
+        DuiButton btnNext = new DuiButton();//下一个按钮
+        DuiButton btnOpenFile = new DuiButton();//打开文件按钮
+        DuiButton btnVolume = new DuiButton();//声音按钮
+        DuiButton btnScreenShot = new DuiButton();//截图按钮
+        DuiButton btnFullScreen = new DuiButton();//全屏按钮
+        DuiButton btnList = new DuiButton();//列表按钮
+        #endregion
 
         #region 模拟窗体移动变量
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
@@ -71,13 +81,13 @@ namespace DeclineAplay
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标经过";
-            playerControl.Visible = true;
+            playPanel.Visible = true;
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标离开";
-            playerControl.Visible = false;
+            playPanel.Visible = false;
         }
 
         private void BaseControl_MouseClick(object sender, MouseEventArgs e)
@@ -173,8 +183,6 @@ namespace DeclineAplay
                 lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
                 lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
                 playerPoint = lw.Location;
-                //lw.WindowState = this.WindowState;
-                //lw.TopLevel = this.TopLevel;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
 
@@ -183,6 +191,9 @@ namespace DeclineAplay
                     dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
                 }
                 BaseControl.Refresh();
+                btnScreenShot.Location = new Point(playPanel.Width - 150, 5);
+                btnFullScreen.Location = new Point(playPanel.Width - 100, 5);
+                btnList.Location = new Point(playPanel.Width - 50, 5);
                 this.Refresh();
             }
         }
@@ -397,65 +408,63 @@ namespace DeclineAplay
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
             dl_PlayerExplain.Visible = true;
+
+            #region 播放器控制控件添加
             //添加播放器控制控件
-            playerControl.Size = new Size(BaseControl.Width - Panel_Left.Width - Panel_Right.Width, 120);
-            playerControl.Location = new Point(Panel_Left.Width, BaseControl.Height - Panel_Bottom.Height - 120);
-            playerControl.Dock = DockStyle.Bottom;
             //停止按钮
-            DuiButton btnStop = new DuiButton();
+            btnStop.Name = "btnStop";
             btnStop.Size = new Size(30, 30);
-            btnStop.Location = new Point(20, 45);
             btnStop.ShowBorder = false;
             btnStop.BaseColor = Color.Transparent;
             btnStop.BackgroundImage = Properties.Resources.stop1;
-            btnStop.BackgroundImageLayout = ImageLayout.Stretch;
+            btnStop.BackgroundImageLayout = ImageLayout.Zoom;
             btnStop.IsPureColor = true;
             btnStop.Tag = "停止";
-            playerControl.Controls.Add(btnStop);
             //上一个按钮
-            DuiButton btnPrev = new DuiButton();
+            btnPrev.Name = "btnPrev";
             btnPrev.Size = new Size(30, 30);
-            btnPrev.Location = new Point(70, 45);
             btnPrev.ShowBorder = false;
             btnPrev.BaseColor = Color.Transparent;
             btnPrev.BackgroundImage = Properties.Resources.sys1;
-            btnPrev.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPrev.BackgroundImageLayout = ImageLayout.Zoom;
             btnPrev.IsPureColor = true;
             btnPrev.Tag = "上一个";
-            playerControl.Controls.Add(btnPrev);
             //播放按钮
-            DuiButton btnPlay = new DuiButton();
+            btnPlay.Name = "btnPlay";
             btnPlay.Size = new Size(30, 30);
-            btnPlay.Location = new Point(120, 45);
             btnPlay.ShowBorder = false;
             btnPlay.BaseColor = Color.Transparent;
             btnPlay.BackgroundImage = Properties.Resources.play1;
-            btnPlay.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPlay.BackgroundImageLayout = ImageLayout.Zoom;
             btnPlay.IsPureColor = true;
             btnPlay.Tag = "播放";
-            playerControl.Controls.Add(btnPlay);
             //下一个按钮
-            DuiButton btnNext = new DuiButton();
+            btnNext.Name = "btnNext";
             btnNext.Size = new Size(30, 30);
-            btnNext.Location = new Point(170, 45);
             btnNext.ShowBorder = false;
             btnNext.BaseColor = Color.Transparent;
             btnNext.BackgroundImage = Properties.Resources.xys1;
-            btnNext.BackgroundImageLayout = ImageLayout.Stretch;
+            btnNext.BackgroundImageLayout = ImageLayout.Zoom;
             btnNext.IsPureColor = true;
             btnNext.Tag = "下一个";
-            playerControl.Controls.Add(btnNext);
+            //打开文件按钮
+            btnOpenFile.Name = "btnOpenFile";
+            btnOpenFile.Size = new Size(30, 30);
+            btnOpenFile.ShowBorder = false;
+            btnOpenFile.BaseColor = Color.Transparent;
+            btnOpenFile.BackgroundImage = Properties.Resources.dkwj1;
+            btnOpenFile.BackgroundImageLayout = ImageLayout.Zoom;
+            btnOpenFile.IsPureColor = true;
+            btnOpenFile.Tag = "打开文件";
             //声音按钮
-            DuiButton btnVolume = new DuiButton();
+            btnVolume.Name = "btnVolume";
             btnVolume.Size = new Size(30, 30);
-            btnVolume.Location = new Point(220, 45);
             btnVolume.ShowBorder = false;
             btnVolume.BaseColor = Color.Transparent;
             btnVolume.BackgroundImage = Properties.Resources.volume1;
-            btnVolume.BackgroundImageLayout = ImageLayout.Stretch;
+            btnVolume.BackgroundImageLayout = ImageLayout.Zoom;
             btnVolume.IsPureColor = true;
             btnVolume.Tag = "静音";
-            playerControl.Controls.Add(btnVolume);
             //声音进度条
 
             //播放进度条
@@ -463,11 +472,36 @@ namespace DeclineAplay
             //播放进度标签
 
             //截图按钮
+            btnScreenShot.Name = "btnScreenShot";
+            btnScreenShot.Size = new Size(30, 30);
+            btnScreenShot.ShowBorder = false;
+            btnScreenShot.BaseColor = Color.Transparent;
+            btnScreenShot.BackgroundImage = Properties.Resources.jietu1;
+            btnScreenShot.BackgroundImageLayout = ImageLayout.Zoom;
+            btnScreenShot.IsPureColor = true;
+            btnScreenShot.Tag = "截图";
             //全屏按钮
+            btnFullScreen.Name = "btnFullScreen";
+            btnFullScreen.Size = new Size(30, 30);
+            btnFullScreen.ShowBorder = false;
+            btnFullScreen.BaseColor = Color.Transparent;
+            btnFullScreen.BackgroundImage = Properties.Resources.allSize1;
+            btnFullScreen.BackgroundImageLayout = ImageLayout.Zoom;
+            btnFullScreen.IsPureColor = true;
+            btnFullScreen.Tag = "全屏";
             //列表按钮
-
-            BaseControl.DUIControls.Add(playerControl);
-            playerControl.Visible = false;
+            btnList.Name = "btnList";
+            btnList.Size = new Size(30, 30);
+            btnList.ShowBorder = false;
+            btnList.BaseColor = Color.Transparent;
+            btnList.BackgroundImage = Properties.Resources.list1;
+            btnList.BackgroundImageLayout = ImageLayout.Zoom;
+            btnList.IsPureColor = true;
+            btnList.Tag = "列表";
+            playPanel.DUIControls.AddRange(new LayeredSkin.DirectUI.DuiBaseControl[] {
+                btnStop,btnPrev,btnPlay,btnNext,btnOpenFile,btnVolume,btnScreenShot,btnFullScreen,btnList
+            });
+            #endregion
         }
 
         #endregion
@@ -491,6 +525,15 @@ namespace DeclineAplay
             Panel_Bottom.MouseMove += Control_MouseMove;
             Panel_Top.MouseDown += Panel_Top_MouseDown;
             Panel_Left.MouseDown += Panel_Top_MouseDown;
+            btnStop.Location = new Point(20, 5);
+            btnPrev.Location = new Point(70, 5);
+            btnPlay.Location = new Point(120, 5);
+            btnNext.Location = new Point(170, 5);
+            btnOpenFile.Location = new Point(220, 5);
+            btnVolume.Location = new Point(270, 5);
+            btnScreenShot.Location = new Point(playPanel.Width - 150, 5);
+            btnFullScreen.Location = new Point(playPanel.Width - 100, 5);
+            btnList.Location = new Point(playPanel.Width - 50, 5);
         }
 
         private void Panel_Top_MouseDown(object sender, MouseEventArgs e)

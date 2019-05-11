@@ -563,6 +563,26 @@ namespace DeclineAplay.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap dkwj1 {
+            get {
+                object obj = ResourceManager.GetObject("dkwj1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap dkwj2 {
+            get {
+                object obj = ResourceManager.GetObject("dkwj2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap jietu1 {
             get {
                 object obj = ResourceManager.GetObject("jietu1", resourceCulture);
@@ -746,6 +766,36 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap sys2 {
             get {
                 object obj = ResourceManager.GetObject("sys2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap tb_PointImage {
+            get {
+                object obj = ResourceManager.GetObject("tb_PointImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap tb_PointImageHover {
+            get {
+                object obj = ResourceManager.GetObject("tb_PointImageHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap tb_PointImagePressed {
+            get {
+                object obj = ResourceManager.GetObject("tb_PointImagePressed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
