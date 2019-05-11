@@ -180,7 +180,7 @@
             // 
             // playPanel
             // 
-            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.playPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.playPanel.Borders.BottomColor = System.Drawing.Color.Empty;
