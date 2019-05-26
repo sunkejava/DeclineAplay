@@ -20,7 +20,7 @@ namespace DeclineAplay
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
         int volumeNum = 50;//视频音量
         int tvPosition = 0;//视频播放进度
-
+        string tvUrl = "";
         #region 播放器控件
         DuiButton btnStop = new DuiButton();//停止按钮
         DuiButton btnPrev = new DuiButton();//上一个按钮
@@ -76,6 +76,7 @@ namespace DeclineAplay
             panel_close.BringToFront();
             panel_min.BringToFront();
             Panel_Top.Focus();
+            tvUrl = "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -95,7 +96,8 @@ namespace DeclineAplay
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 dl_PlayerExplain.Text = "鼠标左键单击";
-                AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                AxPlayer_PlayOrPause(tvUrl);
+                //"http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
             }
             else
             {
@@ -123,7 +125,7 @@ namespace DeclineAplay
             {
                 case Utils.ConstClass.VK_SPACE:
                     dl_PlayerExplain.Text = ("空格键事件");
-                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 default:
                     break;
@@ -292,7 +294,7 @@ namespace DeclineAplay
                     fullScreen();
                     break;
                 case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
-                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 case Utils.ConstClass.WM_LBUTTONUP://左键弹起
                     break;
@@ -328,7 +330,7 @@ namespace DeclineAplay
                     break;
                 case Utils.ConstClass.VK_SPACE:
                     Logger.Singleton.Info("空格键事件");
-                    AxPlayer_PlayOrPause("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
+                    AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 default:
                     break;
