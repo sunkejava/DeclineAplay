@@ -1,6 +1,6 @@
 ﻿namespace DeclineAplay
 {
-    partial class MainForm
+    partial class PlayerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
             this.BaseControl = new LayeredSkin.Controls.LayeredBaseControl();
             this.playPanel = new LayeredSkin.Controls.LayeredPanel();
             this.panel_min.SuspendLayout();

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace DeclineAplay
 {
-    public partial class MainForm : BaseForm
+    public partial class PlayerForm : BaseForm
     {
         private LayeredWindow lw = new LayeredWindow();
         private int flg_LayeredWindow_is_show = 0;
@@ -47,11 +47,10 @@ namespace DeclineAplay
 
         #region 主窗体事件
 
-        public MainForm()
+        public PlayerForm()
         {
             InitializeComponent();
-            creatTimerforLayeredWindowShow();//定时器要随对象一起创建
-
+            //creatTimerforLayeredWindowShow();//定时器要随对象一起创建
         }
 
         private void MainForm_Load(object sender, EventArgs e)
