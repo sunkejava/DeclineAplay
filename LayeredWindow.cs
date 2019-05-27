@@ -19,8 +19,7 @@ namespace DeclineAplay
 
         private void LayeredWindow_Load(object sender, EventArgs e)
         {
-            MainForm mf = new MainForm(this);
-            mf.Show();
+
         }
 
         private void LayeredWindow_AutoSizeChanged(object sender, EventArgs e)

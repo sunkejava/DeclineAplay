@@ -12,7 +12,9 @@ namespace DeclineAplay
 {
     public partial class MainForm : BaseForm
     {
-        LayeredWindow lw = null;
+        private LayeredWindow lw = new LayeredWindow();
+        private int flg_LayeredWindow_is_show = 0;
+        private System.Timers.Timer LayeredWindowShowTimer = new System.Timers.Timer();
         public Color defaultSkinColor = Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         Point playerPoint = new Point();
@@ -45,16 +47,16 @@ namespace DeclineAplay
 
         #region 主窗体事件
 
-        public MainForm(LayeredWindow ilw)
+        public MainForm()
         {
             InitializeComponent();
-            lw = ilw;
+            creatTimerforLayeredWindowShow();//定时器要随对象一起创建
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetDefaultSkin();
-            SetDefaultAnchr();
             AddControl();
             lw.axPlayer.SetVolume(50);
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
@@ -67,22 +69,18 @@ namespace DeclineAplay
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
-            this.TopLevel = true;
             BaseControl.BringToFront();
-            Panel_Bottom.BringToFront();
-            Panel_Top.BringToFront();
-            Panel_Left.BringToFront();
-            Panel_Right.BringToFront();
             panel_close.BringToFront();
             panel_min.BringToFront();
-            Panel_Top.Focus();
-            tvUrl = "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
+            tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
+            //"http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
             dl_PlayerExplain.Text = "鼠标经过";
             playPanel.Visible = true;
+            Control_MouseMove(sender, (MouseEventArgs)e);
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
@@ -95,9 +93,12 @@ namespace DeclineAplay
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
+                if (!lw.Visible)
+                {
+                    lw.Show();
+                }
                 dl_PlayerExplain.Text = "鼠标左键单击";
                 AxPlayer_PlayOrPause(tvUrl);
-                //"http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
             }
             else
             {
@@ -124,6 +125,10 @@ namespace DeclineAplay
             switch ((int)e.KeyChar)
             {
                 case Utils.ConstClass.VK_SPACE:
+                    if (!lw.Visible)
+                    {
+                        lw.Show();
+                    }
                     dl_PlayerExplain.Text = ("空格键事件");
                     AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
@@ -182,8 +187,8 @@ namespace DeclineAplay
         {
             if (lw != null)
             {
-                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
-                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
+                lw.Size = new Size(this.Width, this.Height);
+                lw.Location = new Point(this.Location.X, this.Location.Y);
                 playerPoint = lw.Location;
                 lw.axPlayer.Refresh();
                 lw.Refresh();
@@ -214,8 +219,8 @@ namespace DeclineAplay
         {
             if (lw != null)
             {
-                lw.Size = new Size(this.Width - Panel_Left.Width - Panel_Right.Width, this.Height - Panel_Top.Height - Panel_Bottom.Height);
-                lw.Location = new Point(this.Location.X + Panel_Left.Width, this.Location.Y + Panel_Top.Height);
+                lw.Size = new Size(this.Width, this.Height);
+                lw.Location = new Point(this.Location.X, this.Location.Y);
                 playerPoint = lw.Location;
                 if (dl_PlayerExplain != null)
                 {
@@ -294,6 +299,10 @@ namespace DeclineAplay
                     fullScreen();
                     break;
                 case Utils.ConstClass.WM_LBUTTONDOWN://左键按下
+                    if (!lw.Visible)
+                    {
+                        lw.Show();
+                    }
                     AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 case Utils.ConstClass.WM_LBUTTONUP://左键弹起
@@ -386,6 +395,8 @@ namespace DeclineAplay
             {
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
+                BaseControl.BackgroundImage = null;
+                BaseControl.Refresh();
             }
             else if (lw.axPlayer.GetState() == 3)
             {
@@ -515,18 +526,6 @@ namespace DeclineAplay
         private void SetDefaultSkin()
         {
             BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
-            this.Panel_Left.BackColor = defaultSkinColor;
-            this.Panel_Top.BackColor = defaultSkinColor;
-            this.Panel_Right.BackColor = defaultSkinColor;
-            this.Panel_Bottom.BackColor = defaultSkinColor;
-            Panel_Right.MouseDown += Control_MouseDown;
-            Panel_Right.MouseUp += Control_MouseUp;
-            Panel_Right.MouseMove += Control_MouseMove;
-            Panel_Bottom.MouseDown += Control_MouseDown;
-            Panel_Bottom.MouseUp += Control_MouseUp;
-            Panel_Bottom.MouseMove += Control_MouseMove;
-            Panel_Top.MouseDown += Panel_Top_MouseDown;
-            Panel_Left.MouseDown += Panel_Top_MouseDown;
             btnStop.Location = new Point(20, 5);
             btnPrev.Location = new Point(70, 5);
             btnPlay.Location = new Point(120, 5);
@@ -544,17 +543,6 @@ namespace DeclineAplay
             ReleaseCapture();
             //发送消息﹐让系統误以为在标题栏上按下鼠标
             SendMessage((int)this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-        }
-
-        /// <summary>
-        /// 设置固定位置
-        /// </summary>
-        private void SetDefaultAnchr()
-        {
-            this.Panel_Left.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top)));
-            this.Panel_Top.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel_Right.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Top)));
-            this.Panel_Bottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
         }
 
         #endregion
@@ -594,19 +582,19 @@ namespace DeclineAplay
             }
             //鼠标移动过程中，坐标时刻在改变 
             //当鼠标移动时横坐标距离窗体右边缘5像素以内且纵坐标距离下边缘也在5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Declining 
-            if (e.Location.X >= thisZ.Width - 5 && e.Location.Y > thisZ.Height - 5)
+            if (e.Location.X <= 5 && e.Location.Y <= 5)
             {
                 this.Cursor = Cursors.SizeNWSE;
                 direction = MouseDirection.Declining;
             }
             //当鼠标移动时横坐标距离窗体右边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Herizontal
-            else if (e.Location.X >= thisZ.Width - 5)
+            else if (e.Location.X <= 5)
             {
                 this.Cursor = Cursors.SizeWE;
                 direction = MouseDirection.Herizontal;
             }
             //同理当鼠标移动时纵坐标距离窗体下边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Vertical
-            else if (e.Location.Y >= thisZ.Height - 5)
+            else if (e.Location.Y <= 5)
             {
                 this.Cursor = Cursors.SizeNS;
                 direction = MouseDirection.Vertical;
@@ -652,6 +640,10 @@ namespace DeclineAplay
             else
             {
                 this.Cursor = Cursors.Arrow;
+                //为当前的应用程序释放鼠标捕获
+                ReleaseCapture();
+                //发送消息﹐让系統误以为在标题栏上按下鼠标
+                SendMessage((int)this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
         //定义一个枚举，表示拖动方向
@@ -680,6 +672,49 @@ namespace DeclineAplay
             }
             BaseControl.Focus();
             //lw.axPlayer.Focus();
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetParent")]
+        public static extern int SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        [DllImport("User32.dll")]
+        public static extern IntPtr GetForegroundWindow();     //获取活动窗口句柄
+
+        private void creatTimerforLayeredWindowShow()
+        {
+            LayeredWindowShowTimer.Interval = 50;
+            LayeredWindowShowTimer.Elapsed += LayeredWindowShowTimer_Elapsed; //定时时间到的时候的回调函数
+            LayeredWindowShowTimer.AutoReset = true;//需要反复检测鼠标
+            LayeredWindowShowTimer.Enabled = true;  //启动定时器
+
+        }
+
+        /* 定时器回调函数 */
+        private void LayeredWindowShowTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            //如果鼠标在窗体边缘附近  
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                IntPtr hWnd = GetForegroundWindow();    //获取活动窗口句柄
+
+                if (flg_LayeredWindow_is_show == 0 && this.Handle == hWnd)
+                {
+                    //lw.Location = new Point(this.Left, this.Top);
+                    lw.TopMost = true;
+                    this.TopMost = true;
+                    //lw.TopLevel = false;
+                    SetParent(this.Handle, lw.Handle);
+                    lw.Show();
+                }
+                flg_LayeredWindow_is_show = 1;
+            }
+            else
+            {
+                lw.Hide();
+                //lw.TopMost = false;
+                //this.TopMost = false;
+                flg_LayeredWindow_is_show = 0;
+            }
         }
         #endregion
 
