@@ -92,10 +92,6 @@ namespace DeclineAplay
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                if (!lw.Visible)
-                {
-                    lw.Show();
-                }
                 dl_PlayerExplain.Text = "鼠标左键单击";
                 AxPlayer_PlayOrPause(tvUrl);
             }
@@ -386,6 +382,10 @@ namespace DeclineAplay
         /// <param name="url"></param>
         public void AxPlayer_PlayOrPause(string url)
         {
+            if (!lw.Visible)
+            {
+                lw.Show();
+            }
             if (lw.axPlayer.GetState() == 5)
             {
                 lw.axPlayer.Pause();

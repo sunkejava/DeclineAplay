@@ -85,18 +85,19 @@ namespace DeclineAplay.API
             try
             {
                 string curl = @"http://api1.aajpa.cn:8688/Video/GetListByTag";
-                string jsons = "{\"length\":" + pageSize.ToString() + ",\"ClientType\":2,\"searchtext\":\"\",\"UserID\":0,,\"ordertext\":[{\"column\":\"AddTime\",\"dir\":\"desc\"}]}";
+                string jsons = "{\"length\":" + pageSize.ToString() + ",\"start\":" + startNo + ",\"searchtext\":\"\",\"UserID\":0,\"ordertext\":[{\"column\":\"AddTime\",\"dir\":\"desc\"}]}";
                 //创建一个HttpWebRequest对象
                 req = (HttpWebRequest)HttpWebRequest.Create(curl);
                 //设置它提交数据的方式GET  
                 req.Method = "POST";
                 req.ContentType = "application/json;charset=UTF-8";
+                SetHeaderValue(req.Headers, "Host", "api1.aajpa.cn:8688");
+                SetHeaderValue(req.Headers, "Connection", "Keep-Alive");
+                SetHeaderValue(req.Headers, "Content-Length", jsons.Length.ToString());
                 SetHeaderValue(req.Headers, "Charset", "UTF-8");
                 SetHeaderValue(req.Headers, "User-Agent", "Mozilla/5.0 (Linux; Android 4.4.2; SM-G955F Build/JLS36C) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36 Html5Plus/1.0");
                 SetHeaderValue(req.Headers, "Token", "dasdas");
-                SetHeaderValue(req.Headers, "Content-Length", jsons.Length.ToString());
-                SetHeaderValue(req.Headers, "Host", "api1.aajpa.cn:8688");
-                SetHeaderValue(req.Headers, "Connection", "Keep-Alive");
+
                 //SetHeaderValue(req.Headers, "Expect", "100-continue");//远程服务器返回错误: (417) EXPECTATION_FAILED。Http1.1根据该头信息判断是否直接发送body
                 byte[] payload;
                 payload = System.Text.Encoding.UTF8.GetBytes(jsons);

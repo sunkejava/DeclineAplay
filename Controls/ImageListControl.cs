@@ -141,7 +141,7 @@ namespace DeclineAplay.Controls
 
         private void Btn_Download_MouseEnter(object sender, EventArgs e)
         {
-            toolTip1.Show(((DuiButton)sender).Tag.ToString().Split('|')[0].ToString() + (((DuiButton)sender).Tag.ToString().Split('|')[0].ToString().Contains("取消") ? "" : "壁纸"), this, PointToClient(MousePosition).X, PointToClient(MousePosition).Y + 15, 2000);
+            toolTip1.Show(((DuiButton)sender).Tag.ToString().Split('|')[0].ToString() + (((DuiButton)sender).Tag.ToString().Split('|')[0].ToString().Contains("取消") ? "" : "视频"), this, PointToClient(MousePosition).X, PointToClient(MousePosition).Y + 15, 2000);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace DeclineAplay.Controls
                 //imgTag.BackColor = Color.FromArgb(100, 0, 0, 0);
                 imgTag.BackgroundImage = Properties.Resources.mask_shadow;
                 imgTag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                imgTag.Text = imgInfo.Tags;
+                imgTag.Text = imgInfo.Name;
                 imgTag.Name = "imgTag_" + imgInfo.ID.ToString();
                 imgTag.MouseLeave += Dp_MouseLeave;
 
@@ -257,55 +257,55 @@ namespace DeclineAplay.Controls
                 btn_Download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
                 btn_Download.ShowBorder = false;
                 btn_Download.MouseClick += Btn_Download_MouseClick;
-                btn_Download.Tag = "保存|" + imgInfo.Url;
+                btn_Download.Tag = "播放|" + imgInfo.Url;
                 btn_Download.MouseEnter += Btn_Download_MouseEnter;
                 btn_Download.MouseLeave += Btn_Download_MouseLeave;
                 //收藏按钮
-                DuiButton btn_sc = new DuiButton();
-                btn_sc.Location = new Point(35, 0);
-                btn_sc.Size = new Size(35, 35);
-                btn_sc.Text = "";
-                btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
-                btn_sc.AdaptImage = false;
-                btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
-                btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
-                btn_sc.Radius = 35;
-                btn_sc.ShowBorder = false;
-                btn_sc.BackgroundImage = Properties.Resources.stop1;
-                btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                btn_sc.IsPureColor = true;
-                btn_sc.Tag = "收藏|" + imgInfo.Url;
-                btn_sc.MouseEnter += Btn_Download_MouseEnter;
-                btn_sc.MouseLeave += Btn_Download_MouseLeave;
-                //设置按钮
-                DuiButton btn_Setting = new DuiButton();
-                btn_Setting.Location = new Point(70, 0);
-                btn_Setting.Size = new Size(35, 35);
-                btn_Setting.Text = "";
-                btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
-                btn_Setting.AdaptImage = false;
-                btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
-                btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
-                btn_Setting.Radius = 35;
-                btn_Setting.Tag = "设置|" + imgInfo.Url;
-                btn_Setting.ShowBorder = false;
-                btn_Setting.BackgroundImage = Properties.Resources.sys1;
-                btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                btn_Setting.IsPureColor = true;
-                btn_Setting.MouseEnter += Btn_Download_MouseEnter;
-                btn_Setting.MouseLeave += Btn_Download_MouseLeave;
+                //DuiButton btn_sc = new DuiButton();
+                //btn_sc.Location = new Point(35, 0);
+                //btn_sc.Size = new Size(35, 35);
+                //btn_sc.Text = "";
+                //btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
+                //btn_sc.AdaptImage = false;
+                //btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
+                //btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
+                //btn_sc.Radius = 35;
+                //btn_sc.ShowBorder = false;
+                //btn_sc.BackgroundImage = Properties.Resources.stop1;
+                //btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+                //btn_sc.IsPureColor = true;
+                //btn_sc.Tag = "收藏|" + imgInfo.Url;
+                //btn_sc.MouseEnter += Btn_Download_MouseEnter;
+                //btn_sc.MouseLeave += Btn_Download_MouseLeave;
+                ////设置按钮
+                //DuiButton btn_Setting = new DuiButton();
+                //btn_Setting.Location = new Point(70, 0);
+                //btn_Setting.Size = new Size(35, 35);
+                //btn_Setting.Text = "";
+                //btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
+                //btn_Setting.AdaptImage = false;
+                //btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
+                //btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
+                //btn_Setting.Radius = 35;
+                //btn_Setting.Tag = "设置|" + imgInfo.Url;
+                //btn_Setting.ShowBorder = false;
+                //btn_Setting.BackgroundImage = Properties.Resources.sys1;
+                //btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+                //btn_Setting.IsPureColor = true;
+                //btn_Setting.MouseEnter += Btn_Download_MouseEnter;
+                //btn_Setting.MouseLeave += Btn_Download_MouseLeave;
                 //按钮底层控件
                 DuiBaseControl btnBaseControl = new DuiBaseControl();
                 btnBaseControl.Size = new Size(zWidth / 3, 35);
                 btnBaseControl.Cursor = System.Windows.Forms.Cursors.Hand;
-                btnBaseControl.Location = new Point(zWidth / 3 * 2 - 12, zHeight - 52);
+                btnBaseControl.Location = new Point(zWidth / 3, (zHeight - 35) / 2);
                 btnBaseControl.BackColor = Color.Transparent;
                 //btnBaseControl.MouseEnter += Dp_MouseEnter;
                 btnBaseControl.MouseLeave += Dp_MouseLeave;
                 btnBaseControl.MouseMove += BtnBaseControl_MouseMove;
                 btnBaseControl.Controls.Add(btn_Download);
-                btnBaseControl.Controls.Add(btn_sc);
-                btnBaseControl.Controls.Add(btn_Setting);
+                //btnBaseControl.Controls.Add(btn_sc);
+                //btnBaseControl.Controls.Add(btn_Setting);
                 btnBaseControl.Name = "btnBaseControl_" + imgInfo.ID.ToString();
                 btnBaseControl.Visible = false;
 

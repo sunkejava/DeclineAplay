@@ -95,7 +95,7 @@ namespace DeclineAplay
                 }
             }
             //添加默认字段
-            labelId = "0";
+            labelId = "";
             startNo = "0";
             hotTagName = "";
             nCount = "0";
@@ -175,8 +175,8 @@ namespace DeclineAplay
 
         private void btn_min_Click(object sender, EventArgs e)
         {
-            //this.WindowState = FormWindowState.Minimized;
-            this.Visible = false;
+            this.WindowState = FormWindowState.Minimized;
+            //this.Visible = false;
         }
 
 
@@ -480,7 +480,7 @@ namespace DeclineAplay
                     {
                         if (string.IsNullOrEmpty(tagName))
                         {
-                            result.Result = bimg.getSearchData(tagId, startNos, pageCount);
+                            result.Result = bimg.getSearchData(tagId, pageCount, startNos);
                         }
                     }
 
@@ -755,21 +755,26 @@ namespace DeclineAplay
                 //添加分类控件
                 addImgType(rType.Result);
                 //添加详细信息
-                //List<Utils.EDate.DataItem> imgInfos = new List<Utils.EDate.DataItem>();
-                //result.Result = bimg.getRecomendListData(pageCount, startNo);
-                //nCount = result.Result.recordsTotal.ToString();
-                //loadPageTextUpdate((Math.Floor((decimal.Parse(startNo) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
-                //for (int i = 0; i < result.Result.data.Count; i++)
-                //{
-                //    int zi = i + 1;
-                //    imgInfos.Add(result.Result.data[i]);
-                //    if (zi % 3 == 0 || zi == result.Result.data.Count)
-                //    {
-                //        List_Main.AddImgList(imgInfos);
-                //        List_Main.RefreshList();
-                //        imgInfos.Clear();
-                //    }
-                //}
+                List<Utils.EDate.DataItem> imgInfos = new List<Utils.EDate.DataItem>();
+                result.Result = bimg.getNewListData(pageCount, startNo);
+                if (result.Result == null)
+                {
+                    LoadingControl(false);
+                    return;
+                }
+                nCount = result.Result.recordsTotal.ToString();
+                loadPageTextUpdate((Math.Floor((decimal.Parse(startNo) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
+                for (int i = 0; i < result.Result.data.Count; i++)
+                {
+                    int zi = i + 1;
+                    imgInfos.Add(result.Result.data[i]);
+                    if (zi % 3 == 0 || zi == result.Result.data.Count)
+                    {
+                        List_Main.AddImgList(imgInfos);
+                        List_Main.RefreshList();
+                        imgInfos.Clear();
+                    }
+                }
                 LoadingControl(false);
             }
             catch (Exception ex)
