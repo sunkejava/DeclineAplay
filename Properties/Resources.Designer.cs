@@ -543,6 +543,26 @@ namespace DeclineAplay.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap bnull {
+            get {
+                object obj = ResourceManager.GetObject("bnull", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap close {
+            get {
+                object obj = ResourceManager.GetObject("close", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap close0 {
             get {
                 object obj = ResourceManager.GetObject("close0", resourceCulture);
@@ -616,6 +636,26 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap list2 {
             get {
                 object obj = ResourceManager.GetObject("list2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap mask_shadow {
+            get {
+                object obj = ResourceManager.GetObject("mask_shadow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap mask_shadow_big {
+            get {
+                object obj = ResourceManager.GetObject("mask_shadow_big", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -796,6 +836,86 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap tb_PointImagePressed {
             get {
                 object obj = ResourceManager.GetObject("tb_PointImagePressed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_01 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_02 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_03 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_04 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_04", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_05 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_05", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_06 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_06", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_07 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_07", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap video_loading_08 {
+            get {
+                object obj = ResourceManager.GetObject("video_loading_08", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

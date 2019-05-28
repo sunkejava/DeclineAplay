@@ -123,6 +123,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConstClass.cs" />
     <Compile Include="Utils\EDate.cs" />
+    <Compile Include="Utils\PicDeal.cs" />
     <Compile Include="Utils\PlayClass.cs" />
     <Compile Include="Utils\Win32.cs" />
     <EmbeddedResource Include="BaseForm.resx">
@@ -155,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
@@ -434,7 +444,42 @@
   <ItemGroup>
     <None Include="Resources\tb.PointImageHover.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mask_shadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mask_shadow_big.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_06.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_07.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\video_loading_08.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bnull.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

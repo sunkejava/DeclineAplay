@@ -352,4 +352,40 @@
   <data name="tb_PointImagePressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tb.PointImagePressed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bnull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bnull.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mask_shadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mask_shadow.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mask_shadow_big" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mask_shadow_big.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_01.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_02.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_03.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_04" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_04.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_05" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_05.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_06" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_06.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_07" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_07.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_loading_08" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\video_loading_08.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

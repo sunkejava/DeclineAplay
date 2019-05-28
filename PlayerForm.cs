@@ -22,7 +22,7 @@ namespace DeclineAplay
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
         int volumeNum = 50;//视频音量
         int tvPosition = 0;//视频播放进度
-        string tvUrl = "";
+        public string tvUrl = "";
         #region 播放器控件
         DuiButton btnStop = new DuiButton();//停止按钮
         DuiButton btnPrev = new DuiButton();//上一个按钮
@@ -384,7 +384,7 @@ namespace DeclineAplay
         /// 播放器暂停或播放
         /// </summary>
         /// <param name="url"></param>
-        private void AxPlayer_PlayOrPause(string url)
+        public void AxPlayer_PlayOrPause(string url)
         {
             if (lw.axPlayer.GetState() == 5)
             {

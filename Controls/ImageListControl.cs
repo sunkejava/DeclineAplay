@@ -1,4 +1,5 @@
-﻿using LayeredSkin.DirectUI;
+﻿using DeclineAplay.Utils;
+using LayeredSkin.DirectUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,54 +120,19 @@ namespace DeclineAplay.Controls
             }
         }
         /// <summary>
-        /// 设置按钮点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Btn_Setting_MouseClick(object sender, DuiMouseEventArgs e)
-        {
-            Btn_Download_MouseClick(sender, e);
-        }
-        /// <summary>
-        /// 下载按钮点击事件
+        /// 播放按钮点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Btn_Download_MouseClick(object sender, DuiMouseEventArgs e)
         {
-            //下载文件
+            //播放视频
             DuiButton dbn = sender as DuiButton;
             string url = dbn.Tag.ToString().Split('|')[1].ToString();
-            string fileName = "";
-            if (dbn.Name.Contains("btn_Setting_"))
-            {
-                if (string.IsNullOrEmpty(pes.CachePath))
-                {
-                    fileName = AppDomain.CurrentDomain.BaseDirectory + @"CacheWallpaper\";
-                }
-                else
-                {
-                    fileName = pes.CachePath.Replace("\\CacheWallpaper", "") + @"CacheWallpaper\";
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(pes.DownloadPath))
-                {
-                    fileName = AppDomain.CurrentDomain.BaseDirectory + @"ImageWallpaper\";
-                }
-                else
-                {
-                    fileName = pes.DownloadPath.Replace("\\ImageWallpaper", "") + @"ImageWallpaper\";
-                }
-            }
-            if (!Directory.Exists(fileName))
-            {
-                Directory.CreateDirectory(fileName);
-            }
-            fileName = fileName + new Uri(url).Segments[new Uri(url).Segments.Length - 1];
-            Thread thread = new Thread(() => DownloaImage(fileName, url, dbn.Name));
-            thread.Start();
+            PlayerForm plF = new PlayerForm();
+            plF.tvUrl = url;
+            plF.Show();
+            plF.AxPlayer_PlayOrPause(url);
         }
 
         private void Btn_Download_MouseLeave(object sender, EventArgs e)
@@ -179,26 +145,6 @@ namespace DeclineAplay.Controls
             toolTip1.Show(((DuiButton)sender).Tag.ToString().Split('|')[0].ToString() + (((DuiButton)sender).Tag.ToString().Split('|')[0].ToString().Contains("取消") ? "" : "壁纸"), this, PointToClient(MousePosition).X, PointToClient(MousePosition).Y + 15, 2000);
         }
 
-
-        /// <summary>
-        /// 收藏按钮点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Btn_Sc_MouseClick(object sender, DuiMouseEventArgs e)
-        {
-            DuiButton btn = sender as DuiButton;
-            if (btn.Tag.ToString().Split('|')[0].ToString() == "收藏")
-            {
-                btn.BackgroundImage = Properties.Resources.sc1;
-                btn.Tag = "取消收藏|" + btn.Tag.ToString().Split('|')[1].ToString();
-            }
-            else
-            {
-                btn.BackgroundImage = Properties.Resources.sc0;
-                btn.Tag = "收藏|" + btn.Tag.ToString().Split('|')[1].ToString();
-            }
-        }
         /// <summary>
         /// 图片点击事件
         /// </summary>
@@ -207,36 +153,18 @@ namespace DeclineAplay.Controls
         private void Dp_MouseClick(object sender, DuiMouseEventArgs e)
         {
             DuiPictureBox dp = sender as DuiPictureBox;
-            string ImageSavePath = "";
-            if (string.IsNullOrEmpty(pes.CachePath))
-            {
-                ImageSavePath = AppDomain.CurrentDomain.BaseDirectory + @"\ImageWallpaper";
-            }
-            else
-            {
-                ImageSavePath = pes.CachePath + @"\ImageWallpaper";
-            }
-
-            //设置墙纸
             try
             {
-                Bitmap bmpWallpaper;
-                WebRequest webreq = WebRequest.Create(dp.Tag.ToString());
-                WebResponse webres = webreq.GetResponse();
-                Stream stream = webres.GetResponseStream();
-                if (!Directory.Exists(ImageSavePath))
-                {
-                    Directory.CreateDirectory(ImageSavePath);
-                }
-                bmpWallpaper = (Bitmap)Image.FromStream(stream);
-                ImageSavePath = ImageSavePath + "\\" + new Uri(dp.Tag.ToString()).Segments[new Uri(dp.Tag.ToString()).Segments.Length - 1];
-                bmpWallpaper.Save(ImageSavePath, ImageFormat.Jpeg);
-                stream.Close();
-                PicDeal.setWallpaperApi(ImageSavePath);
+                DuiButton dbn = sender as DuiButton;
+                string url = dp.Tag.ToString();
+                PlayerForm plF = new PlayerForm();
+                plF.tvUrl = url;
+                plF.Show();
+                plF.AxPlayer_PlayOrPause(url);
             }
             catch (Exception ex)
             {
-                throw new Exception("下载图片失败，原因为：" + ex.Message);
+                throw new Exception("播放视频失败，原因为：" + ex.Message);
             }
         }
 
@@ -254,7 +182,7 @@ namespace DeclineAplay.Controls
         /// </summary>
         /// <param name="imgInfos"></param>
         /// <returns></returns>
-        public Boolean AddImgList(List<BridImg.ImageInfo> imgInfos)
+        public Boolean AddImgList(List<Utils.EDate.DataItem> imgInfos)
         {
             if (imgInfos.Count == 0)
             {
@@ -270,21 +198,21 @@ namespace DeclineAplay.Controls
             string baseID = "0";
             foreach (var imgInfo in imgInfos)
             {
-                baseID = imgInfo.id.ToString();
+                baseID = imgInfo.ID.ToString();
                 DuiBaseControl abaseControl = new DuiBaseControl();
                 abaseControl.Size = new Size(zWidth, zHeight);
                 abaseControl.Location = new Point(i * zWidth, 0);
-                abaseControl.Name = "back_" + imgInfo.id.ToString();
+                abaseControl.Name = "back_" + imgInfo.ID.ToString();
                 //背景图
                 DuiPictureBox dp = new DuiPictureBox();
                 dp.Size = new Size(zWidth - 4, zHeight - 4);
                 int thisWidthScreen = Screen.PrimaryScreen.Bounds.Width;
                 int thisHeiightScreen = Screen.PrimaryScreen.Bounds.Height;
-                dp.Tag = imgInfo.img_1280_1024;
+                dp.Tag = imgInfo.CoverImgUrl;
                 getImagePathByUIrlDelegate newg = new getImagePathByUIrlDelegate(PicDeal.DownloaImage);
-                dp.BackgroundImage = Image.FromFile(newg(imgInfo.url.Replace("__85", "300_161_100")));
+                dp.BackgroundImage = Image.FromFile(newg(imgInfo.CoverImgUrl));
                 dp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                dp.Name = "back_" + imgInfo.id.ToString();
+                dp.Name = "back_" + imgInfo.ID.ToString();
                 dp.Location = new Point(2, 2);
                 //dp.Cursor = System.Windows.Forms.Cursors.Hand;
                 dp.MouseEnter += Dp_MouseEnter;
@@ -293,7 +221,7 @@ namespace DeclineAplay.Controls
                 //图片说明
                 DuiLabel imgTag = new DuiLabel();
                 imgTag.TextRenderMode = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                string ingTxt = (string.IsNullOrEmpty(imgInfo.utag) ? "" : imgInfo.utag);
+                string ingTxt = (string.IsNullOrEmpty(imgInfo.Name) ? imgInfo.Tags : imgInfo.Name);
                 if (ingTxt.Length * 9 > zWidth)
                 {
                     imgTag.Size = new Size(zWidth - 4, 10 * 4);
@@ -310,8 +238,8 @@ namespace DeclineAplay.Controls
                 //imgTag.BackColor = Color.FromArgb(100, 0, 0, 0);
                 imgTag.BackgroundImage = Properties.Resources.mask_shadow;
                 imgTag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                imgTag.Text = imgInfo.utag;
-                imgTag.Name = "imgTag_" + imgInfo.id.ToString();
+                imgTag.Text = imgInfo.Tags;
+                imgTag.Name = "imgTag_" + imgInfo.ID.ToString();
                 imgTag.MouseLeave += Dp_MouseLeave;
 
                 imgTag.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -319,18 +247,18 @@ namespace DeclineAplay.Controls
                 DuiButton btn_Download = new DuiButton();
                 btn_Download.Size = new Size(35, 35);
                 btn_Download.Radius = 35;
-                btn_Download.Name = "btn_Download_" + imgInfo.id.ToString();
+                btn_Download.Name = "btn_Download_" + imgInfo.ID.ToString();
                 btn_Download.Text = "";
                 btn_Download.Location = new Point(0, 0);
                 btn_Download.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Download.AdaptImage = false;
                 btn_Download.IsPureColor = true;
                 btn_Download.BaseColor = Color.Transparent;
-                btn_Download.BackgroundImage = Properties.Resources.dl;
+                btn_Download.BackgroundImage = Properties.Resources.play1;
                 btn_Download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
                 btn_Download.ShowBorder = false;
                 btn_Download.MouseClick += Btn_Download_MouseClick;
-                btn_Download.Tag = "保存|" + imgInfo.url_thumb;
+                btn_Download.Tag = "保存|" + imgInfo.Url;
                 btn_Download.MouseEnter += Btn_Download_MouseEnter;
                 btn_Download.MouseLeave += Btn_Download_MouseLeave;
                 //收藏按钮
@@ -340,15 +268,14 @@ namespace DeclineAplay.Controls
                 btn_sc.Text = "";
                 btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_sc.AdaptImage = false;
-                btn_sc.Name = "btn_Sc_" + imgInfo.id.ToString();
+                btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
                 btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 btn_sc.Radius = 35;
                 btn_sc.ShowBorder = false;
-                btn_sc.BackgroundImage = Properties.Resources.sc0;
+                btn_sc.BackgroundImage = Properties.Resources.stop1;
                 btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                btn_sc.MouseClick += Btn_Sc_MouseClick;
                 btn_sc.IsPureColor = true;
-                btn_sc.Tag = "收藏|" + getSetUrl(imgInfo);
+                btn_sc.Tag = "收藏|" + imgInfo.Url;
                 btn_sc.MouseEnter += Btn_Download_MouseEnter;
                 btn_sc.MouseLeave += Btn_Download_MouseLeave;
                 //设置按钮
@@ -358,14 +285,13 @@ namespace DeclineAplay.Controls
                 btn_Setting.Text = "";
                 btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Setting.AdaptImage = false;
-                btn_Setting.Name = "btn_Setting_" + imgInfo.id.ToString();
+                btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
                 btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 btn_Setting.Radius = 35;
-                btn_Setting.Tag = "设置|" + getSetUrl(imgInfo);
+                btn_Setting.Tag = "设置|" + imgInfo.Url;
                 btn_Setting.ShowBorder = false;
-                btn_Setting.BackgroundImage = Properties.Resources.set;
+                btn_Setting.BackgroundImage = Properties.Resources.sys1;
                 btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                btn_Setting.MouseClick += Btn_Setting_MouseClick;
                 btn_Setting.IsPureColor = true;
                 btn_Setting.MouseEnter += Btn_Download_MouseEnter;
                 btn_Setting.MouseLeave += Btn_Download_MouseLeave;
@@ -381,7 +307,7 @@ namespace DeclineAplay.Controls
                 btnBaseControl.Controls.Add(btn_Download);
                 btnBaseControl.Controls.Add(btn_sc);
                 btnBaseControl.Controls.Add(btn_Setting);
-                btnBaseControl.Name = "btnBaseControl_" + imgInfo.id.ToString();
+                btnBaseControl.Name = "btnBaseControl_" + imgInfo.ID.ToString();
                 btnBaseControl.Visible = false;
 
                 Borders baseBorder = new Borders(baseControl);
@@ -404,98 +330,6 @@ namespace DeclineAplay.Controls
             GC.Collect();
             return true;
         }
-
-        private string getSetUrl(BridImg.ImageInfo ci)
-        {
-            string curl = "";
-            switch (pes.PicSize)
-            {
-                case "default":
-                    curl = ci.url_thumb;
-                    break;
-                case "1600900":
-                    curl = ci.img_1600_900;
-                    break;
-                case "1440900":
-                    curl = ci.img_1440_900;
-                    break;
-                case "12801024":
-                    curl = ci.img_1280_1024;
-                    break;
-                case "1024768":
-                    curl = ci.img_1024_768;
-                    break;
-                case "1280800":
-                    curl = ci.img_1280_800;
-                    break;
-            }
-            return curl;
-        }
-        /// <summary>
-        /// 添加底线控件
-        /// </summary>
-        /// <returns></returns>
-        public bool addIsEndLine()
-        {
-            try
-            {
-                //待实现动态底线显示，提示已加载至尾部
-                //DuiBaseControl abaseControl = new DuiBaseControl();
-                //abaseControl.Size = new Size(this.Width-5, 40);
-                //abaseControl.Location = new Point(0, 0);
-                //abaseControl.Name = "imgListBaseControl_backup";
-
-                //DuiLabel dt = new DuiLabel();
-                //dt.Size = new Size(350,35);
-                //dt.Text = "啊哦，已经是最后一页了！";
-                //dt.Location = new Point((this.Width - 5 - 350) / 2,2);
-                //dt.Font = new Font("微软雅黑", 15F, FontStyle.Regular);
-                //dt.ForeColor = Color.DarkCyan;
-                //this.BackColor = Color.White;
-                int zHeight = 80;
-                //abaseControl.Controls.Add(dt);
-                ctEnd = new EllipseControl();
-                ctEnd.Size = new Size(this.Width - 5, zHeight);
-                ctEnd.Location = new Point(0, 0);
-                ctEnd.Name = "backControlC";//"imgListBaseControl_backup";
-                ctEnd.StrValue = "啊哦，已经是最后一页了！";
-
-                cheight = zHeight - 15;
-                System.Windows.Forms.Timer ctm = new System.Windows.Forms.Timer();
-                ctm.Interval = 50;
-                ctm.Enabled = true;
-                ctm.Tick += Ctm_Tick;
-                //Items.Add(ctEnd);
-                //更新列表
-                RefreshList();
-                GC.Collect();
-                return true;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("底线绘制失败，原因为：" + e.Message);
-            }
-        }
-
-        private void Ctm_Tick(object sender, EventArgs e)
-        {
-            if (cheight >= 10)
-            {
-                ctEnd.Visible = true;
-                ctEnd.CenterPotion = new Point(ctEnd.CenterPotion.X, cheight);
-                cheight = cheight - 5;
-                //ctEnd.Refresh();
-            }
-            else
-            {
-                System.Windows.Forms.Timer tm = sender as System.Windows.Forms.Timer;
-                tm.Enabled = false;
-                cheight = ctEnd.Height;
-                ctEnd.Visible = false;
-                //ctEnd.Refresh();
-            }
-        }
-
         public bool addIsNull()
         {
             try
@@ -576,8 +410,6 @@ namespace DeclineAplay.Controls
         {
             if (RefreshListed != null)
                 RefreshListed(this, new EventArgs());
-            pes = new PropertsUtils();
-            defaultColor = pes.BackColor;
             base.RefreshList();
         }
         #endregion
