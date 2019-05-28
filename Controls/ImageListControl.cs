@@ -28,7 +28,6 @@ namespace DeclineAplay.Controls
         ToolTip toolTip1 = new ToolTip();
         int x, y;//记录鼠标进入控件时的位置
         Color defaultColor = Color.FromArgb(125, 255, 92, 138);
-        int cheight = 0;
         public delegate String getImagePathByUIrlDelegate(string url);
         #region 控件事件
 

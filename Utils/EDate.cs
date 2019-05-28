@@ -57,7 +57,7 @@ namespace DeclineAplay.Utils
             /// <summary>
             /// 
             /// </summary>
-            public int Point { get; set; }
+            public decimal Point { get; set; }
             /// <summary>
             /// 
             /// </summary>
@@ -105,11 +105,11 @@ namespace DeclineAplay.Utils
             /// <summary>
             /// 
             /// </summary>
-            public int recordsSum { get; set; }
+            public decimal recordsSum { get; set; }
             /// <summary>
             /// 
             /// </summary>
-            public int recordsSum2 { get; set; }
+            public decimal recordsSum2 { get; set; }
             /// <summary>
             /// 
             /// </summary>

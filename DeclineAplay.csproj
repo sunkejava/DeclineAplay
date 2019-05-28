@@ -77,6 +77,12 @@
   <ItemGroup>
     <Compile Include="API\Hxc.cs" />
     <Compile Include="AppLogs.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,12 +123,6 @@
       <DependentUpon>LayeredWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,11 +137,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\AnimationControl.cs" />
     <Compile Include="Utils\ConstClass.cs" />
     <Compile Include="Utils\EDate.cs" />
     <Compile Include="Utils\PicDeal.cs" />
     <Compile Include="Utils\PlayClass.cs" />
+    <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\Win32.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,9 +164,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LayeredWindow.resx">
       <DependentUpon>LayeredWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
@@ -479,6 +481,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bnull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skinPanel1.NormlBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xlbz_w.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

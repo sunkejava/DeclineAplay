@@ -643,6 +643,16 @@ namespace DeclineAplay.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap mask_shadow {
             get {
                 object obj = ResourceManager.GetObject("mask_shadow", resourceCulture);
@@ -766,6 +776,36 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap resize_bottom_right {
             get {
                 object obj = ResourceManager.GetObject("resize_bottom_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap search0 {
+            get {
+                object obj = ResourceManager.GetObject("search0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap search1 {
+            get {
+                object obj = ResourceManager.GetObject("search1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap skinPanel1_NormlBack {
+            get {
+                object obj = ResourceManager.GetObject("skinPanel1_NormlBack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -936,6 +976,16 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap volume2 {
             get {
                 object obj = ResourceManager.GetObject("volume2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap xlbz_w {
+            get {
+                object obj = ResourceManager.GetObject("xlbz_w", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
