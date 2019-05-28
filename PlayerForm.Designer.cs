@@ -31,8 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
             this.BaseControl = new LayeredSkin.Controls.LayeredBaseControl();
             this.playPanel = new LayeredSkin.Controls.LayeredPanel();
+            this.tkb_sound = new LayeredSkin.Controls.LayeredTrackBar();
+            this.tkb_basic = new LayeredSkin.Controls.LayeredTrackBar();
             this.panel_min.SuspendLayout();
             this.panel_close.SuspendLayout();
+            this.playPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_min
@@ -122,12 +125,76 @@
             this.playPanel.Borders.TopColor = System.Drawing.Color.Empty;
             this.playPanel.Borders.TopWidth = 1;
             this.playPanel.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("playPanel.Canvas")));
+            this.playPanel.Controls.Add(this.tkb_sound);
+            this.playPanel.Controls.Add(this.tkb_basic);
             this.playPanel.Location = new System.Drawing.Point(0, 479);
             this.playPanel.Name = "playPanel";
             this.playPanel.Size = new System.Drawing.Size(730, 40);
             this.playPanel.TabIndex = 7;
             // 
-            // MainForm
+            // tkb_sound
+            // 
+            this.tkb_sound.AdaptImage = true;
+            this.tkb_sound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tkb_sound.BackImage = null;
+            this.tkb_sound.BackLineColor = System.Drawing.Color.Gray;
+            this.tkb_sound.Borders.BottomColor = System.Drawing.Color.Empty;
+            this.tkb_sound.Borders.BottomWidth = 1;
+            this.tkb_sound.Borders.LeftColor = System.Drawing.Color.Empty;
+            this.tkb_sound.Borders.LeftWidth = 1;
+            this.tkb_sound.Borders.RightColor = System.Drawing.Color.Empty;
+            this.tkb_sound.Borders.RightWidth = 1;
+            this.tkb_sound.Borders.TopColor = System.Drawing.Color.Empty;
+            this.tkb_sound.Borders.TopWidth = 1;
+            this.tkb_sound.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("tkb_sound.Canvas")));
+            this.tkb_sound.ControlRectangle = new System.Drawing.Rectangle(5, 5, 40, 2);
+            this.tkb_sound.LineWidth = 2;
+            this.tkb_sound.Location = new System.Drawing.Point(149, 14);
+            this.tkb_sound.MouseCanControl = true;
+            this.tkb_sound.Name = "tkb_sound";
+            this.tkb_sound.Orientation = LayeredSkin.Controls.Orientations.Horizontal;
+            this.tkb_sound.PointImage = ((System.Drawing.Image)(resources.GetObject("tkb_sound.PointImage")));
+            this.tkb_sound.PointImageHover = null;
+            this.tkb_sound.PointImagePressed = null;
+            this.tkb_sound.PointState = LayeredSkin.Controls.ControlStates.Normal;
+            this.tkb_sound.Size = new System.Drawing.Size(50, 12);
+            this.tkb_sound.SurfaceImage = null;
+            this.tkb_sound.SurfaceLineColor = System.Drawing.Color.White;
+            this.tkb_sound.TabIndex = 44;
+            this.tkb_sound.Value = 0.5D;
+            // 
+            // tkb_basic
+            // 
+            this.tkb_basic.AdaptImage = true;
+            this.tkb_basic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tkb_basic.BackImage = null;
+            this.tkb_basic.BackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.tkb_basic.Borders.BottomColor = System.Drawing.Color.Empty;
+            this.tkb_basic.Borders.BottomWidth = 1;
+            this.tkb_basic.Borders.LeftColor = System.Drawing.Color.Empty;
+            this.tkb_basic.Borders.LeftWidth = 1;
+            this.tkb_basic.Borders.RightColor = System.Drawing.Color.Empty;
+            this.tkb_basic.Borders.RightWidth = 1;
+            this.tkb_basic.Borders.TopColor = System.Drawing.Color.Empty;
+            this.tkb_basic.Borders.TopWidth = 1;
+            this.tkb_basic.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("tkb_basic.Canvas")));
+            this.tkb_basic.ControlRectangle = new System.Drawing.Rectangle(5, 5, 383, 15);
+            this.tkb_basic.LineWidth = 3;
+            this.tkb_basic.Location = new System.Drawing.Point(223, 8);
+            this.tkb_basic.MouseCanControl = true;
+            this.tkb_basic.Name = "tkb_basic";
+            this.tkb_basic.Orientation = LayeredSkin.Controls.Orientations.Horizontal;
+            this.tkb_basic.PointImage = ((System.Drawing.Image)(resources.GetObject("tkb_basic.PointImage")));
+            this.tkb_basic.PointImageHover = ((System.Drawing.Image)(resources.GetObject("tkb_basic.PointImageHover")));
+            this.tkb_basic.PointImagePressed = ((System.Drawing.Image)(resources.GetObject("tkb_basic.PointImagePressed")));
+            this.tkb_basic.PointState = LayeredSkin.Controls.ControlStates.Normal;
+            this.tkb_basic.Size = new System.Drawing.Size(393, 25);
+            this.tkb_basic.SurfaceImage = null;
+            this.tkb_basic.SurfaceLineColor = System.Drawing.Color.White;
+            this.tkb_basic.TabIndex = 43;
+            this.tkb_basic.Value = 0.7D;
+            // 
+            // PlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -139,7 +206,7 @@
             this.Controls.Add(this.BaseControl);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
-            this.Name = "MainForm";
+            this.Name = "PlayerForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);
@@ -150,6 +217,7 @@
             this.Controls.SetChildIndex(this.playPanel, 0);
             this.panel_min.ResumeLayout(false);
             this.panel_close.ResumeLayout(false);
+            this.playPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -157,5 +225,7 @@
         #endregion
         public LayeredSkin.Controls.LayeredBaseControl BaseControl;
         private LayeredSkin.Controls.LayeredPanel playPanel;
+        public LayeredSkin.Controls.LayeredTrackBar tkb_basic;
+        private LayeredSkin.Controls.LayeredTrackBar tkb_sound;
     }
 }

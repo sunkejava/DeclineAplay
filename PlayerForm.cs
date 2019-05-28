@@ -385,6 +385,8 @@ namespace DeclineAplay
             if (!lw.Visible)
             {
                 lw.Show();
+                lw.TopMost = true;
+                this.TopMost = true;
             }
             if (lw.axPlayer.GetState() == 5)
             {
