@@ -50,7 +50,6 @@ namespace DeclineAplay
         public PlayerForm()
         {
             InitializeComponent();
-            //creatTimerforLayeredWindowShow();//定时器要随对象一起创建
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -68,23 +67,20 @@ namespace DeclineAplay
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
-            BaseControl.BringToFront();
-            panel_close.BringToFront();
-            panel_min.BringToFront();
             tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
             //"http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
-            dl_PlayerExplain.Text = "鼠标经过";
+            //dl_PlayerExplain.Text = "鼠标经过";
             playPanel.Visible = true;
             Control_MouseMove(sender, (MouseEventArgs)e);
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
         {
-            dl_PlayerExplain.Text = "鼠标离开";
+            //dl_PlayerExplain.Text = "鼠标离开";
             playPanel.Visible = false;
         }
 
@@ -92,31 +88,31 @@ namespace DeclineAplay
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                dl_PlayerExplain.Text = "鼠标左键单击";
+                //dl_PlayerExplain.Text = "鼠标左键单击";
                 AxPlayer_PlayOrPause(tvUrl);
             }
             else
             {
-                dl_PlayerExplain.Text = "鼠标右键单击";
+                //dl_PlayerExplain.Text = "鼠标右键单击";
             }
 
         }
 
         private void BaseControl_MouseHover(object sender, EventArgs e)
         {
-            dl_PlayerExplain.Text = "鼠标悬停";
+            //dl_PlayerExplain.Text = "鼠标悬停";
             //playerControl.Visible = false;
         }
 
         private void BaseControl_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            dl_PlayerExplain.Text = "鼠标双击";
+            //dl_PlayerExplain.Text = "鼠标双击";
             fullScreen();
         }
 
         private void BaseControl_KeyPress(object sender, KeyPressEventArgs e)
         {
-            dl_PlayerExplain.Text = e.KeyChar.ToString();
+            //dl_PlayerExplain.Text = e.KeyChar.ToString();
             switch ((int)e.KeyChar)
             {
                 case Utils.ConstClass.VK_SPACE:
@@ -124,7 +120,7 @@ namespace DeclineAplay
                     {
                         lw.Show();
                     }
-                    dl_PlayerExplain.Text = ("空格键事件");
+                    //dl_PlayerExplain.Text = ("空格键事件");
                     AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 default:
@@ -139,7 +135,7 @@ namespace DeclineAplay
             switch (e.KeyValue)
             {
                 case Utils.ConstClass.VK_LEFT:
-                    dl_PlayerExplain.Text = ("键盘左方向键事件");
+                    //dl_PlayerExplain.Text = ("键盘左方向键事件");
                     break;
                 case Utils.ConstClass.VK_UP:
                     if (volumeNum < 1000)
@@ -150,7 +146,7 @@ namespace DeclineAplay
                     dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_RIGHT:
-                    dl_PlayerExplain.Text = ("键盘右方向键事件");
+                    //dl_PlayerExplain.Text = ("键盘右方向键事件");
                     break;
                 case Utils.ConstClass.VK_DOWN:
                     if (volumeNum > 0)
@@ -161,7 +157,7 @@ namespace DeclineAplay
                     dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_ESCAPE:
-                    dl_PlayerExplain.Text = ("键盘ESC键事件");
+                    //dl_PlayerExplain.Text = ("键盘ESC键事件");
                     fullScreen();
                     break;
                 default:
@@ -192,11 +188,9 @@ namespace DeclineAplay
                 {
                     dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
                 }
-                BaseControl.Refresh();
                 btnScreenShot.Location = new Point(playPanel.Width - 150, 5);
                 btnFullScreen.Location = new Point(playPanel.Width - 100, 5);
                 btnList.Location = new Point(playPanel.Width - 50, 5);
-                this.Refresh();
             }
         }
 
@@ -221,9 +215,7 @@ namespace DeclineAplay
                 {
                     dl_PlayerExplain.Location = new Point(playerPoint.X - this.Location.X, playerPoint.Y - this.Location.Y);
                 }
-                BaseControl.Refresh();
             }
-            this.Refresh();
         }
         #endregion
 
@@ -387,6 +379,8 @@ namespace DeclineAplay
                 lw.Show();
                 lw.TopMost = true;
                 this.TopMost = true;
+                playPanel.BringToFront();
+                BindPlayerControl();
             }
             if (lw.axPlayer.GetState() == 5)
             {
@@ -397,12 +391,20 @@ namespace DeclineAplay
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
                 BaseControl.BackgroundImage = null;
-                BaseControl.Refresh();
             }
             else if (lw.axPlayer.GetState() == 3)
             {
                 lw.axPlayer.Play();
             }
+        }
+        /// <summary>
+        /// 绑定播放器相关控制到控件
+        /// </summary>
+        private void BindPlayerControl()
+        {
+            lb_bfjd.Text = "00:00:00/" + TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetDuration()));
+            tkb_jdt.Enabled = true;
+            timer1.Start();
         }
         #endregion
 
@@ -433,6 +435,7 @@ namespace DeclineAplay
             btnStop.BackgroundImage = Properties.Resources.stop1;
             btnStop.BackgroundImageLayout = ImageLayout.Zoom;
             btnStop.IsPureColor = true;
+            btnStop.Cursor = Cursors.Hand;
             btnStop.Tag = "停止";
             //上一个按钮
             btnPrev.Name = "btnPrev";
@@ -441,6 +444,7 @@ namespace DeclineAplay
             btnPrev.BaseColor = Color.Transparent;
             btnPrev.BackgroundImage = Properties.Resources.sys1;
             btnPrev.BackgroundImageLayout = ImageLayout.Zoom;
+            btnPrev.Cursor = Cursors.Hand;
             btnPrev.IsPureColor = true;
             btnPrev.Tag = "上一个";
             //播放按钮
@@ -451,6 +455,7 @@ namespace DeclineAplay
             btnPlay.BackgroundImage = Properties.Resources.play1;
             btnPlay.BackgroundImageLayout = ImageLayout.Zoom;
             btnPlay.IsPureColor = true;
+            btnPlay.Cursor = Cursors.Hand;
             btnPlay.Tag = "播放";
             //下一个按钮
             btnNext.Name = "btnNext";
@@ -460,6 +465,7 @@ namespace DeclineAplay
             btnNext.BackgroundImage = Properties.Resources.xys1;
             btnNext.BackgroundImageLayout = ImageLayout.Zoom;
             btnNext.IsPureColor = true;
+            btnNext.Cursor = Cursors.Hand;
             btnNext.Tag = "下一个";
             //打开文件按钮
             btnOpenFile.Name = "btnOpenFile";
@@ -469,6 +475,7 @@ namespace DeclineAplay
             btnOpenFile.BackgroundImage = Properties.Resources.dkwj1;
             btnOpenFile.BackgroundImageLayout = ImageLayout.Zoom;
             btnOpenFile.IsPureColor = true;
+            btnOpenFile.Cursor = Cursors.Hand;
             btnOpenFile.Tag = "打开文件";
             //声音按钮
             btnVolume.Name = "btnVolume";
@@ -478,6 +485,7 @@ namespace DeclineAplay
             btnVolume.BackgroundImage = Properties.Resources.volume1;
             btnVolume.BackgroundImageLayout = ImageLayout.Zoom;
             btnVolume.IsPureColor = true;
+            btnVolume.Cursor = Cursors.Hand;
             btnVolume.Tag = "静音";
             //声音进度条
 
@@ -493,6 +501,7 @@ namespace DeclineAplay
             btnScreenShot.BackgroundImage = Properties.Resources.jietu1;
             btnScreenShot.BackgroundImageLayout = ImageLayout.Zoom;
             btnScreenShot.IsPureColor = true;
+            btnScreenShot.Cursor = Cursors.Hand;
             btnScreenShot.Tag = "截图";
             //全屏按钮
             btnFullScreen.Name = "btnFullScreen";
@@ -502,6 +511,7 @@ namespace DeclineAplay
             btnFullScreen.BackgroundImage = Properties.Resources.allSize1;
             btnFullScreen.BackgroundImageLayout = ImageLayout.Zoom;
             btnFullScreen.IsPureColor = true;
+            btnFullScreen.Cursor = Cursors.Hand;
             btnFullScreen.Tag = "全屏";
             //列表按钮
             btnList.Name = "btnList";
@@ -511,6 +521,7 @@ namespace DeclineAplay
             btnList.BackgroundImage = Properties.Resources.list1;
             btnList.BackgroundImageLayout = ImageLayout.Zoom;
             btnList.IsPureColor = true;
+            btnList.Cursor = Cursors.Hand;
             btnList.Tag = "列表";
             playPanel.DUIControls.AddRange(new LayeredSkin.DirectUI.DuiBaseControl[] {
                 btnStop,btnPrev,btnPlay,btnNext,btnOpenFile,btnVolume,btnScreenShot,btnFullScreen,btnList
@@ -527,15 +538,15 @@ namespace DeclineAplay
         private void SetDefaultSkin()
         {
             BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
-            btnStop.Location = new Point(20, 5);
-            btnPrev.Location = new Point(70, 5);
-            btnPlay.Location = new Point(120, 5);
-            btnNext.Location = new Point(170, 5);
-            btnOpenFile.Location = new Point(220, 5);
-            btnVolume.Location = new Point(270, 5);
-            btnScreenShot.Location = new Point(playPanel.Width - 150, 5);
-            btnFullScreen.Location = new Point(playPanel.Width - 100, 5);
-            btnList.Location = new Point(playPanel.Width - 50, 5);
+            btnStop.Location = new Point(20, 25);
+            btnPrev.Location = new Point(70, 25);
+            btnPlay.Location = new Point(120, 25);
+            btnNext.Location = new Point(170, 25);
+            btnOpenFile.Location = new Point(220, 25);
+            btnVolume.Location = new Point(270, 25);
+            btnScreenShot.Location = new Point(playPanel.Width - 150, 25);
+            btnFullScreen.Location = new Point(playPanel.Width - 100, 25);
+            btnList.Location = new Point(playPanel.Width - 50, 25);
         }
 
         private void Panel_Top_MouseDown(object sender, MouseEventArgs e)
@@ -675,49 +686,44 @@ namespace DeclineAplay
             //lw.axPlayer.Focus();
         }
 
-        [DllImport("user32.dll", EntryPoint = "SetParent")]
-        public static extern int SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        [DllImport("User32.dll")]
-        public static extern IntPtr GetForegroundWindow();     //获取活动窗口句柄
-
-        private void creatTimerforLayeredWindowShow()
+        /// <summary>
+        /// 时间格式转换
+        /// </summary>
+        /// <param name="span"></param>
+        /// <returns></returns>
+        string TimeToString(TimeSpan span)
         {
-            LayeredWindowShowTimer.Interval = 50;
-            LayeredWindowShowTimer.Elapsed += LayeredWindowShowTimer_Elapsed; //定时时间到的时候的回调函数
-            LayeredWindowShowTimer.AutoReset = true;//需要反复检测鼠标
-            LayeredWindowShowTimer.Enabled = true;  //启动定时器
-
+            return span.Hours.ToString("00") + ":" +
+            span.Minutes.ToString("00") + ":" +
+            span.Seconds.ToString("00");
         }
 
-        /* 定时器回调函数 */
-        private void LayeredWindowShowTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            //如果鼠标在窗体边缘附近  
-            if (this.WindowState != FormWindowState.Minimized)
-            {
-                IntPtr hWnd = GetForegroundWindow();    //获取活动窗口句柄
-
-                if (flg_LayeredWindow_is_show == 0 && this.Handle == hWnd)
-                {
-                    //lw.Location = new Point(this.Left, this.Top);
-                    lw.TopMost = true;
-                    this.TopMost = true;
-                    //lw.TopLevel = false;
-                    SetParent(this.Handle, lw.Handle);
-                    lw.Show();
-                }
-                flg_LayeredWindow_is_show = 1;
-            }
-            else
-            {
-                lw.Hide();
-                //lw.TopMost = false;
-                //this.TopMost = false;
-                flg_LayeredWindow_is_show = 0;
-            }
+            lb_bfjd.Text = TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetPosition())) + "/" + TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetDuration()));
+            tkb_jdt.Value = lw.axPlayer.GetPosition() <= 0 ? 0 : lw.axPlayer.GetPosition() / lw.axPlayer.GetDuration();
+            tkb_sound.Value = lw.axPlayer.GetVolume() / 1000;
         }
+
         #endregion
-
+        /// <summary>
+        /// 播放进度调整
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tkb_jdt_ValueChanged(object sender, EventArgs e)
+        {
+            lw.axPlayer.SetPosition((int)(tkb_jdt.Value * lw.axPlayer.GetDuration()));
+            lb_bfjd.Text = TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetPosition())) + "/" + TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetDuration()));
+        }
+        /// <summary>
+        /// 声音大小调整
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tkb_sound_ValueChanged(object sender, EventArgs e)
+        {
+            lw.axPlayer.SetVolume((int)(tkb_sound.Value * 1000));  //10倍
+        }
     }
 }
