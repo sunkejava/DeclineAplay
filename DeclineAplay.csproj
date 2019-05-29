@@ -98,12 +98,6 @@
     <Compile Include="Controls\ImageListControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\PlayControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\PlayControl.Designer.cs">
-      <DependentUpon>PlayControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RadiusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,9 +146,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ButtonControl.resx">
       <DependentUpon>ButtonControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PlayControl.resx">
-      <DependentUpon>PlayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RadiusControl.resx">
       <DependentUpon>RadiusControl.cs</DependentUpon>

@@ -92,26 +92,24 @@ namespace DeclineAplay
             }
             else
             {
-                dl_PlayerExplain.Text = "鼠标右键单击";
+                updatePlayerExplain("鼠标右键单击");
             }
-
         }
 
         private void BaseControl_MouseHover(object sender, EventArgs e)
         {
-            //dl_PlayerExplain.Text = "鼠标悬停";
+            //updatePlayerExplain("鼠标悬停");
             //playPanel.Visible = false;
         }
 
         private void BaseControl_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //dl_PlayerExplain.Text = "鼠标双击";
+            //updatePlayerExplain("鼠标双击");
             fullScreen();
         }
 
         private void BaseControl_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //dl_PlayerExplain.Text = e.KeyChar.ToString();
             switch ((int)e.KeyChar)
             {
                 case Utils.ConstClass.VK_SPACE:
@@ -119,7 +117,7 @@ namespace DeclineAplay
                     {
                         lw.Show();
                     }
-                    //dl_PlayerExplain.Text = ("空格键事件");
+                    //updatePlayerExplain("空格键事件");
                     AxPlayer_PlayOrPause(tvUrl);//("http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0");
                     break;
                 default:
@@ -129,24 +127,24 @@ namespace DeclineAplay
 
         private void BaseControl_KeyDown(object sender, KeyEventArgs e)
         {
-            dl_PlayerExplain.Text = e.KeyValue.ToString();
+            updatePlayerExplain(e.KeyValue.ToString());
         }
 
         private void BaseControl_KeyUp(object sender, KeyEventArgs e)
         {
-            dl_PlayerExplain.Text = e.KeyValue.ToString();
+            updatePlayerExplain(e.KeyValue.ToString());
             switch (e.KeyValue)
             {
                 case Utils.ConstClass.VK_LEFT:
-                    //dl_PlayerExplain.Text = ("键盘左方向键事件");
+                    //updatePlayerExplain("键盘左方向键事件");
                     lw.axPlayer.SetPosition((lw.axPlayer.GetPosition() - 10000 < 0 ? 0 : lw.axPlayer.GetPosition() - 10000));//快退10S
-                    dl_PlayerExplain.Text = ("快退10秒");
+                    updatePlayerExplain("快退10秒");
                     isControlValid = false;
                     break;
                 case Utils.ConstClass.VK_RIGHT:
-                    //dl_PlayerExplain.Text = ("键盘右方向键事件");
+                    //updatePlayerExplain("键盘右方向键事件");
                     lw.axPlayer.SetPosition((lw.axPlayer.GetPosition() + 10000 > lw.axPlayer.GetDuration() ? lw.axPlayer.GetDuration() - 1000 : lw.axPlayer.GetPosition() + 10000));//快进10S
-                    dl_PlayerExplain.Text = ("快进10秒");
+                    updatePlayerExplain("快进10秒");
                     isControlValid = false;
                     break;
 
@@ -157,7 +155,7 @@ namespace DeclineAplay
                         volumeNum += 10;
                     }
                     lw.axPlayer.SetVolume(volumeNum);
-                    dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
+                    updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_DOWN:
                     volumeNum = lw.axPlayer.GetVolume();
@@ -166,10 +164,10 @@ namespace DeclineAplay
                         volumeNum -= 10;
                     }
                     lw.axPlayer.SetVolume(volumeNum);
-                    dl_PlayerExplain.Text = ("当前音量：" + lw.axPlayer.GetVolume().ToString());
+                    updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_ESCAPE:
-                    //dl_PlayerExplain.Text = ("键盘ESC键事件");
+                    //updatePlayerExplain("键盘ESC键事件");
                     fullScreen();
                     break;
                 default:
@@ -244,25 +242,25 @@ namespace DeclineAplay
             switch (e.nNewState)
             {
                 case 0: //准备就绪
-                    dl_PlayerExplain.Text = "准备就绪";
+                    updatePlayerExplain("准备就绪");
                     break;
                 case 1: //正在打开
-                    dl_PlayerExplain.Text = "正在打开";
+                    updatePlayerExplain("正在打开");
                     break;
                 case 2://正在暂停
-                    dl_PlayerExplain.Text = "正在暂停";
+                    updatePlayerExplain("正在暂停");
                     break;
                 case 3://暂停中
-                    dl_PlayerExplain.Text = "暂停中";
+                    updatePlayerExplain("暂停中");
                     break;
                 case 4://正在开始播放
-                    dl_PlayerExplain.Text = "正在开始播放";
+                    updatePlayerExplain("正在开始播放");
                     break;
                 case 5://播放中
-                    dl_PlayerExplain.Text = "播放中";
+                    updatePlayerExplain("播放中");
                     break;
                 case 6://正在开始关闭
-                    dl_PlayerExplain.Text = "正在开始关闭";
+                    updatePlayerExplain("正在开始关闭");
                     break;
                 default:
                     break;
@@ -285,14 +283,14 @@ namespace DeclineAplay
         /// <param name="e"></param>
         private void AxPlayer_OnBuffer(object sender, AxAPlayer3Lib._IPlayerEvents_OnBufferEvent e)
         {
-            //if (e.nPercent != 100)
-            //{
-            //    dl_PlayerExplain.Text = "正在缓冲...(" + e.nPercent + "%)";
-            //}
-            //else
-            //{
-            //    dl_PlayerExplain.Text = "正在播放"; ;
-            //}
+            if (e.nPercent != 100)
+            {
+                updatePlayerExplain("正在缓冲(" + lw.axPlayer.GetBufferProgress().ToString() + "%)  下载速度：" + lw.axPlayer.GetConfig(41) + "KB/s");
+            }
+            else
+            {
+                updatePlayerExplain("正在播放"); ;
+            }
         }
         /// <summary>
         /// 鼠标键盘操作事件
@@ -455,7 +453,7 @@ namespace DeclineAplay
                 dl_PlayerExplain = new DuiLabel();
                 BaseControl.DUIControls.Add(dl_PlayerExplain);
             }
-            dl_PlayerExplain.Text = "";
+            updatePlayerExplain("");
             dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
             dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
             dl_PlayerExplain.Size = new Size(200, 20);
@@ -889,7 +887,20 @@ namespace DeclineAplay
             }
             if (lw.axPlayer.GetBufferProgress() > 0)
             {
-                dl_PlayerExplain.Text = "正在缓冲(" + lw.axPlayer.GetBufferProgress().ToString() + "%)  下载速度：" + lw.axPlayer.GetConfig(41) + "KB/s";
+                updatePlayerExplain("正在缓冲(" + lw.axPlayer.GetBufferProgress().ToString() + "%)  下载速度：" + lw.axPlayer.GetConfig(41) + "KB/s");
+            }
+        }
+        delegate void AsynupdatePlayerExplain(string textStr);
+        private void updatePlayerExplain(string textStr)
+        {
+            if (this.BaseControl.InvokeRequired)
+            {
+                AsynupdatePlayerExplain au = new AsynupdatePlayerExplain(updatePlayerExplain);
+                this.Invoke(au, new object[] { textStr });
+            }
+            else
+            {
+                dl_PlayerExplain.Text = textStr;
             }
         }
         #endregion
