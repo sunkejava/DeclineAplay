@@ -105,6 +105,7 @@
             this.BaseControl.Name = "BaseControl";
             this.BaseControl.Size = new System.Drawing.Size(730, 520);
             this.BaseControl.TabIndex = 6;
+            this.BaseControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BaseControl_KeyDown);
             this.BaseControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BaseControl_KeyPress);
             this.BaseControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BaseControl_KeyUp);
             this.BaseControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseClick);
@@ -117,7 +118,7 @@
             // 
             // playPanel
             // 
-            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.playPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.playPanel.Borders.BottomColor = System.Drawing.Color.Empty;
@@ -161,7 +162,7 @@
             // tkb_sound
             // 
             this.tkb_sound.AdaptImage = true;
-            this.tkb_sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tkb_sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tkb_sound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tkb_sound.BackImage = null;
@@ -175,9 +176,9 @@
             this.tkb_sound.Borders.TopColor = System.Drawing.Color.Empty;
             this.tkb_sound.Borders.TopWidth = 1;
             this.tkb_sound.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("tkb_sound.Canvas")));
-            this.tkb_sound.ControlRectangle = new System.Drawing.Rectangle(5, 5, 231, 2);
+            this.tkb_sound.ControlRectangle = new System.Drawing.Rectangle(5, 5, 247, 2);
             this.tkb_sound.LineWidth = 2;
-            this.tkb_sound.Location = new System.Drawing.Point(327, 34);
+            this.tkb_sound.Location = new System.Drawing.Point(312, 34);
             this.tkb_sound.MouseCanControl = true;
             this.tkb_sound.Name = "tkb_sound";
             this.tkb_sound.Orientation = LayeredSkin.Controls.Orientations.Horizontal;
@@ -185,17 +186,18 @@
             this.tkb_sound.PointImageHover = null;
             this.tkb_sound.PointImagePressed = null;
             this.tkb_sound.PointState = LayeredSkin.Controls.ControlStates.Normal;
-            this.tkb_sound.Size = new System.Drawing.Size(241, 12);
+            this.tkb_sound.Size = new System.Drawing.Size(257, 12);
             this.tkb_sound.SurfaceImage = null;
             this.tkb_sound.SurfaceLineColor = System.Drawing.Color.White;
             this.tkb_sound.TabIndex = 44;
             this.tkb_sound.Value = 0.5D;
-            this.tkb_sound.ValueChanged += new System.EventHandler(this.tkb_sound_ValueChanged);
+            this.tkb_sound.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseDown);
+            this.tkb_sound.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tkb_sound_MouseUp);
             // 
             // tkb_jdt
             // 
             this.tkb_jdt.AdaptImage = true;
-            this.tkb_jdt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tkb_jdt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tkb_jdt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tkb_jdt.BackImage = null;
@@ -224,7 +226,8 @@
             this.tkb_jdt.SurfaceLineColor = System.Drawing.Color.White;
             this.tkb_jdt.TabIndex = 43;
             this.tkb_jdt.Value = 0.7D;
-            this.tkb_jdt.ValueChanged += new System.EventHandler(this.tkb_jdt_ValueChanged);
+            this.tkb_jdt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseDown);
+            this.tkb_jdt.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseUp);
             // 
             // timer1
             // 
@@ -243,14 +246,15 @@
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
             this.Name = "PlayerForm";
+            this.Radius = 0;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Controls.SetChildIndex(this.BaseControl, 0);
+            this.Controls.SetChildIndex(this.playPanel, 0);
             this.Controls.SetChildIndex(this.panel_close, 0);
             this.Controls.SetChildIndex(this.panel_min, 0);
-            this.Controls.SetChildIndex(this.playPanel, 0);
             this.panel_min.ResumeLayout(false);
             this.panel_close.ResumeLayout(false);
             this.playPanel.ResumeLayout(false);
@@ -261,9 +265,9 @@
         #endregion
         public LayeredSkin.Controls.LayeredBaseControl BaseControl;
         private LayeredSkin.Controls.LayeredPanel playPanel;
-        public LayeredSkin.Controls.LayeredTrackBar tkb_jdt;
-        private LayeredSkin.Controls.LayeredTrackBar tkb_sound;
-        private LayeredSkin.Controls.LayeredLabel lb_bfjd;
         private System.Windows.Forms.Timer timer1;
+        private LayeredSkin.Controls.LayeredLabel lb_bfjd;
+        private LayeredSkin.Controls.LayeredTrackBar tkb_sound;
+        public LayeredSkin.Controls.LayeredTrackBar tkb_jdt;
     }
 }

@@ -84,7 +84,12 @@ namespace DeclineAplay.Utils
                     break;
             }
         }
-
+        /// <summary>
+        /// 显示控件带动画
+        /// </summary>
+        /// <param name="control">控件对象</param>
+        /// <param name="visible">是否显示</param>
+        /// <param name="direction">动画方向</param>
         public static void ShowControl(Control control, bool visible, AnchorStyles direction = AnchorStyles.None)
         {
             if (direction == AnchorStyles.None)
