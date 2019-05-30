@@ -58,8 +58,8 @@ namespace DeclineAplay
         private void MainForm_Load(object sender, EventArgs e)
         {
             #region 变量初始
-            //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
-            tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
+            tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
+            //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
             tvName = string.IsNullOrEmpty(tvName) ? "纵有疾风起，人生不言弃" : tvName;
             tkb_jdt.Value = 0;
             tkb_jdt.Enabled = false;
@@ -412,6 +412,11 @@ namespace DeclineAplay
             if (lw.axPlayer.GetState() == 5)
             {
                 lw.axPlayer.Pause();
+                if (btnPlay != null)
+                {
+                    btnPlay.BackgroundImage = Properties.Resources.play1;
+                    btnPlay.Tag = "播放";
+                }
             }
             else if (lw.axPlayer.GetState() == 0)
             {
@@ -419,10 +424,20 @@ namespace DeclineAplay
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
                 BaseControl.BackgroundImage = null;
+                if (btnPlay != null)
+                {
+                    btnPlay.BackgroundImage = Properties.Resources.pause1;
+                    btnPlay.Tag = "暂停";
+                }
             }
             else if (lw.axPlayer.GetState() == 3)
             {
                 lw.axPlayer.Play();
+                if (btnPlay != null)
+                {
+                    btnPlay.BackgroundImage = Properties.Resources.pause1;
+                    btnPlay.Tag = "暂停";
+                }
             }
         }
         /// <summary>
@@ -633,8 +648,15 @@ namespace DeclineAplay
                 case "btnPrev"://上一个
                     mbu.BackgroundImage = Properties.Resources.sys1;
                     break;
-                case "btnPlay"://播放或暂停
-                    mbu.BackgroundImage = Properties.Resources.play1;
+                case "btnPlay"://播放或暂停;
+                    //if (mbu.BackgroundImage == Properties.Resources.play2)
+                    //{
+                    //    mbu.BackgroundImage = Properties.Resources.play1;
+                    //}
+                    //else
+                    //{
+                    //    mbu.BackgroundImage = Properties.Resources.pause1;
+                    //}
                     break;
                 case "btnNext"://下一个
                     mbu.BackgroundImage = Properties.Resources.xys1;
@@ -672,7 +694,14 @@ namespace DeclineAplay
                     mbu.BackgroundImage = Properties.Resources.sys2;
                     break;
                 case "btnPlay"://播放或暂停
-                    mbu.BackgroundImage = Properties.Resources.play2;
+                    //if (mbu.BackgroundImage == Properties.Resources.play1)
+                    //{
+                    //    mbu.BackgroundImage = Properties.Resources.play2;
+                    //}
+                    //else
+                    //{
+                    //    mbu.BackgroundImage = Properties.Resources.pause2;
+                    //}
                     break;
                 case "btnNext"://下一个
                     mbu.BackgroundImage = Properties.Resources.xys2;
@@ -703,13 +732,13 @@ namespace DeclineAplay
             switch (mbu.Name)
             {
                 case "btnStop"://停止按钮
-
+                    lw.axPlayer.Close();
                     break;
                 case "btnPrev"://上一个
 
                     break;
                 case "btnPlay"://播放或暂停
-
+                    AxPlayer_PlayOrPause(tvUrl);
                     break;
                 case "btnNext"://下一个
 
@@ -724,7 +753,7 @@ namespace DeclineAplay
 
                     break;
                 case "btnFullScreen"://全屏
-
+                    fullScreen();
                     break;
                 case "btnList"://列表
 
