@@ -209,6 +209,7 @@ namespace DeclineAplay.Controls
             string baseID = "0";
             foreach (var imgInfo in imgInfos)
             {
+                EDate.DataItem newImgInfo = isValidImgInfo(imgInfo);
                 baseID = imgInfo.ID.ToString();
                 DuiBaseControl abaseControl = new DuiBaseControl();
                 abaseControl.Size = new Size(zWidth, zHeight);
@@ -219,9 +220,9 @@ namespace DeclineAplay.Controls
                 dp.Size = new Size(zWidth - 4, zHeight - 4);
                 int thisWidthScreen = Screen.PrimaryScreen.Bounds.Width;
                 int thisHeiightScreen = Screen.PrimaryScreen.Bounds.Height;
-                dp.Tag = imgInfo.CoverImgUrl;
+                dp.Tag = newImgInfo.CoverImgUrl;
                 getImagePathByUIrlDelegate newg = new getImagePathByUIrlDelegate(PicDeal.DownloaImage);
-                dp.BackgroundImage = Image.FromFile(newg(imgInfo.CoverImgUrl));
+                dp.BackgroundImage = Image.FromFile(newg(newImgInfo.CoverImgUrl));
                 dp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                 dp.Name = "back_" + imgInfo.ID.ToString();
                 dp.Location = new Point(2, 2);
@@ -279,7 +280,7 @@ namespace DeclineAplay.Controls
                 btn_Download.Radius = 35;
                 btn_Download.Name = "btn_Download_" + imgInfo.ID.ToString();
                 btn_Download.Text = "";
-                btn_Download.Location = new Point((zWidth - 10 - 35) / 2, (zHeight - 10 - 35) / 2);
+                btn_Download.Location = new Point((zWidth - 20 - 35) / 2, (zHeight - 20 - 35) / 2);
                 btn_Download.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Download.AdaptImage = false;
                 btn_Download.IsPureColor = true;
@@ -288,13 +289,13 @@ namespace DeclineAplay.Controls
                 btn_Download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
                 btn_Download.ShowBorder = false;
                 btn_Download.MouseClick += Btn_Download_MouseClick;
-                btn_Download.Tag = "播放|" + imgInfo.Url + "|" + imgInfo.Name;
+                btn_Download.Tag = "播放|" + newImgInfo.Url + "|" + imgInfo.Name;
                 btn_Download.MouseEnter += Btn_Download_MouseEnter;
                 btn_Download.MouseLeave += Btn_Download_MouseLeave;
                 //收藏次数
                 DuiButton btn_sc = new DuiButton();
-                btn_sc.Location = new Point(zWidth - 10 - 50, zHeight - 10 - 50);
-                btn_sc.Size = new Size(50, 50);
+                btn_sc.Location = new Point(0, 0);
+                btn_sc.Size = new Size(30, 30);
                 btn_sc.Text = "";
                 btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_sc.AdaptImage = false;
@@ -305,26 +306,32 @@ namespace DeclineAplay.Controls
                 btn_sc.BackgroundImage = Properties.Resources.sc0;
                 btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
                 btn_sc.IsPureColor = true;
-                btn_sc.Tag = "收藏|" + imgInfo.Url + "|" + imgInfo.Name;
+                btn_sc.Tag = "收藏|" + newImgInfo.Url + "|" + imgInfo.Name;
                 btn_sc.MouseEnter += Btn_Download_MouseEnter;
                 btn_sc.MouseLeave += Btn_Download_MouseLeave;
                 DuiLabel dltxt = new DuiLabel();
                 dltxt.Text = imgInfo.CollectionCount.ToString();
-                dltxt.Size = new Size(15, 15);
-                dltxt.Location = new Point(btn_sc.Width - 15, btn_sc.Height - 15);
+                dltxt.Size = new Size(30, 16);
+                dltxt.ForeColor = Color.White;
+                dltxt.Location = new Point(30, 7);
                 dltxt.BackColor = Color.Transparent;
-                btn_sc.Controls.Add(dltxt);
+                DuiBaseControl scControl = new DuiBaseControl();
+                scControl.Name = "scControl_" + imgInfo.ID.ToString();
+                scControl.Size = new Size(60, 30);
+                scControl.Location = new Point(zWidth - 20 - 60, zHeight - 20 - 30);
+                scControl.Controls.Add(btn_sc);
+                scControl.Controls.Add(dltxt);
                 //查看次数
                 DuiButton btn_Setting = new DuiButton();
-                btn_Setting.Location = new Point(0, zHeight - 10 - 50);
-                btn_Setting.Size = new Size(50, 50);
-                btn_Setting.Text = imgInfo.SeeCount.ToString();
+                btn_Setting.Location = new Point(0, 0);
+                btn_Setting.Size = new Size(30, 30);
+                btn_Setting.Text = "";
                 btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Setting.AdaptImage = false;
                 btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
                 btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 //btn_Setting.Radius = 35;
-                btn_Setting.Tag = "观看|" + imgInfo.Url + "|" + imgInfo.Name;
+                btn_Setting.Tag = "观看|" + newImgInfo.Url + "|" + imgInfo.Name;
                 btn_Setting.ShowBorder = false;
                 btn_Setting.BackgroundImage = Properties.Resources.eye;
                 btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -332,22 +339,28 @@ namespace DeclineAplay.Controls
                 btn_Setting.MouseEnter += Btn_Download_MouseEnter;
                 btn_Setting.MouseLeave += Btn_Download_MouseLeave;
                 DuiLabel dlatxt = new DuiLabel();
-                dlatxt.Text = imgInfo.CollectionCount.ToString();
-                dlatxt.Size = new Size(15, 15);
-                dlatxt.Location = new Point(btn_sc.Width - 15, btn_sc.Height - 15);
+                dlatxt.Text = imgInfo.SeeCount.ToString();
+                dlatxt.Size = new Size(30, 16);
+                dlatxt.Location = new Point(30, 7);
                 dlatxt.BackColor = Color.Transparent;
-                btn_Setting.Controls.Add(dlatxt);
+                dlatxt.ForeColor = Color.White;
+                DuiBaseControl seeControl = new DuiBaseControl();
+                seeControl.Name = "seeControl_" + imgInfo.ID.ToString();
+                seeControl.Size = new Size(60, 30);
+                seeControl.Location = new Point(0, zHeight - 20 - 30);
+                seeControl.Controls.Add(btn_Setting);
+                seeControl.Controls.Add(dlatxt);
                 //按钮底层控件
                 DuiBaseControl btnBaseControl = new DuiBaseControl();
-                btnBaseControl.Size = new Size(zWidth - 10, zHeight - 10);
+                btnBaseControl.Size = new Size(zWidth - 20, zHeight - 20);
                 btnBaseControl.Cursor = System.Windows.Forms.Cursors.Hand;
-                btnBaseControl.Location = new Point(5, 5);
+                btnBaseControl.Location = new Point(10, 10);
                 btnBaseControl.BackColor = Color.Transparent;
                 btnBaseControl.MouseLeave += Dp_MouseLeave;
                 btnBaseControl.MouseMove += BtnBaseControl_MouseMove;
                 btnBaseControl.Controls.Add(btn_Download);
-                btnBaseControl.Controls.Add(btn_sc);
-                btnBaseControl.Controls.Add(btn_Setting);
+                btnBaseControl.Controls.Add(scControl);
+                btnBaseControl.Controls.Add(seeControl);
                 btnBaseControl.Name = "btnBaseControl_" + imgInfo.ID.ToString();
                 btnBaseControl.Visible = false;
 
@@ -371,6 +384,42 @@ namespace DeclineAplay.Controls
             RefreshList();
             GC.Collect();
             return true;
+        }
+        /// <summary>
+        /// 校验实体中字段的值
+        /// </summary>
+        /// <param name="imgInfo"></param>
+        /// <returns></returns>
+        private EDate.DataItem isValidImgInfo(EDate.DataItem imgInfo)
+        {
+            string imgUrl = imgInfo.CoverImgUrl;
+            string tvUrl = imgInfo.Url;
+            if (isContainsStr(imgUrl, "http") > 1)
+            {
+                imgUrl = imgUrl.Substring(imgUrl.LastIndexOf("http"));
+            }
+            if (isContainsStr(tvUrl, "http") > 1)
+            {
+                tvUrl = tvUrl.Substring(tvUrl.LastIndexOf("http"));
+            }
+            imgInfo.CoverImgUrl = imgUrl;
+            imgInfo.Url = tvUrl;
+            return imgInfo;
+        }
+        /// <summary>
+        /// 判断某一个字符串中包含某个字符串的个数并返回
+        /// </summary>
+        /// <param name="str">全字符串</param>
+        /// <param name="nstr">包含的字符串</param>
+        /// <returns>包含字符串个数</returns>
+        private int isContainsStr(string str, string nstr)
+        {
+            if (str.Contains(nstr))
+            {
+                string newStr = str.Replace(nstr, "");
+                return (str.Length - newStr.Length) / nstr.Length;
+            }
+            return 0;
         }
         public bool addIsNull()
         {

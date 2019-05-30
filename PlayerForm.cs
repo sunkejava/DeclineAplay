@@ -57,6 +57,13 @@ namespace DeclineAplay
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            #region 变量初始
+            //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
+            tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
+            tvName = string.IsNullOrEmpty(tvName) ? "纵有疾风起，人生不言弃" : tvName;
+            tkb_jdt.Value = 0;
+            tkb_jdt.Enabled = false;
+            #endregion
             SetDefaultSkin();
             AddControl();
             lw.axPlayer.SetVolume(50);
@@ -70,11 +77,6 @@ namespace DeclineAplay
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
-            //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
-            tvUrl = "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
-            tvName = "纵有疾风起，人生不言弃";
-            tkb_jdt.Value = 0;
-            tkb_jdt.Enabled = false;
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -413,6 +415,7 @@ namespace DeclineAplay
             }
             else if (lw.axPlayer.GetState() == 0)
             {
+                Logger.Singleton.Info("播放视频" + tvName + "地址为:" + url);
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
                 BaseControl.BackgroundImage = null;
@@ -482,7 +485,7 @@ namespace DeclineAplay
                 dl_TvName.Visible = true;
                 BaseControl.DUIControls.Add(dl_TvName);
             }
-            dl_TvName.Text = tvName;
+            dl_TvName.Text = tvName.Length > 15 ? tvName.Substring(0, 15) + "......" : tvName;
             #endregion
 
             #region 播放器控制控件添加
