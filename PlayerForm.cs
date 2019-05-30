@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using LayeredSkin.Controls;
 using LayeredSkin.DirectUI;
 using System.Windows.Forms;
+using System.IO;
+using System.Threading;
 
 namespace DeclineAplay
 {
@@ -58,7 +60,7 @@ namespace DeclineAplay
         private void MainForm_Load(object sender, EventArgs e)
         {
             #region 变量初始
-            tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
+            tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
             //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
             tvName = string.IsNullOrEmpty(tvName) ? "纵有疾风起，人生不言弃" : tvName;
             tkb_jdt.Value = 0;
@@ -77,6 +79,20 @@ namespace DeclineAplay
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
             lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
+            SetAplayConfig();
+        }
+        /// <summary>
+        /// 设置播放器配置
+        /// </summary>
+        private void SetAplayConfig()
+        {
+            lw.axPlayer.SetConfig(8,"0");//设置是否打开成功后自动播放，0-不自动播放，1-自动播放，默认为1
+            lw.axPlayer.SetConfig(1102,"10");//播放 HTTP 网络视频时，失败重连次数，默认为 5 次
+            lw.axPlayer.SetConfig(1001,"800");//设置当网络没有读取到数据时，等待多少个视频帧进入缓冲（可以通过视频帧率换算成时间），默认为 500
+            lw.axPlayer.SetConfig(1002, "200");//设置在缓冲状态下，缓冲多少个帧退出缓冲，默认为 1000
+            lw.axPlayer.SetConfig(1003, "1000");//设置未缓冲状态下，最多预先读取多少个帧，即数据读取时间点超前当前播放时间点的距离
+            lw.axPlayer.SetConfig(1004, "100");//设置拖动播放进度后，没有数据时多久进入缓冲，单位毫秒。
+            lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
@@ -135,7 +151,7 @@ namespace DeclineAplay
 
         private void BaseControl_KeyDown(object sender, KeyEventArgs e)
         {
-            updatePlayerExplain(e.KeyValue.ToString());
+            //updatePlayerExplain(e.KeyValue.ToString());
         }
 
         private void BaseControl_KeyUp(object sender, KeyEventArgs e)
@@ -420,6 +436,14 @@ namespace DeclineAplay
             }
             else if (lw.axPlayer.GetState() == 0)
             {
+                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"CacheTv\";
+                if (!Directory.Exists(fileName))
+                {
+                    Directory.CreateDirectory(fileName);
+                }
+                fileName = fileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
+                lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
+                lw.axPlayer.SetConfig(2205, fileName+ ";"+fileName.Replace("m3u8","mp4"));//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
                 Logger.Singleton.Info("播放视频" + tvName + "地址为:" + url);
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
@@ -478,9 +502,9 @@ namespace DeclineAplay
                 BaseControl.DUIControls.Add(dl_PlayerExplain);
             }
             updatePlayerExplain("");
-            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleCenter;
+            dl_PlayerExplain.TextAlign = ContentAlignment.MiddleLeft;
             dl_PlayerExplain.Font = new Font("微软雅黑", 10F, FontStyle.Regular);
-            dl_PlayerExplain.Size = new Size(200, 20);
+            dl_PlayerExplain.Size = new Size(500, 20);
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(5, 5);
             dl_PlayerExplain.Visible = true;
@@ -930,7 +954,8 @@ namespace DeclineAplay
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            updateTime();
+            Thread thread = new Thread(() => updateTime());
+            thread.Start();
         }
 
         private void updateTime()
@@ -944,6 +969,10 @@ namespace DeclineAplay
             if (lw.axPlayer.GetBufferProgress() > 0)
             {
                 updatePlayerExplain("正在缓冲(" + lw.axPlayer.GetBufferProgress().ToString() + "%)  下载速度：" + lw.axPlayer.GetConfig(41) + "KB/s");
+            }
+            else
+            {
+                Logger.Singleton.Info("缓存文件大小:"+lw.axPlayer.GetConfig(2203)+";是否下载完成:"+lw.axPlayer.GetConfig(2204));
             }
         }
         delegate void AsynupdatePlayerExplain(string textStr);
