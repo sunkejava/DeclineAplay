@@ -583,6 +583,16 @@ namespace DeclineAplay.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap dimg {
+            get {
+                object obj = ResourceManager.GetObject("dimg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap dkwj1 {
             get {
                 object obj = ResourceManager.GetObject("dkwj1", resourceCulture);
@@ -596,6 +606,16 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap dkwj2 {
             get {
                 object obj = ResourceManager.GetObject("dkwj2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap eye {
+            get {
+                object obj = ResourceManager.GetObject("eye", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -776,6 +796,26 @@ namespace DeclineAplay.Properties {
         internal static System.Drawing.Bitmap resize_bottom_right {
             get {
                 object obj = ResourceManager.GetObject("resize_bottom_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap sc0 {
+            get {
+                object obj = ResourceManager.GetObject("sc0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap sc1 {
+            get {
+                object obj = ResourceManager.GetObject("sc1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

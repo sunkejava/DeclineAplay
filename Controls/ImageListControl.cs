@@ -68,10 +68,16 @@ namespace DeclineAplay.Controls
                     if (!ldl.IsMouseEnter)
                     {
                         ldl.Visible = false;
-                        //显示说明
+                        //显示名称
                         if (dp.FindControl("imgTag_" + strId).Count > 0)
                         {
                             DuiLabel dl = (DuiLabel)dp.FindControl("imgTag_" + strId)[0];
+                            dl.Visible = true;
+                        }
+                        //显示时长
+                        if (dp.FindControl("tvLength_" + strId).Count > 0)
+                        {
+                            DuiLabel dl = (DuiLabel)dp.FindControl("tvLength_" + strId)[0];
                             dl.Visible = true;
                         }
                     }
@@ -104,12 +110,17 @@ namespace DeclineAplay.Controls
                 strId = (sender as DuiPictureBox).Name.Replace("back_", "");
                 dp = (sender as DuiPictureBox).Parent as DuiBaseControl;
             }
-            //隐藏说明
+            //隐藏标题
             if (dp.FindControl("imgTag_" + strId).Count > 0)
             {
                 DuiLabel dl = (DuiLabel)dp.FindControl("imgTag_" + strId)[0];
                 dl.Visible = false;
-                //dl.Location = new Point(2, 2);
+            }
+            //隐藏时长
+            if (dp.FindControl("tvLength_" + strId).Count > 0)
+            {
+                DuiLabel dl = (DuiLabel)dp.FindControl("tvLength_" + strId)[0];
+                dl.Visible = false;
             }
             //显示按钮
             if (dp.FindControl("btnBaseControl_" + strId).Count > 0)
@@ -130,6 +141,7 @@ namespace DeclineAplay.Controls
             string url = dbn.Tag.ToString().Split('|')[1].ToString();
             PlayerForm plF = new PlayerForm();
             plF.tvUrl = url;
+            plF.tvName = dbn.Tag.ToString().Split('|')[2].ToString();
             plF.Show();
             plF.AxPlayer_PlayOrPause(url);
         }
@@ -217,19 +229,19 @@ namespace DeclineAplay.Controls
                 dp.MouseEnter += Dp_MouseEnter;
                 dp.MouseLeave += Dp_MouseLeave;
                 //dp.MouseClick += Dp_MouseClick;
-                //图片说明
+                //视频名称
                 DuiLabel imgTag = new DuiLabel();
                 imgTag.TextRenderMode = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
                 string ingTxt = (string.IsNullOrEmpty(imgInfo.Name) ? imgInfo.Tags : imgInfo.Name);
-                if (ingTxt.Length * 9 > zWidth)
+                if (ingTxt.Length * 12 > zWidth)
                 {
-                    imgTag.Size = new Size(zWidth - 4, 10 * 4);
-                    imgTag.Location = new Point(2, zHeight - 43);
+                    imgTag.Size = new Size(zWidth - 4, 12 * 4);
+                    imgTag.Location = new Point(2, zHeight - 48);
                 }
                 else
                 {
-                    imgTag.Size = new Size(zWidth - 4, 10 * 2);
-                    imgTag.Location = new Point(2, zHeight - 23);
+                    imgTag.Size = new Size(zWidth - 4, 12 * 2);
+                    imgTag.Location = new Point(2, zHeight - 24);
                 }
                 imgTag.Font = new Font("微软雅黑", 9F, FontStyle.Regular);
                 imgTag.ForeColor = Color.White;
@@ -237,18 +249,37 @@ namespace DeclineAplay.Controls
                 //imgTag.BackColor = Color.FromArgb(100, 0, 0, 0);
                 imgTag.BackgroundImage = Properties.Resources.mask_shadow;
                 imgTag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                imgTag.Text = imgInfo.Name;
+                imgTag.Text = ingTxt;
                 imgTag.Name = "imgTag_" + imgInfo.ID.ToString();
                 imgTag.MouseLeave += Dp_MouseLeave;
-
                 imgTag.Cursor = System.Windows.Forms.Cursors.Hand;
-                //下载按钮
+                //视频时长
+                DuiLabel tvLength = new DuiLabel();
+                tvLength.TextRenderMode = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                string tvTimeStr = "0分钟";
+                if (imgInfo.Length > 0)
+                {
+                    tvTimeStr = (imgInfo.Length / 60).ToString() + "分钟";
+                }
+                tvLength.Size = new Size(tvTimeStr.Length * 12, 12 * 2);
+                tvLength.Location = new Point(zWidth - tvTimeStr.Length * 12 - 2, 2);
+                tvLength.Font = new Font("微软雅黑", 9F, FontStyle.Regular);
+                tvLength.ForeColor = Color.White;
+                tvLength.TextAlign = ContentAlignment.MiddleCenter;
+                //imgTag.BackColor = Color.FromArgb(100, 0, 0, 0);
+                tvLength.BackgroundImage = Properties.Resources.mask_shadow;
+                tvLength.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                tvLength.Text = tvTimeStr;
+                tvLength.Name = "tvLength_" + imgInfo.ID.ToString();
+                tvLength.MouseLeave += Dp_MouseLeave;
+                tvLength.Cursor = System.Windows.Forms.Cursors.Hand;
+                //播放按钮
                 DuiButton btn_Download = new DuiButton();
                 btn_Download.Size = new Size(35, 35);
                 btn_Download.Radius = 35;
                 btn_Download.Name = "btn_Download_" + imgInfo.ID.ToString();
                 btn_Download.Text = "";
-                btn_Download.Location = new Point(0, 0);
+                btn_Download.Location = new Point((zWidth - 10 - 35) / 2, (zHeight - 10 - 35) / 2);
                 btn_Download.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Download.AdaptImage = false;
                 btn_Download.IsPureColor = true;
@@ -257,55 +288,66 @@ namespace DeclineAplay.Controls
                 btn_Download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
                 btn_Download.ShowBorder = false;
                 btn_Download.MouseClick += Btn_Download_MouseClick;
-                btn_Download.Tag = "播放|" + imgInfo.Url;
+                btn_Download.Tag = "播放|" + imgInfo.Url + "|" + imgInfo.Name;
                 btn_Download.MouseEnter += Btn_Download_MouseEnter;
                 btn_Download.MouseLeave += Btn_Download_MouseLeave;
-                //收藏按钮
-                //DuiButton btn_sc = new DuiButton();
-                //btn_sc.Location = new Point(35, 0);
-                //btn_sc.Size = new Size(35, 35);
-                //btn_sc.Text = "";
-                //btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
-                //btn_sc.AdaptImage = false;
-                //btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
-                //btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
+                //收藏次数
+                DuiButton btn_sc = new DuiButton();
+                btn_sc.Location = new Point(zWidth - 10 - 50, zHeight - 10 - 50);
+                btn_sc.Size = new Size(50, 50);
+                btn_sc.Text = "";
+                btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
+                btn_sc.AdaptImage = false;
+                btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
+                btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 //btn_sc.Radius = 35;
-                //btn_sc.ShowBorder = false;
-                //btn_sc.BackgroundImage = Properties.Resources.stop1;
-                //btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                //btn_sc.IsPureColor = true;
-                //btn_sc.Tag = "收藏|" + imgInfo.Url;
-                //btn_sc.MouseEnter += Btn_Download_MouseEnter;
-                //btn_sc.MouseLeave += Btn_Download_MouseLeave;
-                ////设置按钮
-                //DuiButton btn_Setting = new DuiButton();
-                //btn_Setting.Location = new Point(70, 0);
-                //btn_Setting.Size = new Size(35, 35);
-                //btn_Setting.Text = "";
-                //btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
-                //btn_Setting.AdaptImage = false;
-                //btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
-                //btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
+                btn_sc.ShowBorder = false;
+                btn_sc.BackgroundImage = Properties.Resources.sc0;
+                btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+                btn_sc.IsPureColor = true;
+                btn_sc.Tag = "收藏|" + imgInfo.Url + "|" + imgInfo.Name;
+                btn_sc.MouseEnter += Btn_Download_MouseEnter;
+                btn_sc.MouseLeave += Btn_Download_MouseLeave;
+                DuiLabel dltxt = new DuiLabel();
+                dltxt.Text = imgInfo.CollectionCount.ToString();
+                dltxt.Size = new Size(15, 15);
+                dltxt.Location = new Point(btn_sc.Width - 15, btn_sc.Height - 15);
+                dltxt.BackColor = Color.Transparent;
+                btn_sc.Controls.Add(dltxt);
+                //查看次数
+                DuiButton btn_Setting = new DuiButton();
+                btn_Setting.Location = new Point(0, zHeight - 10 - 50);
+                btn_Setting.Size = new Size(50, 50);
+                btn_Setting.Text = imgInfo.SeeCount.ToString();
+                btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
+                btn_Setting.AdaptImage = false;
+                btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
+                btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 //btn_Setting.Radius = 35;
-                //btn_Setting.Tag = "设置|" + imgInfo.Url;
-                //btn_Setting.ShowBorder = false;
-                //btn_Setting.BackgroundImage = Properties.Resources.sys1;
-                //btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-                //btn_Setting.IsPureColor = true;
-                //btn_Setting.MouseEnter += Btn_Download_MouseEnter;
-                //btn_Setting.MouseLeave += Btn_Download_MouseLeave;
+                btn_Setting.Tag = "观看|" + imgInfo.Url + "|" + imgInfo.Name;
+                btn_Setting.ShowBorder = false;
+                btn_Setting.BackgroundImage = Properties.Resources.eye;
+                btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+                btn_Setting.IsPureColor = true;
+                btn_Setting.MouseEnter += Btn_Download_MouseEnter;
+                btn_Setting.MouseLeave += Btn_Download_MouseLeave;
+                DuiLabel dlatxt = new DuiLabel();
+                dlatxt.Text = imgInfo.CollectionCount.ToString();
+                dlatxt.Size = new Size(15, 15);
+                dlatxt.Location = new Point(btn_sc.Width - 15, btn_sc.Height - 15);
+                dlatxt.BackColor = Color.Transparent;
+                btn_Setting.Controls.Add(dlatxt);
                 //按钮底层控件
                 DuiBaseControl btnBaseControl = new DuiBaseControl();
-                btnBaseControl.Size = new Size(zWidth / 3, 35);
+                btnBaseControl.Size = new Size(zWidth - 10, zHeight - 10);
                 btnBaseControl.Cursor = System.Windows.Forms.Cursors.Hand;
-                btnBaseControl.Location = new Point(zWidth / 3, (zHeight - 35) / 2);
+                btnBaseControl.Location = new Point(5, 5);
                 btnBaseControl.BackColor = Color.Transparent;
-                //btnBaseControl.MouseEnter += Dp_MouseEnter;
                 btnBaseControl.MouseLeave += Dp_MouseLeave;
                 btnBaseControl.MouseMove += BtnBaseControl_MouseMove;
                 btnBaseControl.Controls.Add(btn_Download);
-                //btnBaseControl.Controls.Add(btn_sc);
-                //btnBaseControl.Controls.Add(btn_Setting);
+                btnBaseControl.Controls.Add(btn_sc);
+                btnBaseControl.Controls.Add(btn_Setting);
                 btnBaseControl.Name = "btnBaseControl_" + imgInfo.ID.ToString();
                 btnBaseControl.Visible = false;
 
@@ -318,6 +360,7 @@ namespace DeclineAplay.Controls
                 abaseControl.Borders = baseBorder;
                 abaseControl.Controls.Add(dp);
                 abaseControl.Controls.Add(imgTag);
+                abaseControl.Controls.Add(tvLength);
                 abaseControl.Controls.Add(btnBaseControl);
                 baseControl.Controls.Add(abaseControl);
                 i++;

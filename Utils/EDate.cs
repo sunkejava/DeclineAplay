@@ -59,7 +59,7 @@ namespace DeclineAplay.Utils
             /// </summary>
             public decimal Point { get; set; }
             /// <summary>
-            /// 
+            /// 时长 /60
             /// </summary>
             public int Length { get; set; }
             /// <summary>

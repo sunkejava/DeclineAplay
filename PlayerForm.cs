@@ -17,12 +17,14 @@ namespace DeclineAplay
         private System.Timers.Timer LayeredWindowShowTimer = new System.Timers.Timer();
         public Color defaultSkinColor = Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
+        DuiLabel dl_TvName = null;
         Point playerPoint = new Point();
         bool IsFull = false;//是否全屏
         Rectangle Nor = new Rectangle(0, 0, 0, 0);//位置
         int volumeNum = 50;//视频音量
         bool isControlValid = false;
         public string tvUrl = "";
+        public string tvName = "";
 
         #region 播放器控件
         DuiButton btnStop = new DuiButton();//停止按钮
@@ -70,18 +72,22 @@ namespace DeclineAplay
             lw.axPlayer.Leave += BaseControl_MouseLeave;
             //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4?sc=dfeae283fd371dfd&br=1094&vid=3293228&aid=39611&area=KR&vst=0";
             tvUrl = "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8";
+            tvName = "纵有疾风起，人生不言弃";
+            tkb_jdt.Value = 0;
+            tkb_jdt.Enabled = false;
         }
 
         private void BaseControl_MouseMove(object sender, EventArgs e)
         {
             //playPanel.Visible = true;
+            dl_TvName.Visible = true;
             Control_MouseMove(sender, (MouseEventArgs)e);
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
         {
             //playPanel.Visible = false;
-
+            dl_TvName.Visible = false;
         }
 
         private void BaseControl_MouseClick(object sender, MouseEventArgs e)
@@ -447,7 +453,7 @@ namespace DeclineAplay
         #region 窗体控件添加
         private void AddControl()
         {
-            //添加左上角显示内容标签（状态，声音等）
+            #region 添加左上角显示内容标签（状态，声音等）
             if (dl_PlayerExplain == null)
             {
                 dl_PlayerExplain = new DuiLabel();
@@ -460,6 +466,24 @@ namespace DeclineAplay
             dl_PlayerExplain.ForeColor = Color.White;
             dl_PlayerExplain.Location = new Point(5, 5);
             dl_PlayerExplain.Visible = true;
+            #endregion
+
+            #region 标题控件
+            if (dl_TvName == null)
+            {
+                dl_TvName = new DuiLabel();
+                dl_TvName.Dock = DockStyle.Top;
+                dl_TvName.TextAlign = ContentAlignment.MiddleCenter;
+                dl_TvName.Font = new Font("微软雅黑", 15F, FontStyle.Bold);
+                dl_TvName.Size = new Size(BaseControl.Width, 35);
+                dl_TvName.ForeColor = Color.White;
+                dl_TvName.Location = new Point(0, 0);
+                dl_TvName.BackColor = Color.Transparent;
+                dl_TvName.Visible = true;
+                BaseControl.DUIControls.Add(dl_TvName);
+            }
+            dl_TvName.Text = tvName;
+            #endregion
 
             #region 播放器控制控件添加
             //添加播放器控制控件

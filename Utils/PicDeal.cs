@@ -213,7 +213,8 @@ namespace DeclineAplay.Utils
             }
             catch (Exception ex)
             {
-                throw new Exception("下载图片失败，原因为：" + ex.Message);
+                Logger.Singleton.Debug("下载图片(" + url + ")失败，原因为：" + ex.Message, ex);
+                return AppDomain.CurrentDomain.BaseDirectory + @"CacheWallpaper\dimg.jpg";
             }
         }
 
