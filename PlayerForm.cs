@@ -442,8 +442,8 @@ namespace DeclineAplay
                     Directory.CreateDirectory(fileName);
                 }
                 fileName = fileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
-                //lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
-                //lw.axPlayer.SetConfig(2205, fileName+ ";"+fileName.Replace("m3u8","mp4"));//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
+                lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
+                lw.axPlayer.SetConfig(2205, fileName+ ";"+fileName.Replace("m3u8","mp4"));//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
                 Logger.Singleton.Info("播放视频" + tvName + "地址为:" + url);
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
