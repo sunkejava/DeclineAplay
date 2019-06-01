@@ -151,6 +151,7 @@
             this.lb_bfjd.Borders.TopWidth = 1;
             this.lb_bfjd.Canvas = ((System.Drawing.Bitmap)(resources.GetObject("lb_bfjd.Canvas")));
             this.lb_bfjd.ForeColor = System.Drawing.Color.White;
+            this.lb_bfjd.HaloColor = System.Drawing.Color.LightCoral;
             this.lb_bfjd.HaloSize = 5;
             this.lb_bfjd.Location = new System.Drawing.Point(0, 3);
             this.lb_bfjd.Name = "lb_bfjd";
@@ -202,7 +203,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tkb_jdt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tkb_jdt.BackImage = null;
-            this.tkb_jdt.BackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.tkb_jdt.BackLineColor = System.Drawing.Color.White;
             this.tkb_jdt.Borders.BottomColor = System.Drawing.Color.Empty;
             this.tkb_jdt.Borders.BottomWidth = 1;
             this.tkb_jdt.Borders.LeftColor = System.Drawing.Color.Empty;
@@ -224,9 +225,9 @@
             this.tkb_jdt.PointState = LayeredSkin.Controls.ControlStates.Normal;
             this.tkb_jdt.Size = new System.Drawing.Size(618, 25);
             this.tkb_jdt.SurfaceImage = null;
-            this.tkb_jdt.SurfaceLineColor = System.Drawing.Color.White;
+            this.tkb_jdt.SurfaceLineColor = System.Drawing.Color.LightCoral;
             this.tkb_jdt.TabIndex = 43;
-            this.tkb_jdt.Value = 0.7D;
+            this.tkb_jdt.Value = 0.25D;
             this.tkb_jdt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseDown);
             this.tkb_jdt.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseUp);
             // 

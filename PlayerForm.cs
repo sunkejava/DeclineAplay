@@ -27,7 +27,8 @@ namespace DeclineAplay
         bool isControlValid = false;
         public string tvUrl = "";
         public string tvName = "";
-
+        string cacheFileName = "";
+        string filePath = AppDomain.CurrentDomain.BaseDirectory + @"CacheTv\";
         #region 播放器控件
         DuiButton btnStop = new DuiButton();//停止按钮
         DuiButton btnPrev = new DuiButton();//上一个按钮
@@ -91,16 +92,15 @@ namespace DeclineAplay
             lw.axPlayer.SetConfig(1002, "1000");//设置在缓冲状态下，缓冲多少个帧退出缓冲，默认为 1000
             lw.axPlayer.SetConfig(1003, "1000");//设置未缓冲状态下，最多预先读取多少个帧，即数据读取时间点超前当前播放时间点的距离
             lw.axPlayer.SetConfig(1004, "100");//设置拖动播放进度后，没有数据时多久进入缓冲，单位毫秒。
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + @"CacheTv\";
-            string fileName = filePath;
-            if (!Directory.Exists(fileName))
+            cacheFileName = filePath;
+            if (!Directory.Exists(cacheFileName))
             {
-                Directory.CreateDirectory(fileName);
+                Directory.CreateDirectory(cacheFileName);
             }
-            fileName = fileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
-            lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
-            lw.axPlayer.SetConfig(2205, fileName + ";" + filePath + tvName + "." + (fileName.Replace("m3u8", "mp4")).Split('.')[1]);//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
+            cacheFileName = cacheFileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
+            lw.axPlayer.SetConfig(2201, cacheFileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
             Logger.Singleton.Info("播放视频" + tvName + "地址为:" + tvUrl);
+            Logger.Singleton.Info("缓存文件:" + cacheFileName + ";转换后的文件:" + filePath + tvName + "." + (cacheFileName.Replace("m3u8", "mp4")).Split('.')[1]);
             lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
         }
 
@@ -331,6 +331,7 @@ namespace DeclineAplay
             {
                 updatePlayerExplain("正在播放"); ;
             }
+            Logger.Singleton.Debug("当前缓存进度：" + lw.axPlayer.GetBufferProgress().ToString() + "%");
         }
         /// <summary>
         /// 鼠标键盘操作事件
@@ -433,6 +434,7 @@ namespace DeclineAplay
         /// <param name="url"></param>
         public void AxPlayer_PlayOrPause(string url)
         {
+            tvUrl = url;
             if (!lw.Visible)
             {
                 lw.Show();
@@ -772,6 +774,7 @@ namespace DeclineAplay
                 case "btnStop"://停止按钮
                     lw.axPlayer.Close();
                     BaseControl.BackColor = defaultSkinColor;
+                    convertCacheFileToOther();
                     break;
                 case "btnPrev"://上一个
 
@@ -1007,8 +1010,11 @@ namespace DeclineAplay
             else
             {
                 //Logger.Singleton.Info("缓存文件大小:"+lw.axPlayer.GetConfig(2203)+";是否下载完成:"+lw.axPlayer.GetConfig(2204));
+                Thread thread = new Thread(() => getCacheFileProgress());
+                thread.Start();
             }
         }
+
         delegate void AsynupdatePlayerExplain(string textStr);
         private void updatePlayerExplain(string textStr)
         {
@@ -1021,6 +1027,61 @@ namespace DeclineAplay
             {
                 dl_PlayerExplain.Text = textStr;
             }
+        }
+        /// <summary>
+        /// 获取播放媒体缓存进度
+        /// </summary>
+        private void getCacheFileProgress()
+        {
+            string fileList = lw.axPlayer.GetConfig(2203);
+            string sfileList = "";//缓存完成
+            string efileList = "";//缓存未完成
+            for (int i = 0; i < fileList.Length; i++)
+            {
+                string nChar = fileList.Substring(i, 1);
+                sfileList = sfileList + (nChar.Equals("1") ? "1" : "");
+                efileList = efileList + (nChar.Equals("0") ? "0" : "");
+            }
+            updatePlayerExplain("缓存完成:" + GetString(sfileList.Length * 640 * 1024) + "未完成:" + GetString(efileList.Length * 640 * 1024));
+        }
+
+        private void convertCacheFileToOther()
+        {
+            if (lw.axPlayer.SetConfig(2204, cacheFileName) == 1)
+            {
+                lw.axPlayer.SetConfig(2205, cacheFileName + ";" + filePath + tvName.Trim() + "." + (cacheFileName.Replace("m3u8", "mp4")).Split('.')[1]);//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
+            }
+            else
+            {
+
+            }
+        }
+
+        public static string GetString(long b)
+        {
+            const int GB = 1024 * 1024 * 1024;
+            const int MB = 1024 * 1024;
+            const int KB = 1024;
+
+            if (b / GB >= 1)
+            {
+                return Math.Round(b / (float)GB, 2) + "GB";
+            }
+
+
+            if (b / MB >= 1)
+            {
+                return Math.Round(b / (float)MB, 2) + "MB";
+            }
+
+
+            if (b / KB >= 1)
+            {
+                return Math.Round(b / (float)KB, 2) + "KB";
+            }
+
+
+            return b + "B";
         }
         #endregion
 

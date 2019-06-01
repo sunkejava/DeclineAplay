@@ -400,6 +400,7 @@ namespace DeclineAplay.Controls
             }
             if (isContainsStr(tvUrl, "http") > 1)
             {
+                Logger.Singleton.Info("存在多个Http的名称:" + imgInfo.Name + "---地址:" + imgInfo.CoverImgUrl);
                 tvUrl = tvUrl.Substring(tvUrl.LastIndexOf("http"));
             }
             imgInfo.CoverImgUrl = imgUrl;
