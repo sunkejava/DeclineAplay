@@ -110,16 +110,12 @@
             this.BaseControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BaseControl_KeyUp);
             this.BaseControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseClick);
             this.BaseControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseDoubleClick);
-            this.BaseControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Control_MouseDown);
             this.BaseControl.MouseLeave += new System.EventHandler(this.BaseControl_MouseLeave);
             this.BaseControl.MouseHover += new System.EventHandler(this.BaseControl_MouseHover);
             this.BaseControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BaseControl_MouseMove);
-            this.BaseControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Control_MouseUp);
             // 
             // playPanel
             // 
-            this.playPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.playPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.playPanel.Borders.BottomColor = System.Drawing.Color.Empty;
             this.playPanel.Borders.BottomWidth = 1;
@@ -133,10 +129,14 @@
             this.playPanel.Controls.Add(this.lb_bfjd);
             this.playPanel.Controls.Add(this.tkb_sound);
             this.playPanel.Controls.Add(this.tkb_jdt);
-            this.playPanel.Location = new System.Drawing.Point(0, 440);
+            this.playPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.playPanel.Location = new System.Drawing.Point(0, 442);
             this.playPanel.Name = "playPanel";
             this.playPanel.Size = new System.Drawing.Size(730, 78);
             this.playPanel.TabIndex = 7;
+            this.playPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Control_MouseDown);
+            this.playPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Control_MouseMove);
+            this.playPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Control_MouseUp);
             // 
             // lb_bfjd
             // 
@@ -162,7 +162,7 @@
             // tkb_sound
             // 
             this.tkb_sound.AdaptImage = true;
-            this.tkb_sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.tkb_sound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tkb_sound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tkb_sound.BackImage = null;
@@ -191,13 +191,14 @@
             this.tkb_sound.SurfaceLineColor = System.Drawing.Color.White;
             this.tkb_sound.TabIndex = 44;
             this.tkb_sound.Value = 0.5D;
+            this.tkb_sound.ValueChanged += new System.EventHandler(this.tkb_sound_ValueChanged);
             this.tkb_sound.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tkb_jdt_MouseDown);
             this.tkb_sound.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tkb_sound_MouseUp);
             // 
             // tkb_jdt
             // 
             this.tkb_jdt.AdaptImage = true;
-            this.tkb_jdt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.tkb_jdt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tkb_jdt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tkb_jdt.BackImage = null;

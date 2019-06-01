@@ -69,6 +69,7 @@ namespace DeclineAplay
             SetDefaultSkin();
             AddControl();
             lw.axPlayer.SetVolume(50);
+            tkb_sound.Value = 50 / 200;
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
             lw.axPlayer.OnBuffer += AxPlayer_OnBuffer;//网络缓冲
@@ -77,29 +78,30 @@ namespace DeclineAplay
             lw.axPlayer.OnSeekCompleted += AxPlayer_OnSeekCompleted;//在用户进行一个 SetPosition 的异步调用完成后
             lw.axPlayer.OnVideoSizeChanged += AxPlayer_OnVideoSizeChanged;//在所播放的视频的分辨率改变时触发
             lw.axPlayer.OnEvent += AxPlayer_OnEvent;//特定扩展事件
-            lw.axPlayer.Move += BaseControl_MouseMove;
             lw.axPlayer.Leave += BaseControl_MouseLeave;
-            SetAplayConfig();
         }
         /// <summary>
         /// 设置播放器配置
         /// </summary>
         private void SetAplayConfig()
         {
-            lw.axPlayer.SetConfig(8,"0");//设置是否打开成功后自动播放，0-不自动播放，1-自动播放，默认为1
-            lw.axPlayer.SetConfig(1102,"10");//播放 HTTP 网络视频时，失败重连次数，默认为 5 次
-            lw.axPlayer.SetConfig(1001,"800");//设置当网络没有读取到数据时，等待多少个视频帧进入缓冲（可以通过视频帧率换算成时间），默认为 500
-            lw.axPlayer.SetConfig(1002, "200");//设置在缓冲状态下，缓冲多少个帧退出缓冲，默认为 1000
+            lw.axPlayer.SetConfig(8, "1");//设置是否打开成功后自动播放，0-不自动播放，1-自动播放，默认为1
+            lw.axPlayer.SetConfig(1102, "10");//播放 HTTP 网络视频时，失败重连次数，默认为 5 次
+            lw.axPlayer.SetConfig(1001, "500");//设置当网络没有读取到数据时，等待多少个视频帧进入缓冲（可以通过视频帧率换算成时间），默认为 500
+            lw.axPlayer.SetConfig(1002, "1000");//设置在缓冲状态下，缓冲多少个帧退出缓冲，默认为 1000
             lw.axPlayer.SetConfig(1003, "1000");//设置未缓冲状态下，最多预先读取多少个帧，即数据读取时间点超前当前播放时间点的距离
             lw.axPlayer.SetConfig(1004, "100");//设置拖动播放进度后，没有数据时多久进入缓冲，单位毫秒。
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + @"CacheTv\";
+            string fileName = filePath;
+            if (!Directory.Exists(fileName))
+            {
+                Directory.CreateDirectory(fileName);
+            }
+            fileName = fileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
+            lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
+            lw.axPlayer.SetConfig(2205, fileName + ";" + filePath + tvName + "." + (fileName.Replace("m3u8", "mp4")).Split('.')[1]);//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
+            Logger.Singleton.Info("播放视频" + tvName + "地址为:" + tvUrl);
             lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
-        }
-
-        private void BaseControl_MouseMove(object sender, EventArgs e)
-        {
-            //playPanel.Visible = true;
-            dl_TvName.Visible = true;
-            Control_MouseMove(sender, (MouseEventArgs)e);
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
@@ -108,6 +110,10 @@ namespace DeclineAplay
             dl_TvName.Visible = false;
         }
 
+        private void BaseControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            dl_TvName.Visible = true;
+        }
         private void BaseControl_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -174,21 +180,31 @@ namespace DeclineAplay
 
                 case Utils.ConstClass.VK_UP:
                     volumeNum = lw.axPlayer.GetVolume();
-                    if (volumeNum < 1000)
+                    if (volumeNum < 200)
                     {
                         volumeNum += 10;
                     }
+                    else
+                    {
+                        volumeNum += 30;
+                    }
+                    volumeNum = volumeNum >= 1000 ? 1000 : volumeNum;
                     lw.axPlayer.SetVolume(volumeNum);
-                    updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
+                    updatePlayerExplain(volumeNum >= 1000 ? "当前已是最大音量！" : "当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_DOWN:
                     volumeNum = lw.axPlayer.GetVolume();
-                    if (volumeNum > 0)
+                    if (volumeNum > 200)
+                    {
+                        volumeNum -= 30;
+                    }
+                    else
                     {
                         volumeNum -= 10;
                     }
+                    volumeNum = volumeNum <= 0 ? 0 : volumeNum;
                     lw.axPlayer.SetVolume(volumeNum);
-                    updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
+                    updatePlayerExplain(volumeNum <= 0 ? "当前已是最小音量！" : "当前音量：" + lw.axPlayer.GetVolume().ToString());
                     break;
                 case Utils.ConstClass.VK_ESCAPE:
                     //updatePlayerExplain("键盘ESC键事件");
@@ -436,15 +452,7 @@ namespace DeclineAplay
             }
             else if (lw.axPlayer.GetState() == 0)
             {
-                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"CacheTv\";
-                if (!Directory.Exists(fileName))
-                {
-                    Directory.CreateDirectory(fileName);
-                }
-                fileName = fileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
-                lw.axPlayer.SetConfig(2201, fileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
-                lw.axPlayer.SetConfig(2205, fileName+ ";"+fileName.Replace("m3u8","mp4"));//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
-                Logger.Singleton.Info("播放视频" + tvName + "地址为:" + url);
+                BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
                 lw.axPlayer.Open(url);
                 lw.axPlayer.Play();
                 BaseControl.BackgroundImage = null;
@@ -453,6 +461,7 @@ namespace DeclineAplay
                     btnPlay.BackgroundImage = Properties.Resources.pause1;
                     btnPlay.Tag = "暂停";
                 }
+                SetAplayConfig();
             }
             else if (lw.axPlayer.GetState() == 3)
             {
@@ -488,7 +497,8 @@ namespace DeclineAplay
         private void tkb_sound_MouseUp(object sender, MouseEventArgs e)
         {
             isControlValid = false;
-            lw.axPlayer.SetVolume((int)(tkb_sound.Value * 1000));  //10倍
+            lw.axPlayer.SetVolume((int)(tkb_sound.Value * 200));
+            updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
         }
         #endregion
 
@@ -522,6 +532,10 @@ namespace DeclineAplay
                 dl_TvName.Location = new Point(0, 0);
                 dl_TvName.BackColor = Color.Transparent;
                 dl_TvName.Visible = true;
+                dl_TvName.MouseDown += Dl_TvName_MouseDown;
+                dl_TvName.MouseUp += Dl_TvName_MouseUp;
+                dl_TvName.MouseMove += Dl_TvName_MouseMove;
+                dl_TvName.MouseLeave += Dl_TvName_MouseLeave;
                 BaseControl.DUIControls.Add(dl_TvName);
             }
             dl_TvName.Text = tvName.Length > 15 ? tvName.Substring(0, 15) + "......" : tvName;
@@ -757,6 +771,7 @@ namespace DeclineAplay
             {
                 case "btnStop"://停止按钮
                     lw.axPlayer.Close();
+                    BaseControl.BackColor = defaultSkinColor;
                     break;
                 case "btnPrev"://上一个
 
@@ -794,7 +809,7 @@ namespace DeclineAplay
         /// </summary>
         private void SetDefaultSkin()
         {
-            BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
+            BaseControl.BackColor = defaultSkinColor;
             playPanel.BackColor = Color.FromArgb(1, 255, 255, 255);
             btnStop.Location = new Point(20, 25);
             btnPrev.Location = new Point(70, 25);
@@ -806,15 +821,6 @@ namespace DeclineAplay
             btnFullScreen.Location = new Point(playPanel.Width - 100, 25);
             btnList.Location = new Point(playPanel.Width - 50, 25);
         }
-
-        private void Panel_Top_MouseDown(object sender, MouseEventArgs e)
-        {
-            //为当前的应用程序释放鼠标捕获
-            ReleaseCapture();
-            //发送消息﹐让系統误以为在标题栏上按下鼠标
-            SendMessage((int)this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-        }
-
         #endregion
 
         #region 窗体大小修改及位置移动
@@ -850,26 +856,32 @@ namespace DeclineAplay
                 DuiButton btn_Resize = sender as DuiButton;
                 thisZ = btn_Resize.Size;
             }
+            else if (sender is LayeredBaseControl)
+            {
+                LayeredBaseControl lns = sender as LayeredBaseControl;
+                thisZ = lns.Size;
+            }
             //鼠标移动过程中，坐标时刻在改变 
             //当鼠标移动时横坐标距离窗体右边缘5像素以内且纵坐标距离下边缘也在5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Declining 
-            if (e.Location.X <= 5 && e.Location.Y <= 5)
+            //(e.Location.X <= 5 && e.Location.Y <= 5) || (e.Location.X >= thisZ.Width - 5 && e.Location.Y <= 5) || (e.Location.X <= 4 && e.Location.Y >= thisZ.Height - 5)
+            if ((e.Location.X >= thisZ.Width - 5 && e.Location.Y >= thisZ.Height - 5))
             {
                 this.Cursor = Cursors.SizeNWSE;
                 direction = MouseDirection.Declining;
             }
-            //当鼠标移动时横坐标距离窗体右边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Herizontal
-            else if (e.Location.X <= 5)
-            {
-                this.Cursor = Cursors.SizeWE;
-                direction = MouseDirection.Herizontal;
-            }
-            //同理当鼠标移动时纵坐标距离窗体下边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Vertical
-            else if (e.Location.Y <= 5)
-            {
-                this.Cursor = Cursors.SizeNS;
-                direction = MouseDirection.Vertical;
+            ////当鼠标移动时横坐标距离窗体右边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Herizontal
+            //else if (e.Location.X <= 5 || e.Location.X >= thisZ.Width - 5)
+            //{
+            //    this.Cursor = Cursors.SizeWE;
+            //    direction = MouseDirection.Herizontal;
+            //}
+            ////同理当鼠标移动时纵坐标距离窗体下边缘5像素以内时，要将光标变为倾斜的箭头形状，同时拖拽方向direction置为MouseDirection.Vertical
+            //else if (e.Location.Y <= 5 || e.Location.Y >= thisZ.Height - 5)
+            //{
+            //    this.Cursor = Cursors.SizeNS;
+            //    direction = MouseDirection.Vertical;
 
-            }
+            //}
             //否则，以外的窗体区域，鼠标星座均为单向箭头（默认）             
             else
                 this.Cursor = Cursors.Arrow;
@@ -921,6 +933,28 @@ namespace DeclineAplay
             None//不做标志，即不拖动窗体改变大小 
         }
 
+        private void Dl_TvName_MouseDown(object sender, DuiMouseEventArgs e)
+        {
+            //为当前的应用程序释放鼠标捕获
+            ReleaseCapture();
+            //发送消息﹐让系統误以为在标题栏上按下鼠标
+            SendMessage((int)this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            dl_TvName.Cursor = Cursors.Arrow;
+        }
+        private void Dl_TvName_MouseUp(object sender, DuiMouseEventArgs e)
+        {
+            dl_TvName.Cursor = Cursors.Arrow;
+        }
+
+        private void Dl_TvName_MouseLeave(object sender, EventArgs e)
+        {
+            dl_TvName.Cursor = Cursors.Arrow;
+        }
+
+        private void Dl_TvName_MouseMove(object sender, DuiMouseEventArgs e)
+        {
+            dl_TvName.Cursor = Cursors.SizeAll;
+        }
         #endregion
 
         #region 自定义事件
@@ -964,7 +998,7 @@ namespace DeclineAplay
             if (lw.axPlayer.GetDuration() != 0 && !isControlValid)
             {
                 tkb_jdt.Value = Math.Round((Double)lw.axPlayer.GetPosition() / lw.axPlayer.GetDuration(), 3);
-                tkb_sound.Value = Math.Round((Double)lw.axPlayer.GetVolume() / 1000, 3);
+                tkb_sound.Value = lw.axPlayer.GetVolume() >= 200 ? 1.0 : Math.Round((Double)lw.axPlayer.GetVolume() / 200, 3);
             }
             if (lw.axPlayer.GetBufferProgress() > 0)
             {
@@ -989,5 +1023,14 @@ namespace DeclineAplay
             }
         }
         #endregion
+
+        private void tkb_sound_ValueChanged(object sender, EventArgs e)
+        {
+            if (lw.axPlayer != null)
+            {
+                lw.axPlayer.SetVolume((int)(tkb_sound.Value * 200));
+                updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
+            }
+        }
     }
 }
