@@ -17,7 +17,7 @@ namespace DeclineAplay
         private LayeredWindow lw = new LayeredWindow();
         ToolTip toolTip1 = new ToolTip();
         private System.Timers.Timer LayeredWindowShowTimer = new System.Timers.Timer();
-        public Color defaultSkinColor = Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
+        public Color defaultSkinColor = Color.Black;//Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         DuiLabel dl_TvName = null;
         Point playerPoint = new Point();
@@ -61,10 +61,14 @@ namespace DeclineAplay
         private void MainForm_Load(object sender, EventArgs e)
         {
             #region 变量初始
-            tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
+            //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
             //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
+            tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
+            tvName = "捉迷藏(T-ara)";
             tvName = string.IsNullOrEmpty(tvName) ? "纵有疾风起，人生不言弃" : tvName;
             tkb_jdt.Value = 0;
+            //tkb_hcjdt.Value = 0;
+            //tkb_hcjdt.MouseCanControl = false;
             tkb_jdt.Enabled = false;
             #endregion
             SetDefaultSkin();
@@ -332,7 +336,6 @@ namespace DeclineAplay
             {
                 updatePlayerExplain("正在播放"); ;
             }
-            Logger.Singleton.Debug("当前缓存进度：" + lw.axPlayer.GetBufferProgress().ToString() + "%");
         }
         /// <summary>
         /// 鼠标键盘操作事件
@@ -801,6 +804,7 @@ namespace DeclineAplay
                     lw.axPlayer.Close();
                     lw.Hide();
                     BaseControl.BackColor = defaultSkinColor;
+                    BaseControl.BackgroundImage = Properties.Resources._5;
                     Thread thread = new Thread(() => convertCacheFileToOther());
                     thread.Start();
                     break;
@@ -984,7 +988,7 @@ namespace DeclineAplay
 
         private void Dl_TvName_MouseMove(object sender, DuiMouseEventArgs e)
         {
-            dl_TvName.Cursor = Cursors.SizeAll;
+            //dl_TvName.Cursor = Cursors.SizeAll;
         }
         #endregion
 
@@ -1037,9 +1041,11 @@ namespace DeclineAplay
             }
             else
             {
-                //Logger.Singleton.Info("缓存文件大小:"+lw.axPlayer.GetConfig(2203)+";是否下载完成:"+lw.axPlayer.GetConfig(2204));
                 Thread thread = new Thread(() => getCacheFileProgress());
-                thread.Start();
+                if (lw.axPlayer.GetState() != 0)
+                {
+                    thread.Start();
+                }
             }
         }
 
@@ -1070,7 +1076,10 @@ namespace DeclineAplay
                 sfileList = sfileList + (nChar.Equals("1") ? "1" : "");
                 efileList = efileList + (nChar.Equals("0") ? "0" : "");
             }
-            updatePlayerExplain("缓存完成:" + GetString(sfileList.Length * 640 * 1024) + "未完成:" + GetString(efileList.Length * 640 * 1024));
+            //updatePlayerExplain("缓存完成:" + GetString(sfileList.Length * 640 * 1024) + "未完成:" + GetString((efileList.Length <= 0 ? 0 : efileList.Length) * 640 * 1024));
+            string bufferStr = (Math.Round((sfileList.Length > 0 ? (Double)sfileList.Length / (sfileList.Length + efileList.Length) : (Double)0), 3) * 100).ToString();
+            updatePlayerExplain("缓冲进度:" + bufferStr);
+            //tkb_hcjdt.Value = Math.Round((sfileList.Length > 0 ? (Double)sfileList.Length / (sfileList.Length + efileList.Length) : (Double)0), 3);
         }
 
         private void convertCacheFileToOther()

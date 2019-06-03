@@ -1706,11 +1706,11 @@
   </data>
   <data name="tkb_sound.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABUAAACACAYAAADkvCJmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVGhD7c5LCoMwFIXhLLKP7bg6FxBjJ1mJozQXzqAI
-        DtRT+uD/4SLR5DOJ/qhhGFqMlp5AQUGdgYKCOgMFBXUGCgrqDBQU1Bnol6M559s0TaU/2ziOLdb6dKxS
-        yqVPW88pOG64BmPivbbsrx9eNtBFW/b3lpvO83zdQO/acqwAOvToP2i11vPga01p6UkmqDGZoMZkghqT
-        CWpMJqgxmaDGZIIakwlqTCaoMZmgxmSCGpMJakwmqDGZP4DSp0vpCRTFZAwWvo4hAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAAQ0AAAAjCAYAAACOw1/6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVHhe7dhLCsIwFAXQLtLPdro6F5CmInQTTnVS8yAg
+        /YjOFHsOXEI+w3AJaQAAAAAAAAAAAAAAAAAAAL4npXToui6X3GKMed0CmMo570rGeRQHH7m27SjbyuV0
+        WhRGZBiGke2qlfDe2qWS/06f0mpp9H1frw9bVCsBluIPY14YkVivRwCeyoti/6I0jvUIwFQURCmKc8k9
+        RoUBAAAAAAAAAAAAAAAAAAD8gqZ5APt+Z/z72cfYAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="tkb_sound.PointImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1767,12 +1767,11 @@
   </data>
   <data name="tkb_jdt.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAmoAAAAZCAYAAACB+wI5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADSSURBVHhe7dxBCoJAFIBhl3XhrJ2n6hKdw1WbENzVvEYY
-        WqgwICER3wc/wvD2PkRtAAAAAAAAAAAAAAAAAAAAAAAAAICliDiklNrcLdeXazudlxEAAPaWF7Jj7pq7
-        rzSdH8soAAB7iojzbDmbdyqjAEDNo+tC+lbPvo80jp8AgKWyhtWt3Wylrb2GwaIGABVlDatbu9lKW/NE
-        DQDqyhoG+0opXWbvpM1ryygAAHvKi5ivPgEAflX4jxoAAAAAAAAAAAAAAAAAAAAAAAAAAPy5pnkDyk5H
-        +uwqMIEAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAmoAAAAQCAYAAACm9FPxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVHhe7dxBCoJAFIBhl3XhrJ2n6hKdw1WbENzVvEYY
+        WpgwICFF3wc/wvD2PkRtAAAAAAAAAAAAAH5ZROxSSm3ukuvLtZ3OywgAAFvLC9k+d85dF5rO92UUAIAt
+        RcRxtpzNO5RRAKDm1nUhfap730cax1cAwLuyhtUt3WyltT2GwaIGABVlDatbutlKa/NEDQDqyhoG20op
+        nWbvpM1ryygAAFvKi5ivPgEAvlX4jxoAAAAAAAAAAPyfpnkCUb1H+tj5zpkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="tkb_jdt.PointImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
