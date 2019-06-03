@@ -1706,11 +1706,11 @@
   </data>
   <data name="tkb_sound.Canvas" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAQEAAAAMCAYAAABiBQiXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACVSURBVGhD7de7DcMwDEVRDhk762g6DaBPGk0SNzIJsHIE
-        pKfuAR4Ef0rxWRYAAADspJRy1lqb5murXfsjANG11l6a+QxFAGzCvvzPArDYfX8FEJkIq/f+UwAWPQnM
-        lBIJHh/x/3y/IKAxxrIEcs7LTUNixUccO9OTwLEqAf0dePsrAKKzgdfB/2guWykAAAAAANiQyA0y9KbA
-        o12IAAAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABUAAACACAYAAADkvCJmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADBSURBVGhD7c5LCoMwFIXhLLKP7bg6FxBjJ1mJozQXzqAI
+        DtRT+uD/4SLR5DOJ/qhhGFqMlp5AQUGdgYKCOgMFBXUGCgrqDBQU1Bnol6M559s0TaU/2ziOLdb6dKxS
+        yqVPW88pOG64BmPivbbsrx9eNtBFW/b3lpvO83zdQO/acqwAOvToP2i11vPga01p6UkmqDGZoMZkghqT
+        CWpMJqgxmaDGZIIakwlqTCaoMZmgxmSCGpMJakwmqDGZP4DSp0vpCRTFZAwWvo4hAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="tkb_sound.PointImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

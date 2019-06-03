@@ -213,7 +213,8 @@ namespace DeclineAplay
                 default:
                     break;
             }
-            updateTime();
+            Thread thread = new Thread(() => updateTime());
+            thread.Start();
         }
 
         private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
@@ -668,9 +669,18 @@ namespace DeclineAplay
             btnList.MouseEnter += BtnPlayControl_MouseEnter;
             btnList.MouseLeave += BtnPlayControl_MouseLeave;
             btnList.MouseClick += BtnPlayControl_MouseClick;
-            playPanel.DUIControls.AddRange(new LayeredSkin.DirectUI.DuiBaseControl[] {
-                btnStop,btnPrev,btnPlay,btnNext,btnOpenFile,btnVolume,btnScreenShot,btnFullScreen,btnList
-            });
+            //playPanel.DUIControls.AddRange(new LayeredSkin.DirectUI.DuiBaseControl[] {
+            //    btnStop,btnPrev,btnPlay,btnNext,btnOpenFile,btnVolume,btnScreenShot,btnFullScreen,btnList
+            //});
+            playPanel.DUIControls.Add(btnStop);
+            playPanel.DUIControls.Add(btnPrev);
+            playPanel.DUIControls.Add(btnPlay);
+            playPanel.DUIControls.Add(btnNext);
+            playPanel.DUIControls.Add(btnOpenFile);
+            playPanel.DUIControls.Add(btnVolume);
+            playPanel.DUIControls.Add(btnScreenShot);
+            playPanel.DUIControls.Add(btnFullScreen);
+            playPanel.DUIControls.Add(btnList);
             #endregion
         }
         #endregion
@@ -689,14 +699,22 @@ namespace DeclineAplay
                     mbu.BackgroundImage = Properties.Resources.sys1;
                     break;
                 case "btnPlay"://播放或暂停;
-                    //if (mbu.BackgroundImage == Properties.Resources.play2)
-                    //{
-                    //    mbu.BackgroundImage = Properties.Resources.play1;
-                    //}
-                    //else
-                    //{
-                    //    mbu.BackgroundImage = Properties.Resources.pause1;
-                    //}
+                    if (mbu.BackgroundImage == Properties.Resources.play2)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.play1;
+                    }
+                    else if (mbu.BackgroundImage == Properties.Resources.play1)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.play2;
+                    }
+                    else if (mbu.BackgroundImage == Properties.Resources.pause1)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.pause2;
+                    }
+                    else
+                    {
+                        mbu.BackgroundImage = Properties.Resources.pause1;
+                    }
                     break;
                 case "btnNext"://下一个
                     mbu.BackgroundImage = Properties.Resources.xys1;
@@ -734,14 +752,22 @@ namespace DeclineAplay
                     mbu.BackgroundImage = Properties.Resources.sys2;
                     break;
                 case "btnPlay"://播放或暂停
-                    //if (mbu.BackgroundImage == Properties.Resources.play1)
-                    //{
-                    //    mbu.BackgroundImage = Properties.Resources.play2;
-                    //}
-                    //else
-                    //{
-                    //    mbu.BackgroundImage = Properties.Resources.pause2;
-                    //}
+                    if (mbu.BackgroundImage == Properties.Resources.play1)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.play2;
+                    }
+                    else if (mbu.BackgroundImage == Properties.Resources.play2)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.play1;
+                    }
+                    else if (mbu.BackgroundImage == Properties.Resources.pause1)
+                    {
+                        mbu.BackgroundImage = Properties.Resources.pause2;
+                    }
+                    else
+                    {
+                        mbu.BackgroundImage = Properties.Resources.pause1;
+                    }
                     break;
                 case "btnNext"://下一个
                     mbu.BackgroundImage = Properties.Resources.xys2;
@@ -773,8 +799,10 @@ namespace DeclineAplay
             {
                 case "btnStop"://停止按钮
                     lw.axPlayer.Close();
+                    lw.Hide();
                     BaseControl.BackColor = defaultSkinColor;
-                    convertCacheFileToOther();
+                    Thread thread = new Thread(() => convertCacheFileToOther());
+                    thread.Start();
                     break;
                 case "btnPrev"://上一个
 

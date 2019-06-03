@@ -89,26 +89,8 @@
     <Compile Include="BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ButtonControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ButtonControl.Designer.cs">
-      <DependentUpon>ButtonControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ImageListControl.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\RadiusControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\RadiusControl.Designer.cs">
-      <DependentUpon>RadiusControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RadiusControlButton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\RadiusControlButton.Designer.cs">
-      <DependentUpon>RadiusControlButton.cs</DependentUpon>
     </Compile>
     <Compile Include="LayeredWindow.cs">
       <SubType>Form</SubType>
@@ -143,15 +125,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ButtonControl.resx">
-      <DependentUpon>ButtonControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RadiusControl.resx">
-      <DependentUpon>RadiusControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RadiusControlButton.resx">
-      <DependentUpon>RadiusControlButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LayeredWindow.resx">
       <DependentUpon>LayeredWindow.cs</DependentUpon>
