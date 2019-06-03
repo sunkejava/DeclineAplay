@@ -104,7 +104,6 @@ namespace DeclineAplay
             cacheFileName = cacheFileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
             lw.axPlayer.SetConfig(2201, cacheFileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
             Logger.Singleton.Info("播放视频" + tvName + "地址为:" + tvUrl);
-            Logger.Singleton.Info("缓存文件:" + cacheFileName + ";转换后的文件:" + filePath + tvName + "." + (cacheFileName.Replace("m3u8", "mp4")).Split('.')[1]);
             lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
         }
 
@@ -1086,11 +1085,12 @@ namespace DeclineAplay
         {
             if (lw.axPlayer.SetConfig(2204, cacheFileName) == 1)
             {
+                Logger.Singleton.Info("缓存文件:" + cacheFileName + ";转换后的文件:" + filePath + tvName.Trim() + "." + (cacheFileName.Replace("m3u8", "mp4")).Split('.')[1]);
                 lw.axPlayer.SetConfig(2205, cacheFileName + ";" + filePath + tvName.Trim() + "." + (cacheFileName.Replace("m3u8", "mp4")).Split('.')[1]);//把缓存文件转换成媒体文件，参数格式："缓存文件名;媒体文件名"，即使未下载完成的缓存文件也能转换成媒体文件，不过未完成的数据块被填充为0。
             }
             else
             {
-
+                Logger.Singleton.Info("缓存未完成，没有进行视频转换！");
             }
         }
 
