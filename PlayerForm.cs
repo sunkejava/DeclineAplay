@@ -64,8 +64,8 @@ namespace DeclineAplay
             //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
             //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
             tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
-            tvName = "捉迷藏(T-ara)";
-            tvName = string.IsNullOrEmpty(tvName) ? "纵有疾风起，人生不言弃" : tvName;
+            //tvName = "纵有疾风起，人生不言弃";
+            tvName = string.IsNullOrEmpty(tvName) ? "捉迷藏(T-ara)" : tvName;
             tkb_jdt.Value = 0;
             //tkb_hcjdt.Value = 0;
             //tkb_hcjdt.MouseCanControl = false;
@@ -1077,8 +1077,10 @@ namespace DeclineAplay
             }
             //updatePlayerExplain("缓存完成:" + GetString(sfileList.Length * 640 * 1024) + "未完成:" + GetString((efileList.Length <= 0 ? 0 : efileList.Length) * 640 * 1024));
             string bufferStr = (Math.Round((sfileList.Length > 0 ? (Double)sfileList.Length / (sfileList.Length + efileList.Length) : (Double)0), 3) * 100).ToString();
-            updatePlayerExplain("缓冲进度:" + bufferStr);
-            //tkb_hcjdt.Value = Math.Round((sfileList.Length > 0 ? (Double)sfileList.Length / (sfileList.Length + efileList.Length) : (Double)0), 3);
+            if (!bufferStr.Equals("100"))
+            {
+                updatePlayerExplain("缓冲进度:" + bufferStr + "%");
+            }
         }
 
         private void convertCacheFileToOther()
