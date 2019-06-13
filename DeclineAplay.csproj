@@ -77,6 +77,9 @@
   <ItemGroup>
     <Compile Include="API\Hxc.cs" />
     <Compile Include="AppLogs.cs" />
+    <Compile Include="Controls\PlayListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +121,7 @@
     <Compile Include="Utils\EDate.cs" />
     <Compile Include="Utils\PicDeal.cs" />
     <Compile Include="Utils\PlayClass.cs" />
+    <Compile Include="Utils\PlayListEntity.cs" />
     <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\Win32.cs" />
     <EmbeddedResource Include="MainForm.resx">

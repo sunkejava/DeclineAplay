@@ -17,6 +17,7 @@ namespace DeclineAplay
         private LayeredWindow lw = new LayeredWindow();
         ToolTip toolTip1 = new ToolTip();
         private System.Timers.Timer LayeredWindowShowTimer = new System.Timers.Timer();
+        private Controls.PlayeListControl Play_List;
         public Color defaultSkinColor = Color.Black;//Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         DuiLabel dl_TvName = null;
@@ -63,12 +64,11 @@ namespace DeclineAplay
             #region 变量初始
             //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
             //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
-            tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
+            //tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
+            tvUrl = "http://cdn-2.haku99.com/hls/2018/12/06/bb2TbMGU/playlist.m3u8";
             //tvName = "纵有疾风起，人生不言弃";
             tvName = string.IsNullOrEmpty(tvName) ? "捉迷藏(T-ara)" : tvName;
             tkb_jdt.Value = 0;
-            //tkb_hcjdt.Value = 0;
-            //tkb_hcjdt.MouseCanControl = false;
             tkb_jdt.Enabled = false;
             #endregion
             SetDefaultSkin();
@@ -684,6 +684,23 @@ namespace DeclineAplay
             playPanel.DUIControls.Add(btnFullScreen);
             playPanel.DUIControls.Add(btnList);
             #endregion
+
+            #region 播放器列表控件添加
+            Play_List = new DeclineAplay.Controls.PlayeListControl();
+            Play_List.Size = new Size(100, BaseControl.Height - 20);
+            Play_List.Location = new Point(BaseControl.Width - 100, 20);
+            Play_List.plf = this;
+            Play_List.Visible = true;
+            List<Utils.PlayListEntity> playLists = new List<Utils.PlayListEntity>();
+            Utils.PlayListEntity ple = new Utils.PlayListEntity();
+            ple.tvImgUrl = "视频图片地址";
+            ple.tvName = tvName;
+            ple.tvUrl = tvUrl;
+            ple.tvTimeLength = "12分钟";
+            playLists.Add(ple);
+            Play_List.AddList(playLists);
+            this.Controls.Add(Play_List);
+            #endregion
         }
         #endregion
 
@@ -829,7 +846,7 @@ namespace DeclineAplay
                     fullScreen();
                     break;
                 case "btnList"://列表
-
+                    isShowList();
                     break;
                 default:
                     break;
@@ -1121,6 +1138,20 @@ namespace DeclineAplay
 
 
             return b + "B";
+        }
+
+        private void isShowList()
+        {
+            if (Play_List.Visible)
+            {
+                Play_List.Visible = false;
+                Play_List.SendToBack();
+            }
+            else
+            {
+                Play_List.Visible = true;
+                Play_List.BringToFront();
+            }
         }
         #endregion
 
