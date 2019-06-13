@@ -313,15 +313,6 @@ namespace DeclineAplay
         }
         private void Dlbe_MouseLeave(object sender, EventArgs e)
         {
-            DuiBaseControl lbbtn = sender as DuiBaseControl;
-            foreach (var vitem in lbbtn.Controls)
-            {
-                DuiLabel lb = vitem as DuiLabel;
-                if (lb.Text == "4K专区")
-                {
-                    skinLine_Update();
-                }
-            }
             Point ms = Control.MousePosition;
             if ((ms.Y < y || (ms.Y >= y && ms.X != x)) && Panel_TypeMess.DUIControls.Count > 0)
             {
@@ -654,6 +645,7 @@ namespace DeclineAplay
             typeControl.Controls.Add(addHotTagControl(bimg.getHotTags()));
             typeControl.Size = new Size(this.Width, 35);
             typeControl.Dock = DockStyle.Fill;
+            Panel_Type.BackColor = Color.White;
             Panel_TypeMess.BringToFront();
             Panel_Type.DUIControls.Add(typeControl);
             return true;
