@@ -90,6 +90,7 @@ namespace DeclineAplay
         /// </summary>
         private void SetAplayConfig()
         {
+            lw.axPlayer.SetConfig(2, Application.StartupPath + "\\codecs");
             lw.axPlayer.SetConfig(8, "1");//设置是否打开成功后自动播放，0-不自动播放，1-自动播放，默认为1
             lw.axPlayer.SetConfig(1102, "10");//播放 HTTP 网络视频时，失败重连次数，默认为 5 次
             lw.axPlayer.SetConfig(1001, "500");//设置当网络没有读取到数据时，等待多少个视频帧进入缓冲（可以通过视频帧率换算成时间），默认为 500
