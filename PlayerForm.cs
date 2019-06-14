@@ -17,7 +17,7 @@ namespace DeclineAplay
         private LayeredWindow lw = new LayeredWindow();
         ToolTip toolTip1 = new ToolTip();
         private System.Timers.Timer LayeredWindowShowTimer = new System.Timers.Timer();
-        private Controls.PlayeListControl Play_List;
+        PLayListForm listForm = null;
         public Color defaultSkinColor = Color.Black;//Color.FromArgb(120, 56, 249, 215);//Color.FromArgb(255, 92, 138);
         DuiLabel dl_PlayerExplain = null;//播放器窗体上说明控件
         DuiLabel dl_TvName = null;
@@ -64,8 +64,8 @@ namespace DeclineAplay
             #region 变量初始
             //tvUrl = "http://hd.yinyuetai.com/uploads/videos/common/E6E90165F112591DC08AF52DA40112E9.mp4";
             //tvUrl = string.IsNullOrEmpty(tvUrl) ? "http://video.aajka.cn:8081/1jxxl/JXXL669FEG/JXXL669FEG.m3u8" : tvUrl;
-            //tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
-            tvUrl = "http://cdn-2.haku99.com/hls/2018/12/06/bb2TbMGU/playlist.m3u8";
+            tvUrl = "http://220.194.238.105/8/w/o/i/p/woipppekntdgjmavnqnyqmrewqnxpd/he.yinyuetai.com/AEF80142ECA75C75BA3860D4D0D5EFFC.flv";
+            //tvUrl = "http://cdn-2.haku99.com/hls/2018/12/06/bb2TbMGU/playlist.m3u8";
             //tvName = "纵有疾风起，人生不言弃";
             tvName = string.IsNullOrEmpty(tvName) ? "捉迷藏(T-ara)" : tvName;
             tkb_jdt.Value = 0;
@@ -248,6 +248,13 @@ namespace DeclineAplay
                 btnScreenShot.Location = new Point(playPanel.Width - 150, 25);
                 btnFullScreen.Location = new Point(playPanel.Width - 100, 25);
                 btnList.Location = new Point(playPanel.Width - 50, 25);
+                lw.WindowState = this.WindowState;
+            }
+            if (listForm != null)
+            {
+                listForm.Size = new Size(135, this.Height - 20);
+                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 20);
+                listForm.WindowState = this.WindowState;
             }
         }
 
@@ -272,6 +279,11 @@ namespace DeclineAplay
                 {
                     dl_PlayerExplain.Location = new Point(5, 5);
                 }
+            }
+            if (listForm != null)
+            {
+                listForm.Size = new Size(135, this.Height - 20);
+                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 20);
             }
         }
         #endregion
@@ -442,8 +454,8 @@ namespace DeclineAplay
             if (!lw.Visible)
             {
                 lw.Show();
-                lw.TopMost = true;
-                this.TopMost = true;
+                //lw.TopMost = true;
+                //this.TopMost = true;
                 playPanel.BringToFront();
                 BindPlayerControl();
             }
@@ -687,11 +699,9 @@ namespace DeclineAplay
             #endregion
 
             #region 播放器列表控件添加
-            Play_List = new DeclineAplay.Controls.PlayeListControl();
-            Play_List.Size = new Size(100, BaseControl.Height - 20);
-            Play_List.Location = new Point(BaseControl.Width - 100, 20);
-            Play_List.plf = this;
-            Play_List.Visible = true;
+            listForm = new PLayListForm();
+            listForm.Size = new Size(135, BaseControl.Height - 20);
+            listForm.Location = new Point(BaseControl.Width - 135, 20);
             List<Utils.PlayListEntity> playLists = new List<Utils.PlayListEntity>();
             Utils.PlayListEntity ple = new Utils.PlayListEntity();
             ple.tvImgUrl = "视频图片地址";
@@ -699,8 +709,8 @@ namespace DeclineAplay
             ple.tvUrl = tvUrl;
             ple.tvTimeLength = "12分钟";
             playLists.Add(ple);
-            Play_List.AddList(playLists);
-            this.Controls.Add(Play_List);
+            listForm.playList = playLists;
+            listForm.plf = this;
             #endregion
         }
         #endregion
@@ -1143,15 +1153,15 @@ namespace DeclineAplay
 
         private void isShowList()
         {
-            if (Play_List.Visible)
+            if (listForm.Visible)
             {
-                Play_List.Visible = false;
-                Play_List.SendToBack();
+                listForm.Hide();
+                listForm.SendToBack();
             }
             else
             {
-                Play_List.Visible = true;
-                Play_List.BringToFront();
+                listForm.Show();
+                listForm.BringToFront();
             }
         }
         #endregion
