@@ -252,8 +252,8 @@ namespace DeclineAplay
             }
             if (listForm != null)
             {
-                listForm.Size = new Size(135, this.Height - 20);
-                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 20);
+                listForm.Size = new Size(135, this.Height - 30);
+                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
                 listForm.WindowState = this.WindowState;
             }
         }
@@ -282,8 +282,20 @@ namespace DeclineAplay
             }
             if (listForm != null)
             {
-                listForm.Size = new Size(135, this.Height - 20);
-                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 20);
+                listForm.Size = new Size(135, this.Height - 30);
+                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
+            }
+        }
+
+        private void PlayerForm_Activated(object sender, EventArgs e)
+        {
+            if (lw != null)
+            {
+                lw.WindowState = this.WindowState;
+            }
+            if (listForm != null)
+            {
+                listForm.WindowState = this.WindowState;
             }
         }
         #endregion
@@ -518,6 +530,16 @@ namespace DeclineAplay
             lw.axPlayer.SetVolume((int)(tkb_sound.Value * 200));
             updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
         }
+
+        private void tkb_sound_ValueChanged(object sender, EventArgs e)
+        {
+            if (lw.axPlayer != null)
+            {
+                lw.axPlayer.SetVolume((int)(tkb_sound.Value * 200));
+                updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
+            }
+        }
+
         #endregion
 
         #region 窗体控件添加
@@ -700,8 +722,9 @@ namespace DeclineAplay
 
             #region 播放器列表控件添加
             listForm = new PLayListForm();
-            listForm.Size = new Size(135, BaseControl.Height - 20);
-            listForm.Location = new Point(BaseControl.Width - 135, 20);
+            listForm.Size = new Size(135, this.Height - 30);
+            listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
+
             List<Utils.PlayListEntity> playLists = new List<Utils.PlayListEntity>();
             Utils.PlayListEntity ple = new Utils.PlayListEntity();
             ple.tvImgUrl = "视频图片地址";
@@ -1107,7 +1130,7 @@ namespace DeclineAplay
             string bufferStr = (Math.Round((sfileList.Length > 0 ? (Double)sfileList.Length / (sfileList.Length + efileList.Length) : (Double)0), 3) * 100).ToString();
             if (!bufferStr.Equals("100"))
             {
-                updatePlayerExplain("缓冲进度:" + bufferStr + "%");
+                //updatePlayerExplain("缓冲进度:" + bufferStr + "%");
             }
         }
 
@@ -1166,13 +1189,5 @@ namespace DeclineAplay
         }
         #endregion
 
-        private void tkb_sound_ValueChanged(object sender, EventArgs e)
-        {
-            if (lw.axPlayer != null)
-            {
-                lw.axPlayer.SetVolume((int)(tkb_sound.Value * 200));
-                updatePlayerExplain("当前音量：" + lw.axPlayer.GetVolume().ToString());
-            }
-        }
     }
 }

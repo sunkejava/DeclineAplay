@@ -81,7 +81,7 @@ namespace DeclineAplay.Controls
             int zHeight = (int)(thisWidth * 0.2);
             DuiBaseControl baseControl = new DuiBaseControl();
             baseControl.Size = new Size(thisWidth, zHeight);
-            baseControl.BackColor = Color.FromArgb(245, 245, 247);
+            baseControl.BackColor = defaultColor;//Color.FromArgb(245, 245, 247);
             int i = 0;
             string baseUrl = "0";
             foreach (Utils.PlayListEntity tvInfo in tvInfos)

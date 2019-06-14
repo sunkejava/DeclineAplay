@@ -249,6 +249,7 @@
             this.DoubleBuffered = true;
             this.Name = "PlayerForm";
             this.Radius = 0;
+            this.Activated += new System.EventHandler(this.PlayerForm_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);
