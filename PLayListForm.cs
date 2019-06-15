@@ -25,5 +25,10 @@ namespace DeclineAplay
             playeListControl1.AddList(playList);
             playeListControl1.RefreshList();
         }
+
+        private void PLayListForm_Activated(object sender, EventArgs e)
+        {
+
+        }
     }
 }

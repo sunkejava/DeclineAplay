@@ -252,9 +252,12 @@ namespace DeclineAplay
             }
             if (listForm != null)
             {
-                listForm.Size = new Size(135, this.Height - 30);
-                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
-                listForm.WindowState = this.WindowState;
+                listForm.Size = new Size(135, this.Height - 30 - playPanel.Height);
+                listForm.Location = new Point(this.Location.X + this.Width - 140, this.Location.Y + 30);
+                if (this.WindowState != FormWindowState.Maximized)
+                {
+                    listForm.WindowState = this.WindowState;
+                }
             }
         }
 
@@ -282,8 +285,8 @@ namespace DeclineAplay
             }
             if (listForm != null)
             {
-                listForm.Size = new Size(135, this.Height - 30);
-                listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
+                listForm.Size = new Size(135, this.Height - 30 - playPanel.Height);
+                listForm.Location = new Point(this.Location.X + this.Width - 140, this.Location.Y + 30);
             }
         }
 
@@ -292,10 +295,16 @@ namespace DeclineAplay
             if (lw != null)
             {
                 lw.WindowState = this.WindowState;
+                //lw.BringToFront();
+                ///this.BringToFront();
             }
             if (listForm != null)
             {
-                listForm.WindowState = this.WindowState;
+                if (this.WindowState != FormWindowState.Maximized)
+                {
+                    listForm.WindowState = this.WindowState;
+                    //listForm.BringToFront();
+                }
             }
         }
         #endregion
@@ -466,9 +475,8 @@ namespace DeclineAplay
             if (!lw.Visible)
             {
                 lw.Show();
-                //lw.TopMost = true;
-                //this.TopMost = true;
-                playPanel.BringToFront();
+                this.BringToFront();
+                listForm.BringToFront();
                 BindPlayerControl();
             }
             if (lw.axPlayer.GetState() == 5)
@@ -503,6 +511,32 @@ namespace DeclineAplay
                 }
             }
         }
+        /// <summary>
+        /// 播放
+        /// </summary>
+        /// <param name="url"></param>
+        public void Axplayer_Play(string url)
+        {
+            tvUrl = url;
+            if (!lw.Visible)
+            {
+                lw.Show();
+                this.BringToFront();
+                listForm.BringToFront();
+                BindPlayerControl();
+            }
+            BaseControl.BackColor = Color.FromArgb(1, 255, 255, 255);
+            lw.axPlayer.Open(url);
+            lw.axPlayer.Play();
+            BaseControl.BackgroundImage = null;
+            if (btnPlay != null)
+            {
+                btnPlay.BackgroundImage = Properties.Resources.pause1;
+                btnPlay.Tag = "暂停";
+            }
+            SetAplayConfig();
+        }
+
         /// <summary>
         /// 绑定播放器相关控制到控件
         /// </summary>
@@ -726,12 +760,15 @@ namespace DeclineAplay
             listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
 
             List<Utils.PlayListEntity> playLists = new List<Utils.PlayListEntity>();
-            Utils.PlayListEntity ple = new Utils.PlayListEntity();
-            ple.tvImgUrl = "视频图片地址";
-            ple.tvName = tvName;
-            ple.tvUrl = tvUrl;
-            ple.tvTimeLength = "12分钟";
-            playLists.Add(ple);
+            for (int i = 0; i < 20; i++)
+            {
+                Utils.PlayListEntity ple = new Utils.PlayListEntity();
+                ple.tvImgUrl = "视频图片地址" + i.ToString();
+                ple.tvName = tvName + i.ToString();
+                ple.tvUrl = tvUrl;
+                ple.tvTimeLength = "12分钟";
+                playLists.Add(ple);
+            }
             listForm.playList = playLists;
             listForm.plf = this;
             #endregion
@@ -1176,6 +1213,9 @@ namespace DeclineAplay
 
         private void isShowList()
         {
+            listForm.Size = new Size(135, this.Height - 30 - playPanel.Height);
+            listForm.StartPosition = FormStartPosition.Manual;
+            listForm.Location = new Point(this.Location.X + this.Width - 140, this.Location.Y + 30);
             if (listForm.Visible)
             {
                 listForm.Hide();

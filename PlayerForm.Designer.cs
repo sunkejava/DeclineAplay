@@ -267,10 +267,10 @@
 
         #endregion
         public LayeredSkin.Controls.LayeredBaseControl BaseControl;
-        private LayeredSkin.Controls.LayeredPanel playPanel;
         private System.Windows.Forms.Timer timer1;
         private LayeredSkin.Controls.LayeredLabel lb_bfjd;
         private LayeredSkin.Controls.LayeredTrackBar tkb_sound;
         public LayeredSkin.Controls.LayeredTrackBar tkb_jdt;
+        public LayeredSkin.Controls.LayeredPanel playPanel;
     }
 }

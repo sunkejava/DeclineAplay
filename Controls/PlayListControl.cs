@@ -27,7 +27,7 @@ namespace DeclineAplay.Controls
     {
         ToolTip toolTip1 = new ToolTip();
         int x, y;//记录鼠标进入控件时的位置
-        Color defaultColor = Color.FromArgb(125, 255, 92, 138);
+        Color defaultColor = Color.FromArgb(120, 0, 0, 0);
 
         public PlayerForm plf = null;
 
@@ -59,7 +59,7 @@ namespace DeclineAplay.Controls
             DuiLabel dlt = sender as DuiLabel;
             plf.tvUrl = dlt.Name.Replace("imgTag_", "");
             plf.tvName = dlt.Text.Trim();
-            plf.AxPlayer_PlayOrPause(dlt.Name.Replace("imgTag_", ""));
+            plf.Axplayer_Play(dlt.Name.Replace("imgTag_", ""));
         }
 
         #endregion
@@ -79,17 +79,17 @@ namespace DeclineAplay.Controls
             int thisWidth = this.Width - 6;//减去滚动条宽度
             int zWidth = thisWidth;
             int zHeight = (int)(thisWidth * 0.2);
-            DuiBaseControl baseControl = new DuiBaseControl();
-            baseControl.Size = new Size(thisWidth, zHeight);
-            baseControl.BackColor = defaultColor;//Color.FromArgb(245, 245, 247);
             int i = 0;
             string baseUrl = "0";
             foreach (Utils.PlayListEntity tvInfo in tvInfos)
             {
+                DuiBaseControl baseControl = new DuiBaseControl();
+                baseControl.Size = new Size(thisWidth, zHeight);
+                baseControl.BackColor = defaultColor;//Color.FromArgb(245, 245, 247);
                 baseUrl = tvInfo.tvUrl.ToString();
                 DuiBaseControl abaseControl = new DuiBaseControl();
                 abaseControl.Size = new Size(zWidth, zHeight);
-                abaseControl.Location = new Point(3, i * zHeight);
+                //abaseControl.Location = new Point(3, i * zHeight);
                 abaseControl.Name = "back_" + tvInfo.tvUrl.ToString();
                 abaseControl.BackColor = Color.Transparent;
                 //视频名称
@@ -98,7 +98,7 @@ namespace DeclineAplay.Controls
                 string ingTxt = tvInfo.tvName;
                 imgTag.Size = new Size(zWidth - 4, zHeight - 4);
                 imgTag.Location = new Point(2, 2);
-                imgTag.Font = new Font("微软雅黑", 9F, FontStyle.Regular);
+                imgTag.Font = new Font("微软雅黑", 10F, FontStyle.Bold);
                 imgTag.ForeColor = Color.White;
                 imgTag.BackColor = Color.Transparent;
                 imgTag.TextAlign = ContentAlignment.MiddleCenter;
@@ -120,12 +120,13 @@ namespace DeclineAplay.Controls
                 abaseControl.Borders = baseBorder;
                 abaseControl.Controls.Add(imgTag);
                 baseControl.Controls.Add(abaseControl);
+
+                baseControl.Name = "imgListBaseControl_" + baseUrl;
+                Items.Add(baseControl);
+                //更新列表
+                RefreshList();
                 i++;
             }
-            baseControl.Name = "imgListBaseControl_" + baseUrl;
-            Items.Add(baseControl);
-            //更新列表
-            RefreshList();
             GC.Collect();
             return true;
         }

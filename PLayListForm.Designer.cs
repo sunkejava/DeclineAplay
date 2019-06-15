@@ -53,13 +53,13 @@
             this.playeListControl1.Name = "playeListControl1";
             this.playeListControl1.Orientation = LayeredSkin.Controls.ListOrientation.Vertical;
             this.playeListControl1.RollSize = 20;
-            this.playeListControl1.ScrollBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.playeListControl1.ScrollBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.playeListControl1.ScrollBarHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.playeListControl1.ScrollBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.playeListControl1.ScrollBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.playeListControl1.ScrollBarHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.playeListControl1.ScrollBarWidth = 10;
             this.playeListControl1.ShowScrollBar = true;
             this.playeListControl1.Size = new System.Drawing.Size(184, 545);
-            this.playeListControl1.SmoothScroll = false;
+            this.playeListControl1.SmoothScroll = true;
             this.playeListControl1.TabIndex = 0;
             this.playeListControl1.Text = "playeListControl1";
             this.playeListControl1.Ulmul = false;
@@ -74,9 +74,12 @@
             this.Controls.Add(this.playeListControl1);
             this.HaloColor = System.Drawing.Color.Transparent;
             this.Name = "PLayListForm";
+            this.Radius = 20;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "";
+            this.Activated += new System.EventHandler(this.PLayListForm_Activated);
             this.Load += new System.EventHandler(this.PLayListForm_Load);
             this.ResumeLayout(false);
 
