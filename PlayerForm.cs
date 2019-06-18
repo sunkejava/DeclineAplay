@@ -760,12 +760,22 @@ namespace DeclineAplay
             listForm.Location = new Point(this.Location.X + this.Width - 135, this.Location.Y + 30);
 
             List<Utils.PlayListEntity> playLists = new List<Utils.PlayListEntity>();
-            for (int i = 0; i < 20; i++)
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    Utils.PlayListEntity ple = new Utils.PlayListEntity();
+            //    ple.tvImgUrl = "视频图片地址" + i.ToString();
+            //    ple.tvName = tvName + i.ToString();
+            //    ple.tvUrl = tvUrl;
+            //    ple.tvTimeLength = "12分钟";
+            //    playLists.Add(ple);
+            //}
+            //盘丝视频
+            for (int i = 0; i < 60; i++)
             {
                 Utils.PlayListEntity ple = new Utils.PlayListEntity();
-                ple.tvImgUrl = "视频图片地址" + i.ToString();
-                ple.tvName = tvName + i.ToString();
-                ple.tvUrl = tvUrl;
+                ple.tvImgUrl = "https://p.syasn.com/ps" + (1100 + i).ToString() + "+350";
+                ple.tvName = "盘丝视频:" + (1100 + i).ToString();
+                ple.tvUrl = "ps-ps" + (1100 + i).ToString();
                 ple.tvTimeLength = "12分钟";
                 playLists.Add(ple);
             }

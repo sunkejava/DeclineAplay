@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Hxc.cs" />
+    <Compile Include="API\Mmtv.cs" />
     <Compile Include="AppLogs.cs" />
     <Compile Include="Controls\PlayListControl.cs">
       <SubType>Component</SubType>

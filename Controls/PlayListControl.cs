@@ -57,9 +57,21 @@ namespace DeclineAplay.Controls
         private void ImgTag_MouseClick(object sender, DuiMouseEventArgs e)
         {
             DuiLabel dlt = sender as DuiLabel;
-            plf.tvUrl = dlt.Name.Replace("imgTag_", "");
-            plf.tvName = dlt.Text.Trim();
-            plf.Axplayer_Play(dlt.Name.Replace("imgTag_", ""));
+            if (dlt.Name.Contains("ps-"))
+            {
+                API.Mmtv llys = new API.Mmtv();
+                string tvUrl = dlt.Name.Replace("imgTag_", "");
+                tvUrl = llys.getMmUrl(tvUrl.Split('-')[0], tvUrl.Split('-')[1]);
+                plf.tvUrl = tvUrl;
+                plf.tvName = dlt.Text.Trim();
+                plf.Axplayer_Play(tvUrl);
+            }
+            else
+            {
+                plf.tvUrl = dlt.Name.Replace("imgTag_", "");
+                plf.tvName = dlt.Text.Trim();
+                plf.Axplayer_Play(dlt.Name.Replace("imgTag_", ""));
+            }
         }
 
         #endregion
