@@ -15,7 +15,7 @@ namespace DeclineAplay
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DebugForm());
+            Application.Run(new MainForm());
         }
     }
 }

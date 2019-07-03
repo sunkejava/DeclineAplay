@@ -139,11 +139,20 @@ namespace DeclineAplay.Controls
             //播放视频
             DuiButton dbn = sender as DuiButton;
             string url = dbn.Tag.ToString().Split('|')[1].ToString();
-            PlayerForm plF = new PlayerForm();
-            plF.tvUrl = url;
-            plF.tvName = dbn.Tag.ToString().Split('|')[2].ToString();
-            plF.Show();
-            plF.AxPlayer_PlayOrPause(url);
+            try
+            {
+                PlayerForm plF = new PlayerForm();
+                plF.tvUrl = url;
+                plF.tvName = dbn.Tag.ToString().Split('|')[2].ToString();
+                plF.Show();
+                plF.AxPlayer_PlayOrPause(url);
+            }
+            catch (Exception ex)
+            {
+                Logger.Singleton.Error("name:" + dbn.Tag.ToString().Split('|')[2].ToString() + "---地址:" + dbn.Tag.ToString().Split('|')[1].ToString(),ex);
+                throw;
+            }
+            
         }
 
         private void Btn_Download_MouseLeave(object sender, EventArgs e)

@@ -42,7 +42,7 @@ namespace DeclineAplay.API
         {
             try
             {
-                string curl = @"http://api1.aajpa.cn:8688/Video/GetListByTag";
+                string curl = @"http://api1.afhxc.com:8688/Video/GetListByTag";
                 string jsons = "{\"length\":" + pageSize.ToString() + ",\"start\":" + startNo.ToString() + ",\"searchtext\":\"" + searchText + "\",\"UserID\":0}";
                 //创建一个HttpWebRequest对象
                 req = (HttpWebRequest)HttpWebRequest.Create(curl);
@@ -84,7 +84,7 @@ namespace DeclineAplay.API
         {
             try
             {
-                string curl = @"http://api1.aajpa.cn:8688/Video/GetListByTag";
+                string curl = @"http://api1.afhxc.com:8688/Video/GetListByTag";
                 string jsons = "{\"length\":" + pageSize.ToString() + ",\"start\":" + startNo + ",\"searchtext\":\"\",\"UserID\":0,\"ordertext\":[{\"column\":\"AddTime\",\"dir\":\"desc\"}]}";
                 //创建一个HttpWebRequest对象
                 req = (HttpWebRequest)HttpWebRequest.Create(curl);
@@ -127,7 +127,7 @@ namespace DeclineAplay.API
         {
             try
             {
-                string curl = @"http://api1.aajpa.cn:8688/Video/GetHomeRecomendList";
+                string curl = @"http://api1.afhxc.com:8688/Video/GetHomeRecomendList";
                 string jsons = "{\"UserID\":0,\"ClientType\":2,\"length\":" + pageSize.ToString() + ",\"start\":" + startNo.ToString() + "}";
                 //创建一个HttpWebRequest对象
                 req = (HttpWebRequest)HttpWebRequest.Create(curl);
@@ -169,7 +169,7 @@ namespace DeclineAplay.API
         {
             try
             {
-                string curl = @"http://api1.aajpa.cn:8688/Video/GetHomeHotList";
+                string curl = @"http://api1.afhxc.com:8688/Video/GetHomeHotList";
                 string jsons = "{\"UserID\":0,\"ClientType\":2,\"length\":" + pageSize.ToString() + ",\"start\":" + startNo.ToString() + "}";
                 //创建一个HttpWebRequest对象
                 req = (HttpWebRequest)HttpWebRequest.Create(curl);
