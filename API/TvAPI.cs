@@ -40,16 +40,16 @@ namespace DeclineAplay.API
         /// <summary>
         /// 获取版本号
         /// </summary>
-        /// <returns>{"ver":"1.2.45","message":"success"}</returns>
+        /// <returns>{"ver":"","message":""}</returns>
         public string getAppVer()
         {
             try
             {
-                string verUrl = ApiHost + "A383/VerInfo?PostKey=" + getThisKey("VerInfo", new Entity.UserEntity());
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/VerInfo?PostKey=" + getThisKey("VerInfo", new Entity.UserEntity());
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -71,11 +71,11 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = ApiHost + "A383/AppConfig?IMEI=" + IMEI + "&postkey=" + getThisKey("AppConfig", new Entity.UserEntity());
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/AppConfig?IMEI=" + IMEI + "&postkey=" + getThisKey("AppConfig", new Entity.UserEntity());
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -91,16 +91,16 @@ namespace DeclineAplay.API
         /// 获取销售信息
         /// </summary>
         /// <param name="sellid">28825252</param>
-        /// <returns>{"data":{"LogoURL":"http://api.i888999.com/img/logo.png","Title":"383å½±é³å28825252"},"message":"success"}</returns>
+        /// <returns>{"data":{"LogoURL":"","Title":""},"message":""}</returns>
         public string getSellInfo(string sellid)
         {
             try
             {
-                string verUrl = ApiHost + "A383/getSellInfo?sellid=" + sellid;
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/getSellInfo?sellid=" + sellid;
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -120,11 +120,11 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = ApiHost + "A383/MemberLogin?mail=" + userEntity.email + "&psw=" + userEntity.psw + "&IMEI=" + userEntity.imei + "&postkey=" + getThisKey("MemberLogin", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/MemberLogin?mail=" + userEntity.email + "&psw=" + userEntity.psw + "&IMEI=" + userEntity.imei + "&postkey=" + getThisKey("MemberLogin", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -145,11 +145,11 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = ApiHost + "A383/Category?IMEI=" + IMEI + "&postkey=" + getThisKey("Category", new Entity.UserEntity());
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/Category?IMEI=" + IMEI + "&postkey=" + getThisKey("Category", new Entity.UserEntity());
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -170,11 +170,11 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = ApiHost + "A383/ScrollMenu?IMEI=" + IMEI + "&postkey=" + getThisKey("ScrollMenu", new Entity.UserEntity());
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/ScrollMenu?IMEI=" + IMEI + "&postkey=" + getThisKey("ScrollMenu", new Entity.UserEntity());
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -195,11 +195,11 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = ApiHost + "A383/FreeVideo?IMEI=" + IMEI + "&postkey=" + getThisKey("FreeVideo", new Entity.UserEntity());
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/FreeVideo?IMEI=" + IMEI + "&postkey=" + getThisKey("FreeVideo", new Entity.UserEntity());
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -224,11 +224,11 @@ namespace DeclineAplay.API
                 Entity.UserEntity userEntity = new Entity.UserEntity();
                 userEntity.page = page;
                 userEntity.imei = IMEI;
-                string verUrl = ApiHost + "A383/NewVideo?Page=" + page + "&IMEI=" + IMEI + "&postkey=" + getThisKey("NewVideo", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/NewVideo?Page=" + page + "&IMEI=" + IMEI + "&postkey=" + getThisKey("NewVideo", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -255,11 +255,11 @@ namespace DeclineAplay.API
                 userEntity.page = page;
                 userEntity.imei = IMEI;
                 userEntity.category = categoryId;
-                string verUrl = ApiHost + "A383/CategoryVideo?Page=" + page + "&Category=" + categoryId + "&IMEI=" + IMEI + "&postkey=" + getThisKey("CategoryVideo", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/CategoryVideo?Page=" + page + "&Category=" + categoryId + "&IMEI=" + IMEI + "&postkey=" + getThisKey("CategoryVideo", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -284,11 +284,11 @@ namespace DeclineAplay.API
                 Entity.UserEntity userEntity = new Entity.UserEntity();
                 userEntity.page = page;
                 userEntity.imei = IMEI;
-                string verUrl = ApiHost + "A383/ArticleList?Page=" + page + "&IMEI=" + IMEI + "&postkey=" + getThisKey("ArticleList", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/ArticleList?Page=" + page + "&IMEI=" + IMEI + "&postkey=" + getThisKey("ArticleList", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -309,7 +309,7 @@ namespace DeclineAplay.API
         {
             try
             {
-                string verUrl = "http://avnews.qr383.com/A383/AvNews?id=" + id;
+                string verUrl = "http://avnews.qr383.com/" + Utils.SecurityHelper.Decode(uStr) + "/AvNews?id=" + id;
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
@@ -338,11 +338,11 @@ namespace DeclineAplay.API
                 Entity.UserEntity userEntity = new Entity.UserEntity();
                 userEntity.type = type;
                 userEntity.imei = IMEI;
-                string verUrl = ApiHost + "A383/SearchIndex?type=" + type + "&IMEI=" + IMEI + "&postkey=" + getThisKey("SearchIndex", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/SearchIndex?type=" + type + "&IMEI=" + IMEI + "&postkey=" + getThisKey("SearchIndex", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -369,11 +369,11 @@ namespace DeclineAplay.API
                 userEntity.search = tag;
                 userEntity.imei = IMEI;
                 userEntity.page = page;
-                string verUrl = ApiHost + "A383/SearchVideo?Page=" + page + "&Search=" + SecurityHelper.EncodeUrl(tag) + "&IMEI=" + IMEI + "&postkey=" + getThisKey("SearchVideo", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/SearchVideo?Page=" + page + "&Search=" + SecurityHelper.EncodeUrl(tag) + "&IMEI=" + IMEI + "&postkey=" + getThisKey("SearchVideo", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -400,11 +400,11 @@ namespace DeclineAplay.API
                 userEntity.vid = vid;
                 userEntity.imei = IMEI;
                 userEntity.uid = uid;
-                string verUrl = ApiHost + "A383/VideoDetail?vid=" + vid + "&uid=" + uid + "&IMEI=" + IMEI + "&postkey=" + getThisKey("VideoDetail", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/VideoDetail?vid=" + vid + "&uid=" + uid + "&IMEI=" + IMEI + "&postkey=" + getThisKey("VideoDetail", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -435,11 +435,11 @@ namespace DeclineAplay.API
                 userEntity.email = email;
                 userEntity.psw = pwd;
                 userEntity.type = type;
-                string verUrl = ApiHost + "A383/PlayVideo?mail=" + email + "&psw=" + pwd + "&vid=" + vid + "&Type=" + type + "&IMEI=" + IMEI + "&postkey=" + getThisKey("PlayVideo", userEntity);
+                string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/PlayVideo?mail=" + email + "&psw=" + pwd + "&vid=" + vid + "&Type=" + type + "&IMEI=" + IMEI + "&postkey=" + getThisKey("PlayVideo", userEntity);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
-                SecurityHelper.SetHeaderValue(req.Headers, "Host", hostStr);
+                SecurityHelper.SetHeaderValue(req.Headers, "Host", Utils.SecurityHelper.Decode(hostStr));
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
@@ -461,75 +461,76 @@ namespace DeclineAplay.API
         public string getThisKey(string postType, Entity.UserEntity userEntity)
         {
             string encryptStr = "";
+            string tempuStr = Utils.SecurityHelper.Decode(uStr);
             switch (postType)
             {
                 case "MemberLogin"://用户登录
-                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "MemberReg"://用户注册
-                    encryptStr = userEntity.psw + userEntity.email + userEntity.imei + userEntity.sellid + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.psw + userEntity.email + userEntity.imei + userEntity.sellid + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "UpPSW"://更新密码
-                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "UpNick"://更新用户信息
-                    encryptStr = userEntity.email + userEntity.psw + userEntity.nick + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + userEntity.psw + userEntity.nick + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "ForgetPSW"://忘记密码
-                    encryptStr = userEntity.email + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "AppMonth"://
-                    encryptStr = userEntity.email + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "ViewLog":
                 case "OrderLog":
-                    encryptStr = userEntity.uid + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.uid + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "NewVideo"://最新视频
                 case "ArticleList"://情报列表
-                    encryptStr = userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "VideoDetail"://视频详情
-                    encryptStr = userEntity.vid + userEntity.uid + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.vid + userEntity.uid + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "LikeEDIT"://喜欢修改
                 case "NiceVideo"://好视频
-                    encryptStr = userEntity.uid + userEntity.vid + userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.uid + userEntity.vid + userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "LikeLIST"://喜欢列表
-                    encryptStr = userEntity.uid + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.uid + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "CategoryVideo"://类别视频
-                    encryptStr = userEntity.category + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.category + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "SearchVideo"://搜索视频
-                    encryptStr = userEntity.search + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.search + userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "SearchIndex"://搜索索引
-                    encryptStr = userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "PlayVideo"://播放视频
-                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + userEntity.vid + userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + userEntity.vid + userEntity.type + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "ArticleContent"://文章内容
-                    encryptStr = userEntity.id + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.id + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "MemberLogout"://用户退出
-                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.email + userEntity.psw + userEntity.imei + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "PushList"://推送列表
-                    encryptStr = userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.page + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "VerInfo"://获取版本号
                 case "AppConfig"://获取系统配置
                 case "DomainList"://域名列表
-                    encryptStr = DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 case "DomainBad"://域名错误
-                    encryptStr = userEntity.id + DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = userEntity.id + DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
                 default:
-                    encryptStr = DateTime.Now.ToString("yyyyMMddHH") + uStr;
+                    encryptStr = DateTime.Now.ToString("yyyyMMddHH") + tempuStr;
                     break;
             }
             encryptStr = SecurityHelper.MD5Encrypt(encryptStr, true);
