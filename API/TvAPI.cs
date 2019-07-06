@@ -425,7 +425,7 @@ namespace DeclineAplay.API
         /// <param name="type">类型</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string PlayVideo(string email, string pwd, string vid, string type, string IMEI)
+        public string getVideoUrl(string email, string pwd, string vid, string type, string IMEI)
         {
             try
             {

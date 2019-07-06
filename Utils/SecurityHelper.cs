@@ -64,7 +64,7 @@ namespace DeclineAplay.Utils
         /// <returns></returns>
         public static string DecodeUrl(string text)
         {
-            return HttpContext.Current.Server.UrlDecode(text);
+            return HttpUtility.UrlDecode(text);
         }
 
         /// <summary>
@@ -74,7 +74,8 @@ namespace DeclineAplay.Utils
         /// <returns></returns>
         public static string EncodeUrl(string text)
         {
-            return HttpContext.Current.Server.UrlEncode(text);
+
+            return HttpUtility.UrlEncode(text);
         }
 
         /// <summary>

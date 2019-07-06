@@ -88,7 +88,17 @@
     <Compile Include="DebugForm.Designer.cs">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AppVerEntity.cs" />
+    <Compile Include="Entity\CategoryEntity.cs" />
+    <Compile Include="Entity\ConfigEntity.cs" />
+    <Compile Include="Entity\MenuEntity.cs" />
+    <Compile Include="Entity\MovePlayEntity.cs" />
+    <Compile Include="Entity\MovieEntity.cs" />
+    <Compile Include="Entity\MovieListEntity.cs" />
+    <Compile Include="Entity\SellInfoEntity.cs" />
+    <Compile Include="Entity\TagsEntity.cs" />
     <Compile Include="Entity\UserEntity.cs" />
+    <Compile Include="Entity\UserInfoEntity.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
