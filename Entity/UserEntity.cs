@@ -41,5 +41,6 @@ namespace DeclineAplay.Entity
         public string search { get; set; }
         public string id { get; set; }
         public string nick { get; set; }
+        public string menuName { get; set; }
     }
 }

@@ -28,6 +28,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using DeclineAplay.Utils;
+using System.Web.Script.Serialization;
 
 namespace DeclineAplay.API
 {
@@ -41,7 +42,7 @@ namespace DeclineAplay.API
         /// 获取版本号
         /// </summary>
         /// <returns>{"ver":"","message":""}</returns>
-        public string getAppVer()
+        public Entity.AppVerEntity getAppVer()
         {
             try
             {
@@ -53,7 +54,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.AppVerEntity it = jss.Deserialize<Entity.AppVerEntity>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -67,7 +70,7 @@ namespace DeclineAplay.API
         /// </summary>
         /// <param name="IMEI">4a46fa50b289ff3c</param>
         /// <returns></returns>
-        public string getAppConfig(string IMEI)
+        public Entity.ConfigEntity.Root getAppConfig(string IMEI)
         {
             try
             {
@@ -79,7 +82,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.ConfigEntity.Root it = jss.Deserialize<Entity.ConfigEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -92,7 +97,7 @@ namespace DeclineAplay.API
         /// </summary>
         /// <param name="sellid">28825252</param>
         /// <returns>{"data":{"LogoURL":"","Title":""},"message":""}</returns>
-        public string getSellInfo(string sellid)
+        public Entity.SellInfoEntity.Root getSellInfo(string sellid)
         {
             try
             {
@@ -104,7 +109,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.SellInfoEntity.Root it = jss.Deserialize<Entity.SellInfoEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -116,7 +123,7 @@ namespace DeclineAplay.API
         /// 用户登录
         /// </summary>
         /// <returns></returns>
-        public string MemberLogin(Entity.UserEntity userEntity)
+        public Entity.UserInfoEntity MemberLogin(Entity.UserEntity userEntity)
         {
             try
             {
@@ -128,7 +135,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.UserInfoEntity it = jss.Deserialize<Entity.UserInfoEntity>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -141,7 +150,7 @@ namespace DeclineAplay.API
         /// </summary>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getCategory(string IMEI)
+        public Entity.CategoryEntity.Root getCategory(string IMEI)
         {
             try
             {
@@ -153,7 +162,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.CategoryEntity.Root it = jss.Deserialize<Entity.CategoryEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -166,7 +177,7 @@ namespace DeclineAplay.API
         /// </summary>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getScrollMenu(string IMEI)
+        public Entity.MenuEntity.Root getScrollMenu(string IMEI)
         {
             try
             {
@@ -178,7 +189,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MenuEntity.Root it = jss.Deserialize<Entity.MenuEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -191,7 +204,7 @@ namespace DeclineAplay.API
         /// </summary>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getFreeVideo(string IMEI)
+        public Entity.MovieListEntity.Root getFreeVideo(string IMEI)
         {
             try
             {
@@ -203,7 +216,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovieListEntity.Root it = jss.Deserialize<Entity.MovieListEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -217,7 +232,7 @@ namespace DeclineAplay.API
         /// <param name="page">当前页码</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getNewVideo(string page, string IMEI)
+        public Entity.MovieListEntity.Root getNewVideo(string page, string IMEI)
         {
             try
             {
@@ -232,7 +247,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovieListEntity.Root it = jss.Deserialize<Entity.MovieListEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -247,7 +264,7 @@ namespace DeclineAplay.API
         /// <param name="IMEI">手机IMEI码</param>
         /// <param name="categoryId">分类ID</param>
         /// <returns></returns>
-        public string getCategoryVideo(string page, string IMEI, string categoryId)
+        public Entity.MovieListEntity.Root getCategoryVideo(string page, string IMEI, string categoryId)
         {
             try
             {
@@ -263,7 +280,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovieListEntity.Root it = jss.Deserialize<Entity.MovieListEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -331,7 +350,7 @@ namespace DeclineAplay.API
         /// <param name="type">类型</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getHotTags(string type, string IMEI)
+        public Entity.TagsEntity.Root getHotTags(string type, string IMEI)
         {
             try
             {
@@ -346,7 +365,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.TagsEntity.Root it = jss.Deserialize<Entity.TagsEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -361,7 +382,7 @@ namespace DeclineAplay.API
         /// <param name="tag">搜索内容</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string searchVideoByTag(string page, string tag, string IMEI)
+        public Entity.MovieListEntity.Root searchVideoByTag(string page, string tag, string IMEI)
         {
             try
             {
@@ -377,7 +398,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovieListEntity.Root it = jss.Deserialize<Entity.MovieListEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -392,7 +415,7 @@ namespace DeclineAplay.API
         /// <param name="uid">用户ID</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getVideoDetail(string vid, string uid, string IMEI)
+        public Entity.MovieEntity.Root getVideoDetail(string vid, string uid, string IMEI)
         {
             try
             {
@@ -408,7 +431,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovieEntity.Root it = jss.Deserialize<Entity.MovieEntity.Root>(Reader);
+                return it;
             }
             catch (Exception ex)
             {
@@ -425,7 +450,7 @@ namespace DeclineAplay.API
         /// <param name="type">类型</param>
         /// <param name="IMEI">手机IMEI码</param>
         /// <returns></returns>
-        public string getVideoUrl(string email, string pwd, string vid, string type, string IMEI)
+        public Entity.MovePlayEntity getVideoUrl(string email, string pwd, string vid, string type, string IMEI)
         {
             try
             {
@@ -443,7 +468,9 @@ namespace DeclineAplay.API
                 StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream());
                 //获取返回的数据
                 string Reader = sr.ReadToEnd();
-                return Reader;
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+                Entity.MovePlayEntity it = jss.Deserialize<Entity.MovePlayEntity>(Reader);
+                return it;
             }
             catch (Exception ex)
             {

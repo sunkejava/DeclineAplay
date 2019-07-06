@@ -28,6 +28,7 @@ namespace DeclineAplay.Controls
         ToolTip toolTip1 = new ToolTip();
         int x, y;//记录鼠标进入控件时的位置
         Color defaultColor = Color.FromArgb(125, 255, 92, 138);
+        public Entity.UserEntity userEntity = new Entity.UserEntity();
         public delegate String getImagePathByUIrlDelegate(string url);
         #region 控件事件
 
@@ -138,21 +139,29 @@ namespace DeclineAplay.Controls
         {
             //播放视频
             DuiButton dbn = sender as DuiButton;
-            string url = dbn.Tag.ToString().Split('|')[1].ToString();
+            Entity.MovieListEntity.DataItem moveInfo = new Entity.MovieListEntity.DataItem();
+            if (dbn.Tag != null)
+            {
+                moveInfo = dbn.Tag as Entity.MovieListEntity.DataItem;
+            }
+            string url = "";
             try
             {
+                API.TvAPI tva = new API.TvAPI();
+                Entity.MovePlayEntity plav = tva.getVideoUrl(userEntity.email, userEntity.psw, moveInfo.videoID.ToString(), "all", userEntity.imei);
                 PlayerForm plF = new PlayerForm();
-                plF.tvUrl = url;
-                plF.tvName = dbn.Tag.ToString().Split('|')[2].ToString();
+                url = plav.data.ToString();
+                plF.tvUrl = plav.data.ToString();
+                plF.tvName = moveInfo.videoName;
                 plF.Show();
                 plF.AxPlayer_PlayOrPause(url);
             }
             catch (Exception ex)
             {
-                Logger.Singleton.Error("name:" + dbn.Tag.ToString().Split('|')[2].ToString() + "---地址:" + dbn.Tag.ToString().Split('|')[1].ToString(),ex);
+                Logger.Singleton.Error("name:" + moveInfo.videoName + "---地址:" + url, ex);
                 throw;
             }
-            
+
         }
 
         private void Btn_Download_MouseLeave(object sender, EventArgs e)
@@ -162,30 +171,8 @@ namespace DeclineAplay.Controls
 
         private void Btn_Download_MouseEnter(object sender, EventArgs e)
         {
-            toolTip1.Show(((DuiButton)sender).Tag.ToString().Split('|')[0].ToString() + (((DuiButton)sender).Tag.ToString().Split('|')[0].ToString().Contains("取消") ? "" : "视频"), this, PointToClient(MousePosition).X, PointToClient(MousePosition).Y + 15, 2000);
-        }
-
-        /// <summary>
-        /// 图片点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Dp_MouseClick(object sender, DuiMouseEventArgs e)
-        {
-            DuiPictureBox dp = sender as DuiPictureBox;
-            try
-            {
-                DuiButton dbn = sender as DuiButton;
-                string url = dp.Tag.ToString();
-                PlayerForm plF = new PlayerForm();
-                plF.tvUrl = url;
-                plF.Show();
-                plF.AxPlayer_PlayOrPause(url);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("播放视频失败，原因为：" + ex.Message);
-            }
+            Entity.MovieListEntity.DataItem moveinfo = (sender as DuiButton).Tag as Entity.MovieListEntity.DataItem;
+            toolTip1.Show(moveinfo.videoName, this, PointToClient(MousePosition).X, PointToClient(MousePosition).Y + 15, 2000);
         }
 
         private void BtnBaseControl_MouseMove(object sender, DuiMouseEventArgs e)
@@ -202,7 +189,7 @@ namespace DeclineAplay.Controls
         /// </summary>
         /// <param name="imgInfos"></param>
         /// <returns></returns>
-        public Boolean AddImgList(List<Utils.EDate.DataItem> imgInfos)
+        public Boolean AddImgList(List<Entity.MovieListEntity.DataItem> imgInfos)
         {
             if (imgInfos.Count == 0)
             {
@@ -218,22 +205,22 @@ namespace DeclineAplay.Controls
             string baseID = "0";
             foreach (var imgInfo in imgInfos)
             {
-                EDate.DataItem newImgInfo = isValidImgInfo(imgInfo);
-                baseID = imgInfo.ID.ToString();
+                //EDate.DataItem newImgInfo = isValidImgInfo(imgInfo);
+                baseID = imgInfo.videoID.ToString();
                 DuiBaseControl abaseControl = new DuiBaseControl();
                 abaseControl.Size = new Size(zWidth, zHeight);
                 abaseControl.Location = new Point(i * zWidth, 0);
-                abaseControl.Name = "back_" + imgInfo.ID.ToString();
+                abaseControl.Name = "back_" + imgInfo.videoID.ToString();
                 //背景图
                 DuiPictureBox dp = new DuiPictureBox();
                 dp.Size = new Size(zWidth - 4, zHeight - 4);
                 int thisWidthScreen = Screen.PrimaryScreen.Bounds.Width;
                 int thisHeiightScreen = Screen.PrimaryScreen.Bounds.Height;
-                dp.Tag = newImgInfo.CoverImgUrl;
+                dp.Tag = imgInfo.photo;
                 getImagePathByUIrlDelegate newg = new getImagePathByUIrlDelegate(PicDeal.DownloaImage);
-                dp.BackgroundImage = Image.FromFile(newg(newImgInfo.CoverImgUrl));
+                dp.BackgroundImage = Image.FromFile(newg(imgInfo.photo));
                 dp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                dp.Name = "back_" + imgInfo.ID.ToString();
+                dp.Name = "back_" + imgInfo.videoID.ToString();
                 dp.Location = new Point(2, 2);
                 //dp.Cursor = System.Windows.Forms.Cursors.Hand;
                 dp.MouseEnter += Dp_MouseEnter;
@@ -242,7 +229,7 @@ namespace DeclineAplay.Controls
                 //视频名称
                 DuiLabel imgTag = new DuiLabel();
                 imgTag.TextRenderMode = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                string ingTxt = (string.IsNullOrEmpty(imgInfo.Name) ? imgInfo.Tags : imgInfo.Name);
+                string ingTxt = (string.IsNullOrEmpty(imgInfo.videoName) ? imgInfo.videoType : imgInfo.videoName);
                 if (ingTxt.Length * 12 > zWidth)
                 {
                     imgTag.Size = new Size(zWidth - 4, 12 * 4);
@@ -260,16 +247,16 @@ namespace DeclineAplay.Controls
                 imgTag.BackgroundImage = Properties.Resources.mask_shadow;
                 imgTag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                 imgTag.Text = ingTxt;
-                imgTag.Name = "imgTag_" + imgInfo.ID.ToString();
+                imgTag.Name = "imgTag_" + imgInfo.videoID.ToString();
                 imgTag.MouseLeave += Dp_MouseLeave;
                 imgTag.Cursor = System.Windows.Forms.Cursors.Hand;
                 //视频时长
                 DuiLabel tvLength = new DuiLabel();
                 tvLength.TextRenderMode = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                string tvTimeStr = "0分钟";
-                if (imgInfo.Length > 0)
+                string tvTimeStr = "上架时间：";
+                if (!string.IsNullOrEmpty(imgInfo.onDate))
                 {
-                    tvTimeStr = (imgInfo.Length / 60).ToString() + "分钟";
+                    tvTimeStr = "上架时间：" + imgInfo.onDate;
                 }
                 tvLength.Size = new Size(tvTimeStr.Length * 12, 12 * 2);
                 tvLength.Location = new Point(zWidth - tvTimeStr.Length * 12 - 2, 2);
@@ -280,14 +267,14 @@ namespace DeclineAplay.Controls
                 tvLength.BackgroundImage = Properties.Resources.mask_shadow;
                 tvLength.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                 tvLength.Text = tvTimeStr;
-                tvLength.Name = "tvLength_" + imgInfo.ID.ToString();
+                tvLength.Name = "tvLength_" + imgInfo.videoID.ToString();
                 tvLength.MouseLeave += Dp_MouseLeave;
                 tvLength.Cursor = System.Windows.Forms.Cursors.Hand;
                 //播放按钮
                 DuiButton btn_Download = new DuiButton();
                 btn_Download.Size = new Size(35, 35);
                 btn_Download.Radius = 35;
-                btn_Download.Name = "btn_Download_" + imgInfo.ID.ToString();
+                btn_Download.Name = "btn_Download_" + imgInfo.videoID.ToString();
                 btn_Download.Text = "";
                 btn_Download.Location = new Point((zWidth - 20 - 35) / 2, (zHeight - 20 - 35) / 2);
                 btn_Download.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -298,7 +285,7 @@ namespace DeclineAplay.Controls
                 btn_Download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
                 btn_Download.ShowBorder = false;
                 btn_Download.MouseClick += Btn_Download_MouseClick;
-                btn_Download.Tag = "播放|" + newImgInfo.Url + "|" + imgInfo.Name;
+                btn_Download.Tag = imgInfo;
                 btn_Download.MouseEnter += Btn_Download_MouseEnter;
                 btn_Download.MouseLeave += Btn_Download_MouseLeave;
                 //收藏次数
@@ -308,24 +295,24 @@ namespace DeclineAplay.Controls
                 btn_sc.Text = "";
                 btn_sc.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_sc.AdaptImage = false;
-                btn_sc.Name = "btn_Sc_" + imgInfo.ID.ToString();
+                btn_sc.Name = "btn_Sc_" + imgInfo.videoID.ToString();
                 btn_sc.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 //btn_sc.Radius = 35;
                 btn_sc.ShowBorder = false;
                 btn_sc.BackgroundImage = Properties.Resources.sc0;
                 btn_sc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
                 btn_sc.IsPureColor = true;
-                btn_sc.Tag = "收藏|" + newImgInfo.Url + "|" + imgInfo.Name;
+                btn_sc.Tag = imgInfo;
                 btn_sc.MouseEnter += Btn_Download_MouseEnter;
                 btn_sc.MouseLeave += Btn_Download_MouseLeave;
                 DuiLabel dltxt = new DuiLabel();
-                dltxt.Text = imgInfo.CollectionCount.ToString();
+                dltxt.Text = imgInfo.actorName.ToString();
                 dltxt.Size = new Size(30, 16);
                 dltxt.ForeColor = Color.White;
                 dltxt.Location = new Point(30, 7);
                 dltxt.BackColor = Color.Transparent;
                 DuiBaseControl scControl = new DuiBaseControl();
-                scControl.Name = "scControl_" + imgInfo.ID.ToString();
+                scControl.Name = "scControl_" + imgInfo.videoID.ToString();
                 scControl.Size = new Size(60, 30);
                 scControl.Location = new Point(zWidth - 20 - 60, zHeight - 20 - 30);
                 scControl.Controls.Add(btn_sc);
@@ -337,10 +324,10 @@ namespace DeclineAplay.Controls
                 btn_Setting.Text = "";
                 btn_Setting.Cursor = System.Windows.Forms.Cursors.Hand;
                 btn_Setting.AdaptImage = false;
-                btn_Setting.Name = "btn_Setting_" + imgInfo.ID.ToString();
+                btn_Setting.Name = "btn_Setting_" + imgInfo.videoID.ToString();
                 btn_Setting.BaseColor = Color.Transparent;//Color.FromArgb(100, 0, 0, 0);
                 //btn_Setting.Radius = 35;
-                btn_Setting.Tag = "观看|" + newImgInfo.Url + "|" + imgInfo.Name;
+                btn_Setting.Tag = imgInfo;
                 btn_Setting.ShowBorder = false;
                 btn_Setting.BackgroundImage = Properties.Resources.eye;
                 btn_Setting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -348,13 +335,13 @@ namespace DeclineAplay.Controls
                 btn_Setting.MouseEnter += Btn_Download_MouseEnter;
                 btn_Setting.MouseLeave += Btn_Download_MouseLeave;
                 DuiLabel dlatxt = new DuiLabel();
-                dlatxt.Text = imgInfo.SeeCount.ToString();
+                dlatxt.Text = imgInfo.videoTypeID.ToString();
                 dlatxt.Size = new Size(30, 16);
                 dlatxt.Location = new Point(30, 7);
                 dlatxt.BackColor = Color.Transparent;
                 dlatxt.ForeColor = Color.White;
                 DuiBaseControl seeControl = new DuiBaseControl();
-                seeControl.Name = "seeControl_" + imgInfo.ID.ToString();
+                seeControl.Name = "seeControl_" + imgInfo.videoID.ToString();
                 seeControl.Size = new Size(60, 30);
                 seeControl.Location = new Point(0, zHeight - 20 - 30);
                 seeControl.Controls.Add(btn_Setting);
@@ -370,7 +357,7 @@ namespace DeclineAplay.Controls
                 btnBaseControl.Controls.Add(btn_Download);
                 btnBaseControl.Controls.Add(scControl);
                 btnBaseControl.Controls.Add(seeControl);
-                btnBaseControl.Name = "btnBaseControl_" + imgInfo.ID.ToString();
+                btnBaseControl.Name = "btnBaseControl_" + imgInfo.videoID.ToString();
                 btnBaseControl.Visible = false;
 
                 Borders baseBorder = new Borders(baseControl);
@@ -394,43 +381,7 @@ namespace DeclineAplay.Controls
             GC.Collect();
             return true;
         }
-        /// <summary>
-        /// 校验实体中字段的值
-        /// </summary>
-        /// <param name="imgInfo"></param>
-        /// <returns></returns>
-        private EDate.DataItem isValidImgInfo(EDate.DataItem imgInfo)
-        {
-            string imgUrl = imgInfo.CoverImgUrl;
-            string tvUrl = imgInfo.Url;
-            if (isContainsStr(imgUrl, "http") > 1)
-            {
-                imgUrl = imgUrl.Substring(imgUrl.LastIndexOf("http"));
-            }
-            if (isContainsStr(tvUrl, "http") > 1)
-            {
-                Logger.Singleton.Info("存在多个Http的名称:" + imgInfo.Name + "---地址:" + imgInfo.CoverImgUrl);
-                tvUrl = tvUrl.Substring(tvUrl.LastIndexOf("http"));
-            }
-            imgInfo.CoverImgUrl = imgUrl;
-            imgInfo.Url = tvUrl;
-            return imgInfo;
-        }
-        /// <summary>
-        /// 判断某一个字符串中包含某个字符串的个数并返回
-        /// </summary>
-        /// <param name="str">全字符串</param>
-        /// <param name="nstr">包含的字符串</param>
-        /// <returns>包含字符串个数</returns>
-        private int isContainsStr(string str, string nstr)
-        {
-            if (str.Contains(nstr))
-            {
-                string newStr = str.Replace(nstr, "");
-                return (str.Length - newStr.Length) / nstr.Length;
-            }
-            return 0;
-        }
+
         public bool addIsNull()
         {
             try
@@ -466,39 +417,6 @@ namespace DeclineAplay.Controls
             }
         }
 
-        public void DownloaImage(string fileName, string url, string btnName)
-        {
-            try
-            {
-                WebRequest webreq = WebRequest.Create(url);
-                WebResponse webres = webreq.GetResponse();
-                Stream stream = webres.GetResponseStream();
-                Stream fileStream = new FileStream(fileName, FileMode.Create);
-                byte[] bArray = new byte[1024];
-                int size;
-                do
-                {
-                    size = stream.Read(bArray, 0, (int)bArray.Length);
-                    fileStream.Write(bArray, 0, size);
-                } while (size > 0);
-                fileStream.Close();
-                stream.Close();
-                if (btnName.Contains("btn_Setting_"))
-                {
-                    Thread thread = new Thread(() => PicDeal.setWallpaperApi(fileName));
-                    thread.Start();
-                }
-                else
-                {
-                    MethodInvoker methInvo = new MethodInvoker(showMessageForm);
-                    BeginInvoke(methInvo);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("下载图片失败，原因为：" + ex.Message);
-            }
-        }
         private void showMessageForm()
         {
             MessageForm mfm = new MessageForm("");

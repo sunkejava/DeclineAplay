@@ -37,12 +37,11 @@ namespace DeclineAplay
         /// </summary>
         private bool scorlling = false;
         private int mousetop = 0;
-        API.Hxc bimg = new API.Hxc();
+        API.TvAPI bimg = new API.TvAPI();
+        Entity.UserEntity userEntity = new Entity.UserEntity();
         DuiBaseControl typeControl = new DuiBaseControl();
-        string labelId = "";//类型ID
         string startNo = "0";//开始序号
         string pageCount = "12";//每页或每次调用获取图片的总数
-        string hotTagName = "";//热门标签
         bool isSearch = false;//是否搜索
         bool isEnd = false;//是否为页尾
         bool isLoadData = false;//是否正在加载数据
@@ -94,15 +93,18 @@ namespace DeclineAplay
                     }
                 }
             }
+            userEntity.email = "";
+            userEntity.psw = "";
+            userEntity.imei = "4a46fa50b289ff3c";
+            userEntity.sellid = "28825252";
+            bimg.MemberLogin(userEntity);
             //添加默认字段
-            labelId = "";
-            startNo = "0";
-            hotTagName = "";
+            userEntity.menuName = "0";
+            startNo = "1";
             nCount = "0";
             isSearch = false;
             Thread thread = new Thread(() => addBackImg());
             thread.Start();
-            //addBackImg();
         }
         /// <summary>
         /// 搜索框获取焦点后事件
@@ -150,8 +152,8 @@ namespace DeclineAplay
                             if (!string.IsNullOrEmpty(searchText.Text) && searchText.Text != "输入关键字进行搜索")
                             {
                                 isSearch = true;
-                                startNo = "0";
-                                labelId = searchText.Text;
+                                startNo = "1";
+                                userEntity.menuName = searchText.Text;
                                 Thread thread = new Thread(() => updateImgList(searchText.Text, startNo));
                                 thread.Start();
                             }
@@ -299,16 +301,19 @@ namespace DeclineAplay
         /// <param name="e"></param>
         private void Dlbe_MouseClick(object sender, DuiMouseEventArgs e)
         {
-            //!string.IsNullOrEmpty((sender as DuiLabel).Tag.ToString()) &&
-            if ((sender as DuiLabel).Tag.ToString() != "999" && (sender as DuiLabel).Tag.ToString() != labelId)
+            DuiLabel dlbe = sender as DuiLabel;
+            if (dlbe.Tag != null)
             {
-                labelId = (sender as DuiLabel).Tag.ToString();
-                startNo = "0";
-                hotTagName = "";
-                nCount = "0";
-                isSearch = false;
-                Thread thread = new Thread(() => updateImgList(labelId, startNo));
-                thread.Start();
+                Entity.MenuEntity.DataItem dt = (Entity.MenuEntity.DataItem)dlbe.Tag;
+                if (dt.MenuName != userEntity.menuName)
+                {
+                    userEntity.menuName = dt.MenuName;
+                    startNo = "1";
+                    nCount = "0";
+                    isSearch = false;
+                    Thread thread = new Thread(() => updateImgList(dt.MenuVal.Replace("categoryID=", ""), startNo));
+                    thread.Start();
+                }
             }
         }
         private void Dlbe_MouseLeave(object sender, EventArgs e)
@@ -343,20 +348,18 @@ namespace DeclineAplay
             {
                 if (tidsStr.Contains("-"))
                 {
-                    labelId = dlb.Tag.ToString().Split('-')[0];
-                    hotTagName = dlb.Tag.ToString().Split('-')[1];
-                    startNo = "0";
+                    userEntity.menuName = dlb.Tag.ToString().Split('-')[1];
+                    startNo = "1";
                     isSearch = false;
-                    Thread thread = new Thread(() => updateImgList(labelId, startNo, hotTagName));
+                    Thread thread = new Thread(() => updateImgList(dlb.Tag.ToString().Split('-')[1], startNo));
                     thread.Start();
                 }
                 else
                 {
-                    labelId = (sender as DuiLabel).Tag.ToString();
-                    startNo = "0";
-                    hotTagName = "";
+                    userEntity.menuName = dlb.Tag.ToString();
+                    startNo = "1";
                     isSearch = false;
-                    Thread thread = new Thread(() => updateImgList(labelId, startNo));
+                    Thread thread = new Thread(() => updateImgList(dlb.Tag.ToString().Split('-')[1], startNo));
                     thread.Start();
                 }
             }
@@ -438,7 +441,7 @@ namespace DeclineAplay
             try
             {
                 LoadingControl(true);
-                startNos = (string.IsNullOrEmpty(startNos) ? "0" : startNos);
+                startNos = (string.IsNullOrEmpty(startNos) ? "1" : startNos);
                 List<DuiBaseControl> cItems = new List<DuiBaseControl>();
                 foreach (var item in List_Main.Items)
                 {
@@ -455,23 +458,23 @@ namespace DeclineAplay
                     List_Main.Items.Remove(item);
                 }
                 cItems.Clear();
-                var result = new Utils.Response<Utils.EDate.Root>();
-                List<Utils.EDate.DataItem> imgInfos = new List<Utils.EDate.DataItem>();
+                var result = new Utils.Response<Entity.MovieListEntity.Root>();
+                List<Entity.MovieListEntity.DataItem> imgInfos = new List<Entity.MovieListEntity.DataItem>();
                 if (isSearch)
                 {
-                    result.Result = bimg.getSearchData(tagId, pageCount, startNos);
+                    result.Result = bimg.searchVideoByTag(startNos, tagId, userEntity.imei);
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(tagId) || tagId == "最新上传")
+                    if (string.IsNullOrEmpty(tagId) || tagId == "新片")
                     {
-                        result.Result = bimg.getNewListData(pageCount, startNos);
+                        result.Result = bimg.getNewVideo(startNos, userEntity.imei);
                     }
                     else
                     {
                         if (string.IsNullOrEmpty(tagName))
                         {
-                            result.Result = bimg.getSearchData(tagId, pageCount, startNos);
+                            result.Result = bimg.getCategoryVideo(startNos, userEntity.imei, tagId);
                         }
                     }
 
@@ -481,7 +484,7 @@ namespace DeclineAplay
                     LoadingControl(false);
                     return false;
                 }
-                nCount = result.Result.recordsTotal.ToString();
+                nCount = result.Result.data.Count.ToString();
                 loadPageTextUpdate((Math.Floor((decimal.Parse(startNos) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
                 for (int i = 0; i < result.Result.data.Count; i++)
                 {
@@ -511,45 +514,31 @@ namespace DeclineAplay
             }
 
         }
-        /// <summary>
-        /// 添加列表信息
-        /// </summary>
-        /// <param name="tagId"></param>
-        /// <param name="startNos"></param>
-        /// <returns></returns>
-        private bool addImgListItem(string tagId, string startNos)
-        {
-            return addImgListItem(tagId, startNos, "");
-        }
 
-        private bool addImgListItem(string tagId, string startNos, string tagName)
+        private bool addImgListItem(string tagId, string startNos)
         {
             LoadingControl(true);
             //准备加载下一页图片
             startNos = (string.IsNullOrEmpty(startNos) ? "0" : startNos);
             List<DuiBaseControl> cItems = new List<DuiBaseControl>();
-            var result = new Utils.Response<Utils.EDate.Root>();
-            List<Utils.EDate.DataItem> imgInfos = new List<Utils.EDate.DataItem>();
+            var result = new Utils.Response<Entity.MovieListEntity.Root>();
+            List<Entity.MovieListEntity.DataItem> imgInfos = new List<Entity.MovieListEntity.DataItem>();
             if (isSearch)
             {
-                result.Result = bimg.getSearchData(tagId, pageCount, startNos);
+                result.Result = bimg.searchVideoByTag(startNos, tagId, userEntity.imei);
             }
             else
             {
                 if (string.IsNullOrEmpty(tagId) || tagId == "0")
                 {
-                    result.Result = bimg.getNewListData(pageCount, startNos);
+                    result.Result = bimg.getNewVideo(startNos, userEntity.imei);
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(tagName))
-                    {
-                        result.Result = bimg.getSearchData(tagId, pageCount, startNos);
-                    }
+                    result.Result = bimg.getCategoryVideo(startNos, userEntity.imei, tagId);
                 }
-
             }
-            nCount = result.Result.recordsTotal.ToString();
+            nCount = result.Result.data.Count.ToString();
             loadPageTextUpdate((Math.Floor((decimal.Parse(startNos) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
             for (int i = 0; i < result.Result.data.Count; i++)
             {
@@ -612,11 +601,11 @@ namespace DeclineAplay
                     {
                         if (vitem is DuiLabel)
                         {
-                            if ((vitem as DuiLabel).Name.Contains("ImageTypeLine_") && (vitem as DuiLabel).Tag.ToString() != labelId)
+                            if ((vitem as DuiLabel).Name.Contains("ImageTypeLine_") && (vitem as DuiLabel).Tag.ToString() != userEntity.menuName)
                             {
                                 (vitem as DuiLabel).BackColor = System.Drawing.Color.Silver;
                             }
-                            if ((vitem as DuiLabel).Name.Contains("ImageTypeName_") && (vitem as DuiLabel).Tag.ToString() != labelId)
+                            if ((vitem as DuiLabel).Name.Contains("ImageTypeName_") && (vitem as DuiLabel).Tag.ToString() != userEntity.menuName)
                             {
                                 (vitem as DuiLabel).ForeColor = System.Drawing.Color.Black;
                             }
@@ -627,22 +616,21 @@ namespace DeclineAplay
         }
 
         /// <summary>
-        /// 添加图片分类
+        /// 添加分类
         /// </summary>
         /// <param name="imgJsons"></param>
         /// <returns></returns>
-        public bool addImgType(List<string> imgJsons)
+        public bool addImgType(Entity.MenuEntity.Root menus)
         {
             //获取热门标签
             typeControl.Name = "typeControl";
-            labelId = "0";
             //循环增加分类
-            for (int i = 0; i < imgJsons.Count; i++)
+            for (int i = 0; i < menus.data.Count; i++)
             {
                 //含热门标签的分类
-                addTypeLable(imgJsons[i]);
+                addTypeLable(menus.data[i]);
             }
-            typeControl.Controls.Add(addHotTagControl(bimg.getHotTags()));
+            typeControl.Controls.Add(addHotTagControl(bimg.getHotTags("all", userEntity.imei)));
             typeControl.Size = new Size(this.Width, 35);
             typeControl.Dock = DockStyle.Fill;
             Panel_Type.BackColor = Color.White;
@@ -656,13 +644,13 @@ namespace DeclineAplay
         /// </summary>
         /// <param name="imgType">类型</param>
         /// <returns></returns>
-        private Boolean addTypeLable(string imgType)
+        private Boolean addTypeLable(Entity.MenuEntity.DataItem imgType)
         {
             int i = (typeControl.Controls.Count / 1);
             DuiLabel dlbe = new DuiLabel();
             dlbe.Size = new Size(60, 20);
-            dlbe.Text = imgType;
-            dlbe.Name = "ImageTypeName_" + imgType;
+            dlbe.Text = imgType.MenuName;
+            dlbe.Name = "ImageTypeName_" + imgType.MenuName;
             dlbe.Location = new Point(0, 5);
             dlbe.Cursor = System.Windows.Forms.Cursors.Hand;
             dlbe.MouseMove += Dlbe_MouseMove;
@@ -671,7 +659,7 @@ namespace DeclineAplay
             dlbe.MouseClick += Dlbe_MouseClick;
 
             DuiLabel dLabel1 = new DuiLabel();
-            dLabel1.Name = "ImageTypeLine_" + imgType;
+            dLabel1.Name = "ImageTypeLine_" + imgType.MenuName;
             dLabel1.Cursor = dlbe.Cursor;
             dLabel1.Size = new Size(60, 2);
             dLabel1.BackColor = System.Drawing.Color.Silver;
@@ -698,13 +686,13 @@ namespace DeclineAplay
         /// <param name="typeId">分类ID</param>
         /// <param name="index">当前顺序</param>
         /// <returns></returns>
-        private DuiBaseControl addHotTagControl(List<string> tagsList)
+        private DuiBaseControl addHotTagControl(Entity.TagsEntity.Root tagsList)
         {
             int index = ((typeControl.Controls.Count - 1) / 2);
             DuiBaseControl ltypeControl = new DuiBaseControl();
-            if (tagsList.Count > 0)
+            if (tagsList.data.Count > 0)
             {
-                ltypeControl.Size = new Size(154, 15 + tagsList.Count * 27 / 2);
+                ltypeControl.Size = new Size(154, 15 + tagsList.data.Count * 27 / 2);
             }
             else
             {
@@ -718,18 +706,18 @@ namespace DeclineAplay
             int rowi = 1;
             int coli = 1;
             int ti = 1;
-            foreach (string citem in tagsList)
+            foreach (Entity.TagsEntity.DataItem citem in tagsList.data)
             {
                 coli = (ti % 2 == 0 ? 2 : 1);
                 rowi = (int)Math.Ceiling(((double)ti / 2));
                 DuiLabel dlbea = new DuiLabel();
                 dlbea.Size = new Size(60, 20);
-                dlbea.Text = citem;
-                dlbea.Name = "ImageTypeNameOther_" + citem;
+                dlbea.Text = citem.Item;
+                dlbea.Name = "ImageTypeNameOther_" + citem.TopicId + citem.ItemOrder;
                 dlbea.Location = new Point(70 * (coli - 1), 10 + 24 * (rowi - 1));
                 dlbea.Cursor = System.Windows.Forms.Cursors.Hand;
                 dlbea.TextAlign = ContentAlignment.MiddleCenter;
-                dlbea.Tag = "0-" + citem;
+                dlbea.Tag = "0-" + citem.Item;
                 dlbea.MouseClick += dlTag_MouseClick;
                 ltypeControl.Controls.Add(dlbea);
                 ti++;
@@ -739,23 +727,24 @@ namespace DeclineAplay
         private void addBackImg()
         {
             LoadingControl(true);
-            var result = new Utils.Response<Utils.EDate.Root>();
-            var rType = new Utils.Response<List<string>>();
+            var result = new Utils.Response<Entity.MovieListEntity.Root>();
+            var rType = new Utils.Response<Entity.MenuEntity.Root>();
             try
             {
-                rType.Result = bimg.getVideoType();
+                rType.Result = bimg.getScrollMenu(userEntity.imei);
                 //添加分类控件
                 addImgType(rType.Result);
                 //添加详细信息
-                List<Utils.EDate.DataItem> imgInfos = new List<Utils.EDate.DataItem>();
-                result.Result = bimg.getNewListData(pageCount, startNo);
+                List<Entity.MovieListEntity.DataItem> imgInfos = new List<Entity.MovieListEntity.DataItem>();
+                result.Result = bimg.getNewVideo(startNo, userEntity.imei);
                 if (result.Result == null)
                 {
                     LoadingControl(false);
                     return;
                 }
-                nCount = result.Result.recordsTotal.ToString();
+                nCount = result.Result.data.Count.ToString();
                 loadPageTextUpdate((Math.Floor((decimal.Parse(startNo) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
+                List_Main.userEntity = userEntity;
                 for (int i = 0; i < result.Result.data.Count; i++)
                 {
                     int zi = i + 1;
@@ -895,7 +884,7 @@ namespace DeclineAplay
                         isLoadData = true;
                         startNo = (int.Parse(startNo) + int.Parse(pageCount)).ToString();
                         isEnd = false;
-                        Thread thread = new Thread(() => addImgListItem(labelId, startNo, hotTagName));
+                        Thread thread = new Thread(() => addImgListItem(userEntity.menuName, startNo));
                         thread.Start();
                     }
                 }
