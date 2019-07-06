@@ -31,5 +31,10 @@ namespace DeclineAplay
             textBox_resoult.Text += tvApi.getFreeVideo(userEntity.imei) + "\r\n";
             textBox_resoult.Text += tvApi.getNewVideo("1", userEntity.imei) + "\r\n";
         }
+
+        private void DebugForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

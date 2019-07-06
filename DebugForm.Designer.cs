@@ -59,6 +59,7 @@
             this.Controls.Add(this.btn_get);
             this.Name = "DebugForm";
             this.Text = "Debug";
+            this.Load += new System.EventHandler(this.DebugForm_Load);
             this.ResumeLayout(false);
 
         }

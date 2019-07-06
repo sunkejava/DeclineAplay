@@ -34,9 +34,9 @@ namespace DeclineAplay.API
     public class TvAPI
     {
         HttpWebRequest req = null;
-        string ApiHost = "http://api.i888999.com/";
-        string hostStr = "api.i888999.com";
-        string uStr = "A383";
+        string ApiHost = "aaJrqLtOVStQMOYkm3CnqR+90OyUPkxQ";
+        string hostStr = "BDK+58HuR7km7TgGPjgLXg==";
+        string uStr = "2c+15Z1Q894=";
         /// <summary>
         /// 获取版本号
         /// </summary>
