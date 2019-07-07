@@ -265,7 +265,7 @@ namespace DeclineAplay
         {
             if (lw != null)
             {
-                lw.axPlayer.Dispose();
+                lw.axPlayer.Close();
                 lw.Close();
             }
             base.btn_close_Click(sender, e);
@@ -1126,7 +1126,6 @@ namespace DeclineAplay
 
         private void updateTime()
         {
-            lb_bfjd.Text = TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetPosition())) + "/" + TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetDuration()));
             if (lw.axPlayer.GetDuration() != 0 && !isControlValid)
             {
                 tkb_jdt.Value = Math.Round((Double)lw.axPlayer.GetPosition() / lw.axPlayer.GetDuration(), 3);
@@ -1157,6 +1156,7 @@ namespace DeclineAplay
             else
             {
                 dl_PlayerExplain.Text = textStr;
+                lb_bfjd.Text = TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetPosition())) + "/" + TimeToString(TimeSpan.FromMilliseconds(lw.axPlayer.GetDuration()));
             }
         }
         /// <summary>
