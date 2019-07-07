@@ -872,14 +872,14 @@ namespace DeclineAplay
                 if (List_Main.Value == 1 && !isLoadData)
                 {
                     //如果为尾页则显示加载完毕
-                    if ((int.Parse(startNo) + int.Parse(pageCount)) >= int.Parse(nCount) && nCount != "0" && startNo != "0" && !isLoadData)
-                    {
-                        if (!isEnd)
-                        {
+                    //if ((int.Parse(startNo) + int.Parse(pageCount)) >= int.Parse(nCount) && nCount != "0" && startNo != "0" && !isLoadData)
+                    //{
+                    //    if (!isEnd)
+                    //    {
 
-                        }
-                    }
-                    else
+                    //    }
+                    //}
+                    //else
                     {
                         isLoadData = true;
                         startNo = (int.Parse(startNo) + int.Parse(pageCount)).ToString();

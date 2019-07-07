@@ -103,9 +103,9 @@ namespace DeclineAplay
                 Directory.CreateDirectory(cacheFileName);
             }
             cacheFileName = cacheFileName + new Uri(tvUrl).Segments[new Uri(tvUrl).Segments.Length - 1];
-            lw.axPlayer.SetConfig(2201, cacheFileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
+            //lw.axPlayer.SetConfig(2201, cacheFileName);//在线播放时本地缓存文件名，如设置为空字符串，则不缓存到本地；该参数默认值为空字符串；缓存文件也可以用 APlayer 打开继续播放。
             Logger.Singleton.Info("播放视频" + tvName + "地址为:" + tvUrl);
-            lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
+            //lw.axPlayer.SetConfig(2207, "1");//设置是否在播放媒体文件时贪婪下载所有的数据到缓存文件。
         }
 
         private void BaseControl_MouseLeave(object sender, EventArgs e)
