@@ -149,6 +149,7 @@
     <Compile Include="Utils\PlayListEntity.cs" />
     <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\SecurityHelper.cs" />
+    <Compile Include="Utils\StaticUtils.cs" />
     <Compile Include="Utils\Win32.cs" />
     <EmbeddedResource Include="DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>

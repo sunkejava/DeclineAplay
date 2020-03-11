@@ -273,6 +273,7 @@ namespace DeclineAplay.API
                 userEntity.imei = IMEI;
                 userEntity.category = categoryId;
                 string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/CategoryVideo?Page=" + page + "&Category=" + categoryId + "&IMEI=" + IMEI + "&postkey=" + getThisKey("CategoryVideo", userEntity);
+                Console.WriteLine("根据分类ID获取视频verUrl:" + verUrl);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
@@ -391,6 +392,7 @@ namespace DeclineAplay.API
                 userEntity.imei = IMEI;
                 userEntity.page = page;
                 string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/SearchVideo?Page=" + page + "&Search=" + SecurityHelper.EncodeUrl(tag) + "&IMEI=" + IMEI + "&postkey=" + getThisKey("SearchVideo", userEntity);
+                Console.WriteLine("通过索引或标签进行视频搜索verUrl:" + verUrl);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
@@ -424,6 +426,7 @@ namespace DeclineAplay.API
                 userEntity.imei = IMEI;
                 userEntity.uid = uid;
                 string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/VideoDetail?vid=" + vid + "&uid=" + uid + "&IMEI=" + IMEI + "&postkey=" + getThisKey("VideoDetail", userEntity);
+                Console.WriteLine("视频详情verUrl:"+verUrl);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";
@@ -461,6 +464,7 @@ namespace DeclineAplay.API
                 userEntity.psw = pwd;
                 userEntity.type = type;
                 string verUrl = Utils.SecurityHelper.Decode(ApiHost) + Utils.SecurityHelper.Decode(uStr) + "/PlayVideo?mail=" + email + "&psw=" + pwd + "&vid=" + vid + "&Type=" + type + "&IMEI=" + IMEI + "&postkey=" + getThisKey("PlayVideo", userEntity);
+                Console.WriteLine("视频地址verUrl:" + verUrl);
                 req = (HttpWebRequest)HttpWebRequest.Create(verUrl);
                 //设置它提交数据的方式GET
                 req.Method = "GET";

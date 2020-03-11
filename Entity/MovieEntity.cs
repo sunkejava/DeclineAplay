@@ -83,7 +83,7 @@ namespace DeclineAplay.Entity
             /// <summary>
             /// 系列集合
             /// </summary>
-            public List<string> videoSeries { get; set; }
+            public List<VideoSeriesItem> videoSeries { get; set; }
             /// <summary>
             /// 
             /// </summary>
@@ -117,7 +117,41 @@ namespace DeclineAplay.Entity
             /// </summary>
             public string VIPtime { get; set; }
         }
-
+        public class VideoSeriesItem
+        {
+            /// <summary>
+            /// 视频ID
+            /// </summary>
+            public int videoID { get; set; }
+            /// <summary>
+            /// 黑絲襪色情推銷2
+            /// </summary>
+            public string videoName { get; set; }
+            /// <summary>
+            /// 视频类型ID
+            /// </summary>
+            public int videoTypeID { get; set; }
+            /// <summary>
+            /// 美臀長腿絲襪
+            /// </summary>
+            public string videoType { get; set; }
+            /// <summary>
+            /// 上映时间
+            /// </summary>
+            public string onDate { get; set; }
+            /// <summary>
+            /// 波多野結衣.等3人
+            /// </summary>
+            public string actorName { get; set; }
+            /// <summary>
+            /// 图片
+            /// </summary>
+            public string photo { get; set; }
+            /// <summary>
+            /// 女業務為了推銷商品特地穿著短裙黑絲襪!只要是男屋主絕對眼光不離那雙黑絲美腿，只要稍加用美腿愛撫客戶的褲檔馬上點燃慾火!粗暴的扯破絲襪對準濕穴盡情猛插吧、雞巴屁眼或是嘴裡任君選擇唷(中文字幕)
+            /// </summary>
+            public string desc { get; set; }
+        }
         public class Root
         {
             /// <summary>

@@ -20,6 +20,7 @@
 *描述：
 *
 *****************************************************************************/
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,21 @@ namespace DeclineAplay.Entity
         /// 消息
         /// </summary>
         public string message { get; set; }
+        /// <summary>
+        /// 重写ToString方法
+        /// </summary>
+        /// <returns>返回需要的实体信息</returns>
+        public override string ToString()
+        {
+            return "ver:"+ver.ToString()+"---message:"+message;
+        }
+        /// <summary>
+        /// 转为json字符串
+        /// </summary>
+        /// <returns></returns>
+        public string toJsonString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

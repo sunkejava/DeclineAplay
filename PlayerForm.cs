@@ -225,10 +225,10 @@ namespace DeclineAplay
         {
             if (lw != null)
             {
-                lw.axPlayer.Dispose();
+                lw.axPlayer.Close();
                 lw.Close();
             }
-            base.btn_close_Click(sender, e);
+            //base.btn_close_Click(sender, e);
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
