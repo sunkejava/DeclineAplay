@@ -149,6 +149,8 @@ namespace DeclineAplay.Controls
             {
                 API.TvAPI tva = new API.TvAPI();
                 Entity.MovePlayEntity plav = tva.getVideoUrl(userEntity.email, userEntity.psw, moveInfo.videoID.ToString(), "all", userEntity.imei);
+                Console.WriteLine(plav.toJsonString());
+                Console.WriteLine(plav.data);
                 PlayerForm plF = new PlayerForm();
                 url = plav.data.ToString();
                 plF.tvUrl = plav.data.ToString();

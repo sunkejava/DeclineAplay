@@ -42,6 +42,7 @@ namespace DeclineAplay
         DuiBaseControl typeControl = new DuiBaseControl();
         string startNo = "0";//开始序号
         string pageCount = "12";//每页或每次调用获取图片的总数
+        string SumPage = "N";//总页数
         bool isSearch = false;//是否搜索
         bool isEnd = false;//是否为页尾
         bool isLoadData = false;//是否正在加载数据
@@ -307,9 +308,10 @@ namespace DeclineAplay
                 Entity.MenuEntity.DataItem dt = (Entity.MenuEntity.DataItem)dlbe.Tag;
                 if (dt.MenuName != userEntity.menuName)
                 {
-                    userEntity.menuName = dt.MenuName;
+                    userEntity.menuName = dt.MenuVal.Replace("categoryID=", "");
                     startNo = "1";
                     nCount = "0";
+                    SumPage = "N";
                     isSearch = false;
                     Thread thread = new Thread(() => updateImgList(dt.MenuVal.Replace("categoryID=", ""), startNo));
                     thread.Start();
@@ -350,6 +352,7 @@ namespace DeclineAplay
                 {
                     userEntity.menuName = dlb.Tag.ToString().Split('-')[1];
                     startNo = "1";
+                    SumPage = "N";
                     isSearch = false;
                     Thread thread = new Thread(() => updateImgList(dlb.Tag.ToString().Split('-')[1], startNo));
                     thread.Start();
@@ -358,6 +361,7 @@ namespace DeclineAplay
                 {
                     userEntity.menuName = dlb.Tag.ToString();
                     startNo = "1";
+                    SumPage = "N";
                     isSearch = false;
                     Thread thread = new Thread(() => updateImgList(dlb.Tag.ToString().Split('-')[1], startNo));
                     thread.Start();
@@ -479,13 +483,14 @@ namespace DeclineAplay
                     }
 
                 }
-                if (result.Result == null)
+                if (result.Result == null || result.Result.data == null || result.Result.data.Count == 0)
                 {
+                    SumPage = startNo;
                     LoadingControl(false);
                     return false;
                 }
                 nCount = result.Result.data.Count.ToString();
-                loadPageTextUpdate((Math.Floor((decimal.Parse(startNos) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
+                loadPageTextUpdate(startNos, "");
                 for (int i = 0; i < result.Result.data.Count; i++)
                 {
                     int zi = i + 1;
@@ -519,7 +524,7 @@ namespace DeclineAplay
         {
             LoadingControl(true);
             //准备加载下一页图片
-            startNos = (string.IsNullOrEmpty(startNos) ? "0" : startNos);
+            startNos = (string.IsNullOrEmpty(startNos) ? "1" : startNos);
             List<DuiBaseControl> cItems = new List<DuiBaseControl>();
             var result = new Utils.Response<Entity.MovieListEntity.Root>();
             List<Entity.MovieListEntity.DataItem> imgInfos = new List<Entity.MovieListEntity.DataItem>();
@@ -539,7 +544,7 @@ namespace DeclineAplay
                 }
             }
             nCount = result.Result.data.Count.ToString();
-            loadPageTextUpdate((Math.Floor((decimal.Parse(startNos) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
+            loadPageTextUpdate(startNos, "");
             for (int i = 0; i < result.Result.data.Count; i++)
             {
                 int zi = i + 1;
@@ -580,6 +585,7 @@ namespace DeclineAplay
 
         private void loadPageTextUpdate(string nowPage, string countPage)
         {
+            if (string.IsNullOrEmpty(countPage)) countPage = "N";
             if (this.Panel_load.InvokeRequired)
             {
                 AsynUpdateloadPageText au = new AsynUpdateloadPageText(loadPageTextUpdate);
@@ -743,7 +749,7 @@ namespace DeclineAplay
                     return;
                 }
                 nCount = result.Result.data.Count.ToString();
-                loadPageTextUpdate((Math.Floor((decimal.Parse(startNo) + decimal.Parse(pageCount)) / decimal.Parse(pageCount))).ToString(), (Math.Ceiling(decimal.Parse(nCount) / decimal.Parse(pageCount))).ToString());
+                loadPageTextUpdate(startNo, "");
                 List_Main.userEntity = userEntity;
                 for (int i = 0; i < result.Result.data.Count; i++)
                 {
@@ -880,9 +886,10 @@ namespace DeclineAplay
                     //    }
                     //}
                     //else
+                    if(!startNo.Equals(SumPage))
                     {
                         isLoadData = true;
-                        startNo = (int.Parse(startNo) + int.Parse(pageCount)).ToString();
+                        startNo = (int.Parse(startNo) + 1).ToString(); //int.Parse(pageCount)).ToString();
                         isEnd = false;
                         Thread thread = new Thread(() => addImgListItem(userEntity.menuName, startNo));
                         thread.Start();
