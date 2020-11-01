@@ -75,6 +75,7 @@ namespace DeclineAplay
             AddControl();
             lw.axPlayer.SetVolume(50);
             tkb_sound.Value = 50 / 200;
+            this.Owner = lw;
             lw.axPlayer.OnStateChanged += AxPlayer_OnStateChanged;//状态变化事件
             lw.axPlayer.OnDownloadCodec += AxPlayer_OnDownloadCodec;//在 APlayer 引擎播放某个媒体文件缺少对应的解码器时
             lw.axPlayer.OnBuffer += AxPlayer_OnBuffer;//网络缓冲
@@ -223,10 +224,11 @@ namespace DeclineAplay
 
         private void MainForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
+            if (lw.IsDisposed || lw.Disposing) return;
             if (lw != null)
             {
-                lw.axPlayer.Close();
-                lw.Close();
+                //.axPlayer.Dispose();
+                lw.Dispose();
             }
             //base.btn_close_Click(sender, e);
         }

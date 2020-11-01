@@ -247,8 +247,10 @@
             this.Controls.Add(this.BaseControl);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
+            this.HaloColor = System.Drawing.Color.Transparent;
             this.Name = "PlayerForm";
             this.Radius = 0;
+            this.ShowInTaskbar = false;
             this.Activated += new System.EventHandler(this.PlayerForm_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);

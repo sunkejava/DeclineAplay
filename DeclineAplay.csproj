@@ -79,6 +79,12 @@
     <Compile Include="API\Mmtv.cs" />
     <Compile Include="API\TvAPI.cs" />
     <Compile Include="AppLogs.cs" />
+    <Compile Include="Controls\NewWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NewWebBrowser.Designer.cs">
+      <DependentUpon>NewWebBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlayListControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,6 +93,12 @@
     </Compile>
     <Compile Include="DebugForm.Designer.cs">
       <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DplayWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DplayWindow.Designer.cs">
+      <DependentUpon>DplayWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Entity\AppVerEntity.cs" />
     <Compile Include="Entity\CategoryEntity.cs" />
@@ -144,15 +156,20 @@
     <Compile Include="Utils\AnimationControl.cs" />
     <Compile Include="Utils\ConstClass.cs" />
     <Compile Include="Utils\EDate.cs" />
+    <Compile Include="Utils\IEVersion.cs" />
     <Compile Include="Utils\PicDeal.cs" />
     <Compile Include="Utils\PlayClass.cs" />
     <Compile Include="Utils\PlayListEntity.cs" />
     <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\SecurityHelper.cs" />
     <Compile Include="Utils\StaticUtils.cs" />
+    <Compile Include="Utils\WebBrowserExtendedNavigatingEventArgs.cs" />
     <Compile Include="Utils\Win32.cs" />
     <EmbeddedResource Include="DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DplayWindow.resx">
+      <DependentUpon>DplayWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

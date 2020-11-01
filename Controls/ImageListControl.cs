@@ -247,6 +247,7 @@ namespace DeclineAplay.Controls
                 imgTag.TextAlign = ContentAlignment.MiddleCenter;
                 //imgTag.BackColor = Color.FromArgb(100, 0, 0, 0);
                 imgTag.BackgroundImage = Properties.Resources.mask_shadow;
+                imgTag.BackColor = Color.FromArgb(125, 255, 92, 138);
                 imgTag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                 imgTag.Text = ingTxt;
                 imgTag.Name = "imgTag_" + imgInfo.videoID.ToString();

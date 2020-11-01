@@ -48,15 +48,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.ClientSize = new System.Drawing.Size(622, 408);
             this.Controls.Add(this.axPlayer);
+            this.DoubleBuffered = false;
             this.DrawIcon = false;
             this.EnableAnimation = false;
             this.HaloColor = System.Drawing.Color.Transparent;
             this.IsLayeredWindowForm = false;
             this.Name = "LayeredWindow";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "";
             this.TransparencyKey = System.Drawing.Color.Transparent;
